@@ -30,7 +30,7 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     private EditText nama,alamat,usia,telp,email,username,pass;
     private RadioGroup jenis;
-    private Button submit, back;
+    private Button submit, back, login;
     private ProgressDialog progressDialog;
 
     @Override
@@ -47,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.etpassword);
 
         submit = (Button) findViewById(R.id.btnsubmit);
+        login = (Button) findViewById(R.id.btnlogin);
 
         jenis = (RadioGroup) findViewById(R.id.rgjenis);
 
@@ -63,6 +64,16 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerUser();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

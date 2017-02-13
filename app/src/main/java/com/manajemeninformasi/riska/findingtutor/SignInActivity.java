@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
     EditText username, password;
-    Button back, submit;
+    Button back, submit, register;
     private String susername, spassword;
     private ProgressDialog progressDialog;
 
@@ -38,6 +38,14 @@ public class SignInActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.etusername);
         password = (EditText) findViewById(R.id.etpass);
         progressDialog = new ProgressDialog(this);
+        register = (Button) findViewById(R.id.btnregister);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
         back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
