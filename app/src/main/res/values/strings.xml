@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Finding Tutor</string>
+    <string name="title_activity_keahlian_tutor">KeahlianTutorActivity</string>
+</resources>
