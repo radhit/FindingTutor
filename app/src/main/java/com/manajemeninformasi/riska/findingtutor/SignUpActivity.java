@@ -38,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+
         nama = (EditText) findViewById(R.id.etnama);
         alamat = (EditText) findViewById(R.id.etalamat);
         usia = (EditText) findViewById(R.id.etusia);
@@ -63,9 +64,25 @@ public class SignUpActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerUser();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                String ceknama,cekalamat,cekusia,cektelp,cekemail,cekusername,cekpass;
+                ceknama = nama.getText().toString();
+                cekalamat = alamat.getText().toString();
+                cekusia = usia.getText().toString();
+                cektelp = telp.getText().toString();
+                cekemail = email.getText().toString();
+                cekusername = username.getText().toString();
+                cekpass = pass.getText().toString();
+                if(ceknama.matches("") || cekalamat.matches("") || cekusia.matches("") ||
+                        cektelp.matches("") || cekemail.matches("") || cekusername.matches("") ||cekpass.matches(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    registerUser();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         login.setOnClickListener(new View.OnClickListener() {

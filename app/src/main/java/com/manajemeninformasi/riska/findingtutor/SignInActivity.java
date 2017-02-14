@@ -53,10 +53,18 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         submit = (Button) findViewById(R.id.btnsubmit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String cekUsername = username.getText().toString();
+                String cekPass = password.getText().toString();
+                if(cekUsername.matches("") || cekPass.matches(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Username atau Password belum dimasukkan", Toast.LENGTH_SHORT).show();
+                }
+                else
                 userLogin();
             }
         });
@@ -65,7 +73,7 @@ public class SignInActivity extends AppCompatActivity {
     {
         susername = username.getText().toString();
         spassword = password.getText().toString();
-        progressDialog.setMessage("Register ...");
+        progressDialog.setMessage("Please Wait ...");
         progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
