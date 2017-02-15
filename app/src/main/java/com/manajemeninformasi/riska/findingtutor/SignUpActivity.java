@@ -19,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.manajemeninformasi.riska.findingtutor.volley.Config;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setMessage("Register ...");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.REGISTER_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.REGISTER_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -17,7 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.manajemeninformasi.riska.findingtutor.volley.Config;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
+import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +31,13 @@ public class SignInActivity extends AppCompatActivity {
     Button back, submit, register;
     private String susername, spassword;
     private ProgressDialog progressDialog;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        db = new Database(getApplicationContext());
         username = (EditText) findViewById(R.id.etusername);
         password = (EditText) findViewById(R.id.etpass);
         progressDialog = new ProgressDialog(this);
@@ -76,7 +79,8 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setMessage("Please Wait ...");
         progressDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.LOGIN_URL,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -85,11 +89,13 @@ public class SignInActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString("jenis").equals("Pentutor"))
                         {
+                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("jenis"));
                             toIntent(HomeTutorActivity.class);
                             Log.d("ini tutor",jsonObject.getString("jenis"));
                         }
                         else
                         {
+                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("jenis"));
                             toIntent(HomeMuridActivity.class);
                             Log.d("ini murid",jsonObject.getString("jenis"));
                         }
