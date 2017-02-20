@@ -23,6 +23,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Kelas"
+                    android:textSize="20sp"/>
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spkelas"
+                    android:entries="@array/kelas"
+                    android:prompt="@string/pilih_kelas"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Pelajaran"
                     android:textSize="20sp"/>
                 <EditText
@@ -41,12 +52,23 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Tanggal"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ettanggal"
+                    android:inputType="date"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Waktu"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etwaktu"/>
+                    android:id="@+id/etwaktu"
+                    android:inputType="time"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

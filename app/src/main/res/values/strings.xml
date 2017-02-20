@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Finding Tutor</string>
     <string name="title_activity_keahlian_tutor">KeahlianTutorActivity</string>
+    <string name="pilih_kelas">Pilih Kelas</string>
+    <string-array name="kelas">
+        <item>SD</item>
+        <item>SMP</item>
+        <item>SMA</item>
+        <item>UMUM</item>
+    </string-array>
 </resources>
