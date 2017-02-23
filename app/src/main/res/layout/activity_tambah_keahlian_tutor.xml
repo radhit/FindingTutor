@@ -17,6 +17,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Kelas"
+            android:textSize="20sp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/kelas"
+            android:prompt="@string/pilih_kelas"
+            android:id="@+id/spkelas"></Spinner>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Pelajaran"
             android:textSize="20sp"/>
         <EditText
@@ -31,7 +42,25 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etbiaya"/>
+            android:id="@+id/etbiaya"
+            android:inputType="numberDecimal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ketersediaan Waktu"
+            android:textSize="20sp"/>
+
+        <CheckBox
+            android:text="CheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ettanggal"
+            android:inputType="date"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +69,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etwaktu"/>
+            android:id="@+id/etwaktu"
+            android:inputType="time"/>
 
     </LinearLayout>
     <LinearLayout

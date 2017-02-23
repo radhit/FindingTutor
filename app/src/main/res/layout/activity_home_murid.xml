@@ -25,7 +25,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="cari murid"
+            android:text="cari tutor"
             android:id="@+id/btncari"
             android:background="@drawable/button"
             android:textColor="@color/colorButtonSubmit"

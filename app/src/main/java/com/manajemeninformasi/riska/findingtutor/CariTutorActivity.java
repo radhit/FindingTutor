@@ -3,26 +3,37 @@ package com.manajemeninformasi.riska.findingtutor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinner;
-    private EditText pelajaran, biaya, tanggal, waktu, alamat;
+    private EditText pelajaran, biaya, alamat;
     private String pilihKelas;
+    private DatePicker tanggal;
+    //private CalendarView tanggal;
+    private Calendar calendar;
+    private TimePicker waktu;
+    private Integer day, year, month, selectedDay, hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +42,32 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         db = new Database(this);
         spinner = (Spinner) findViewById(R.id.spkelas);
         spinner.setOnItemSelectedListener(this);
+
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
         biaya = (EditText) findViewById(R.id.etbiaya);
-        tanggal = (EditText) findViewById(R.id.ettanggal);
-        waktu = (EditText) findViewById(R.id.etwaktu);
         alamat = (EditText) findViewById(R.id.etalamat);
+
+        tanggal = (DatePicker) findViewById(R.id.dptanggal);
+
+        day = tanggal.getDayOfMonth();
+        month = tanggal.getMonth();
+        year = tanggal.getYear();
+        calendar = Calendar.getInstance();
+
+
+        tanggal.init(year, month, day, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
+                day = dayOfMonth;
+                month = monthOfYear;
+                year = years;
+                calendar.set(year, month, day);
+                selectedDay = calendar.get(Calendar.DAY_OF_WEEK);
+            }
+        });
+
+
+        waktu = (TimePicker) findViewById(R.id.tpwaktu);
 
         Button back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
@@ -83,15 +115,13 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private void cariTutor()
     {
         String cekkelas, cekpelajaran, cekbiaya, cektanggal, cekwaktu, cekalamat;
-
         cekkelas = pilihKelas;
         cekpelajaran = pelajaran.getText().toString();
         cekbiaya = biaya.getText().toString();
-        cektanggal = tanggal.getText().toString();
-        cekwaktu = waktu.getText().toString();
+        cektanggal = selectedDay.toString();
+        cekwaktu = waktu.getCurrentHour()+" : "+waktu.getCurrentMinute();
         cekalamat = alamat.getText().toString();
-        if(cekkelas.matches("") || cekpelajaran.matches("") || cekbiaya.matches("") ||
-                cektanggal.matches("") || cekwaktu.matches("") || cekalamat.matches(""))
+        if(cekkelas.matches("") || cekpelajaran.matches("") || cekbiaya.matches("") || cekwaktu.matches("") || cekalamat.matches("") || cektanggal.matches("") )
         {
             Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
         }
@@ -100,6 +130,5 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
                     "\n Tanggal = "+cektanggal+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
         }
-
     }
 }
