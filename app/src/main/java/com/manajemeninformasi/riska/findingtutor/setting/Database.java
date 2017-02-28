@@ -62,4 +62,19 @@ public class Database extends SQLiteOpenHelper {
         cursor.close();
         return jenis;
     }
+    public String getUser()
+    {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+        {
+            return "";
+        }
+        String username = cursor.getString(cursor.getColumnIndex("username"));
+        cursor.close();
+        return username;
+    }
+
 }

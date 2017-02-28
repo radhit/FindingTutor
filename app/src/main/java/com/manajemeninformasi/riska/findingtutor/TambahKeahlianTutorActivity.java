@@ -1,30 +1,55 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
-public class TambahKeahlianTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private Database db;
-    private Spinner spinner;
-    private String pilih;
+    private Spinner kelas,hari;
+    private String pilihKelas, pilihHari;
+    private EditText pelajaran, biaya;
+    private TimePicker waktu;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah_keahlian_tutor);
         db = new Database(this);
-        spinner = (Spinner) findViewById(R.id.spkelas);
-        spinner.setOnItemSelectedListener(this);
+        pelajaran = (EditText) findViewById(R.id.etpelajaran);
+        biaya = (EditText) findViewById(R.id.etbiaya);
+        waktu = (TimePicker) findViewById(R.id.tpwaktu);
+        progressDialog =  new ProgressDialog(this);
 
         Button back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
@@ -37,12 +62,57 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity implements Ad
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tambahKeahlian();
+                String cekkelas, cekpelajaran, cekbiaya, cekketersediaan, cekwaktu;
+                cekkelas = pilihKelas;
+                cekketersediaan = pilihHari;
+                cekpelajaran = pelajaran.getText().toString();
+                cekbiaya = biaya.getText().toString();
+                cekwaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches("") || cekbiaya.matches("") || cekwaktu.matches(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+//                    Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+//                            "\n Hari = "+cekketersediaan+"\n Waktu = "+cekwaktu,Toast.LENGTH_LONG).show();
+                    tambahKeahlian();
+                }
+
             }
         });
+
+        kelas = (Spinner) findViewById(R.id.spkelas);
         ArrayAdapter<CharSequence> kelasAdapter = ArrayAdapter.createFromResource(this, R.array.kelas, android.R.layout.simple_spinner_item);
         kelasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(kelasAdapter);
+        kelas.setAdapter(kelasAdapter);
+        kelas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pilihKelas = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                pilihKelas = "";
+            }
+        });
+
+        hari = (Spinner) findViewById(R.id.sphari);
+        ArrayAdapter<CharSequence> hariAdapter = ArrayAdapter.createFromResource(this, R.array.hari, android.R.layout.simple_spinner_item);
+        hariAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hari.setAdapter(hariAdapter);
+        hari.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pilihHari = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                pilihHari = "";
+            }
+        });
     }
 
     @Override
@@ -59,19 +129,53 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity implements Ad
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        pilih = parent.getItemAtPosition(position).toString();
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        pilih = "";
-    }
-
     private void tambahKeahlian()
     {
-        String cekkelas, cekpelajaran, cekbiaya, cekketersediaan;
+        final String stringUsername, stringKelas, stringPelajaran, stringBiaya, stringWaktu, stringHari;
+        stringUsername = db.getUser();
+        stringKelas = pilihKelas;
+        stringHari = pilihHari;
+        stringPelajaran = pelajaran.getText().toString();
+        stringBiaya = biaya.getText().toString();
+        stringWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+        progressDialog.setMessage("Tambah Keahlian...");
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TAMBAHKEAHLIAN_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.hide();
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                        Log.d("cek",error.getMessage());
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username",stringUsername);
+                params.put("kelas",stringKelas);
+                params.put("pelajaran",stringPelajaran);
+                params.put("keterbatasanhari",stringHari);
+                params.put("jam",stringWaktu);
+                params.put("biaya",stringBiaya);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

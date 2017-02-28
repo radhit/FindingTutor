@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText nama,alamat,usia,telp,email,username,pass;
-    private RadioGroup jenis;
+    private RadioGroup jenis, kelamin;
     private Button submit, back, login;
     private ProgressDialog progressDialog;
 
@@ -51,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btnlogin);
 
         jenis = (RadioGroup) findViewById(R.id.rgjenis);
+        kelamin = (RadioGroup) findViewById(R.id.rgkelamin);
 
         progressDialog = new ProgressDialog(this);
 
@@ -98,9 +99,11 @@ public class SignUpActivity extends AppCompatActivity {
     private void registerUser()
     {
         RadioButton pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
-        final String snama, salamat, susia, stelp, semail, susername, spass, sjenispengguna;
+        RadioButton jenisKelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
+        final String snama, salamat, skelamin, susia, stelp, semail, susername, spass, sjenispengguna;
         snama = nama.getText().toString();
         salamat = alamat.getText().toString();
+        skelamin = jenisKelamin.getText().toString();
         susia = usia.getText().toString();
         stelp = telp.getText().toString();
         semail = email.getText().toString();
@@ -139,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                 params.put("nama",snama);
                 params.put("alamat",salamat);
                 params.put("usia",susia);
+                params.put("jeniskelamin",skelamin);
                 params.put("telp",stelp);
                 params.put("email",semail);
                 params.put("jenis",sjenispengguna);

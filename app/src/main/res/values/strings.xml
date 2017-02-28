@@ -8,4 +8,16 @@
         <item>SMA</item>
         <item>UMUM</item>
     </string-array>
+    <string name="pilih_hari">Pilih Hari</string>
+    <string-array name="hari">
+        <item>Minggu</item>
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+        <item>Tidak Ada</item>
+    </string-array>
+    <string name="title_activity_detil_murid">Map</string>
 </resources>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -30,10 +31,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private EditText pelajaran, biaya, alamat;
     private String pilihKelas;
     private DatePicker tanggal;
-    //private CalendarView tanggal;
     private Calendar calendar;
     private TimePicker waktu;
-    private Integer day, year, month, selectedDay, hour, minute;
+    private Integer day, year, month, selectedDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +48,10 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         alamat = (EditText) findViewById(R.id.etalamat);
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
-
         day = tanggal.getDayOfMonth();
         month = tanggal.getMonth();
         year = tanggal.getYear();
         calendar = Calendar.getInstance();
-
-
         tanggal.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
@@ -65,7 +62,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 selectedDay = calendar.get(Calendar.DAY_OF_WEEK);
             }
         });
-
 
         waktu = (TimePicker) findViewById(R.id.tpwaktu);
 
@@ -114,7 +110,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
     private void cariTutor()
     {
-        String cekkelas, cekpelajaran, cekbiaya, cektanggal, cekwaktu, cekalamat;
+        String cekkelas, cekpelajaran, cekbiaya, cektanggal, cekwaktu, cekalamat, hari;
         cekkelas = pilihKelas;
         cekpelajaran = pelajaran.getText().toString();
         cekbiaya = biaya.getText().toString();
@@ -127,8 +123,48 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         }
         else
         {
-            Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                    "\n Tanggal = "+cektanggal+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            if (cektanggal.equals("1"))
+            {
+                hari = "Minggu";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("2"))
+            {
+                hari = "Senin";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("3"))
+            {
+                hari = "Selasa";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("4"))
+            {
+                hari = "Rabu";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("5"))
+            {
+                hari = "Kamis";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("6"))
+            {
+                hari = "Jumat";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
+            if (cektanggal.equals("7"))
+            {
+                hari = "Sabtu";
+                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
+                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
