@@ -30,8 +30,10 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     private EditText nama,alamat,usia,telp,email,username,pass;
     private RadioGroup jenis, kelamin;
+    private RadioButton pengguna, jeniskelamin;
     private Button submit, back, login;
     private ProgressDialog progressDialog;
+    private String getNama,getAlamat, getUsia, getTelp , getEmail ,getUsername , getPass, getJeniskelamin, getJenisuser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,10 @@ public class SignUpActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btnlogin);
 
         jenis = (RadioGroup) findViewById(R.id.rgjenis);
+        pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
+
         kelamin = (RadioGroup) findViewById(R.id.rgkelamin);
+        jeniskelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
 
         progressDialog = new ProgressDialog(this);
 
@@ -65,16 +70,17 @@ public class SignUpActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ceknama,cekalamat,cekusia,cektelp,cekemail,cekusername,cekpass;
-                ceknama = nama.getText().toString();
-                cekalamat = alamat.getText().toString();
-                cekusia = usia.getText().toString();
-                cektelp = telp.getText().toString();
-                cekemail = email.getText().toString();
-                cekusername = username.getText().toString();
-                cekpass = pass.getText().toString();
-                if(ceknama.matches("") || cekalamat.matches("") || cekusia.matches("") ||
-                        cektelp.matches("") || cekemail.matches("") || cekusername.matches("") ||cekpass.matches(""))
+                getNama = nama.getText().toString();
+                getAlamat = alamat.getText().toString();
+                getJeniskelamin = jeniskelamin.getText().toString();
+                getUsia = usia.getText().toString();
+                getTelp = telp.getText().toString();
+                getEmail = email.getText().toString();
+                getJenisuser = pengguna.getText().toString();
+                getUsername = username.getText().toString();
+                getPass = pass.getText().toString();
+                if(getNama.matches("") || getAlamat.matches("") || getJeniskelamin.matches("") || getUsia.matches("") ||
+                        getTelp.matches("") || getEmail.matches("") || getJenisuser.matches("") || getUsername.matches("") || getPass.matches(""))
                 {
                     Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
                 }
@@ -98,18 +104,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void registerUser()
     {
-        RadioButton pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
-        RadioButton jenisKelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
-        final String snama, salamat, skelamin, susia, stelp, semail, susername, spass, sjenispengguna;
-        snama = nama.getText().toString();
-        salamat = alamat.getText().toString();
-        skelamin = jenisKelamin.getText().toString();
-        susia = usia.getText().toString();
-        stelp = telp.getText().toString();
-        semail = email.getText().toString();
-        susername = username.getText().toString();
-        spass = pass.getText().toString();
-        sjenispengguna = pengguna.getText().toString();
+        getNama = nama.getText().toString();
+        getAlamat = alamat.getText().toString();
+        getJeniskelamin = jeniskelamin.getText().toString();
+        getUsia = usia.getText().toString();
+        getTelp = telp.getText().toString();
+        getEmail = email.getText().toString();
+        getJenisuser = pengguna.getText().toString();
+        getUsername = username.getText().toString();
+        getPass = pass.getText().toString();
         progressDialog.setMessage("Register ...");
         progressDialog.show();
 
@@ -139,15 +142,15 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("nama",snama);
-                params.put("alamat",salamat);
-                params.put("usia",susia);
-                params.put("jeniskelamin",skelamin);
-                params.put("telp",stelp);
-                params.put("email",semail);
-                params.put("jenis",sjenispengguna);
-                params.put("username",susername);
-                params.put("password",spass);
+                params.put("nama",getNama);
+                params.put("alamat",getAlamat);
+                params.put("usia",getUsia);
+                params.put("jeniskelamin",getJeniskelamin);
+                params.put("telp",getTelp);
+                params.put("email",getEmail);
+                params.put("jenis",getJenisuser);
+                params.put("username",getUsername);
+                params.put("password",getPass);
                 return params;
             }
         };

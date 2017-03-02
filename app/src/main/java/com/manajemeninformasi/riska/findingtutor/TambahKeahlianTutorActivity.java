@@ -74,8 +74,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 }
                 else
                 {
-//                    Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-//                            "\n Hari = "+cekketersediaan+"\n Waktu = "+cekwaktu,Toast.LENGTH_LONG).show();
                     tambahKeahlian();
                 }
 

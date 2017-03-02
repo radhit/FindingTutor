@@ -43,13 +43,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Biaya (per Jam)"
+                    android:text="Alamat"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etbiaya"
-                    android:inputType="numberDecimal"/>
+                    android:id="@+id/etalamat"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,12 +74,54 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Alamat"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:gravity="center"
+                    android:text="KRITERIA TUTOR"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="36sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jenis Kelamin"
+                    android:textSize="20sp"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rgkelamin">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Laki-laki"
+                        android:id="@+id/rblakilaki"
+                        android:checked="true" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perempuan"
+                        android:id="@+id/rbperempuan"/>
+                </RadioGroup>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usia"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etalamat"/>
+                    android:id="@+id/etusia"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Biaya (per Jam)"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etbiaya"
+                    android:inputType="numberDecimal"/>
+
 
             </LinearLayout>
             <LinearLayout

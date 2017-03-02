@@ -1,5 +1,6 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,29 +12,43 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinner;
-    private EditText pelajaran, biaya, alamat;
+    private EditText pelajaran, alamat, usia, biaya;
+    private RadioGroup jeniskelamin;
     private String pilihKelas;
+    private String getKelas, getPelajaran, getBiaya, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getUsername, getHari;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
     private Integer day, year, month, selectedDay;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +59,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         spinner.setOnItemSelectedListener(this);
 
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
-        biaya = (EditText) findViewById(R.id.etbiaya);
         alamat = (EditText) findViewById(R.id.etalamat);
+        usia = (EditText) findViewById(R.id.etusia);
+        biaya = (EditText) findViewById(R.id.etbiaya);
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
         day = tanggal.getDayOfMonth();
@@ -63,7 +79,15 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             }
         });
 
+        jeniskelamin = (RadioGroup) findViewById(R.id.rgkelamin);
+
         waktu = (TimePicker) findViewById(R.id.tpwaktu);
+
+        ArrayAdapter<CharSequence> kelasAdapter = ArrayAdapter.createFromResource(this, R.array.kelas, android.R.layout.simple_spinner_item);
+        kelasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(kelasAdapter);
+
+        progressDialog =  new ProgressDialog(this);
 
         Button back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
@@ -76,13 +100,24 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cariTutor();
+                getKelas = pilihKelas;
+                getPelajaran = pelajaran.getText().toString();
+                getAlamat = alamat.getText().toString();
+                toGetDay = selectedDay.toString();
+                getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+                getUsia = usia.getText().toString();
+                getBiaya = biaya.getText().toString();
+                if (getKelas.matches("") || getPelajaran.matches("") || getAlamat.matches("")
+                        || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches("")
+                        || getBiaya.matches(""))
+                {
+                    Toast.makeText(CariTutorActivity.this, "Semua data harus di isi lengkap!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    cariTutor();
+                }
             }
         });
-
-        ArrayAdapter<CharSequence> kelasAdapter = ArrayAdapter.createFromResource(this, R.array.kelas, android.R.layout.simple_spinner_item);
-        kelasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(kelasAdapter);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,61 +145,92 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
     private void cariTutor()
     {
-        String cekkelas, cekpelajaran, cekbiaya, cektanggal, cekwaktu, cekalamat, hari;
-        cekkelas = pilihKelas;
-        cekpelajaran = pelajaran.getText().toString();
-        cekbiaya = biaya.getText().toString();
-        cektanggal = selectedDay.toString();
-        cekwaktu = waktu.getCurrentHour()+" : "+waktu.getCurrentMinute();
-        cekalamat = alamat.getText().toString();
-        if(cekkelas.matches("") || cekpelajaran.matches("") || cekbiaya.matches("") || cekwaktu.matches("") || cekalamat.matches("") || cektanggal.matches("") )
+        RadioButton pengguna = (RadioButton) jeniskelamin.findViewById(jeniskelamin.getCheckedRadioButtonId());
+        getUsername = db.getUser();
+        final String getTanggal;
+        getKelas = pilihKelas;
+        getPelajaran = pelajaran.getText().toString();
+        getAlamat = alamat.getText().toString();
+        getTanggal = day+"/"+month+"/"+year;
+        toGetDay = selectedDay.toString();
+        getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+        getJeniskelamin = pengguna.getText().toString();
+        getUsia = usia.getText().toString();
+        getBiaya = biaya.getText().toString();
+
+        if (toGetDay.equals("1"))
         {
-            Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
+            getHari = "Minggu";
         }
-        else
+        else if(toGetDay.equals("2"))
         {
-            if (cektanggal.equals("1"))
-            {
-                hari = "Minggu";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("2"))
-            {
-                hari = "Senin";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("3"))
-            {
-                hari = "Selasa";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("4"))
-            {
-                hari = "Rabu";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("5"))
-            {
-                hari = "Kamis";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("6"))
-            {
-                hari = "Jumat";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
-            if (cektanggal.equals("7"))
-            {
-                hari = "Sabtu";
-                Toast.makeText(getApplicationContext(),"Kelas = "+cekkelas+"\n Pelajaran = "+cekpelajaran+"\n Biaya = "+cekbiaya+
-                        "\n Tanggal = "+cektanggal+"\n Hari = "+hari+"\n Waktu = "+cekwaktu+"\n Alamat = "+cekalamat,Toast.LENGTH_LONG).show();
-            }
+            getHari = "Senin";
         }
+        else if(toGetDay.equals("3"))
+        {
+            getHari = "Selasa";
+        }
+        else if(toGetDay.equals("4"))
+        {
+            getHari = "Rabu";
+        }
+        else if(toGetDay.equals("5"))
+        {
+            getHari = "Kamis";
+        }
+        else if(toGetDay.equals("6"))
+        {
+            getHari = "Jumat";
+        }
+        else if(toGetDay.equals("7"))
+        {
+            getHari = "Sabtu";
+        }
+
+        progressDialog.setMessage("Pencarian Tutor...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.PENCARIANTUTOR_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.hide();
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                        Log.d("cek",error.getMessage());
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username",getUsername);
+                params.put("kelas",getKelas);
+                params.put("pelajaran",getPelajaran);
+                params.put("alamat",getAlamat);
+                params.put("tanggal", getTanggal);
+                params.put("hari",getHari);
+                params.put("jam",getWaktu);
+                params.put("jeniskelamin",getJeniskelamin);
+                params.put("usia",getUsia);
+                params.put("biaya",getBiaya);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 }
