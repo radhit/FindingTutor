@@ -79,7 +79,6 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setMessage("Please Wait ...");
         progressDialog.show();
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.LOGIN_URL,
             new Response.Listener<String>() {
                 @Override
@@ -110,12 +109,15 @@ public class SignInActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     progressDialog.hide();
                     Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                    Log.d("error: ", error.toString());
                 }
             })
         {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=utf-8");
                 params.put("username",susername);
                 params.put("password",spassword);
                 return params;

@@ -61,7 +61,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
         alamat = (EditText) findViewById(R.id.etalamat);
         usia = (EditText) findViewById(R.id.etusia);
-        biaya = (EditText) findViewById(R.id.etbiaya);
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
         day = tanggal.getDayOfMonth();
@@ -106,10 +105,8 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
                 getUsia = usia.getText().toString();
-                getBiaya = biaya.getText().toString();
                 if (getKelas.matches("") || getPelajaran.matches("") || getAlamat.matches("")
-                        || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches("")
-                        || getBiaya.matches(""))
+                        || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches(""))
                 {
                     Toast.makeText(CariTutorActivity.this, "Semua data harus di isi lengkap!", Toast.LENGTH_SHORT).show();
                 }
@@ -156,7 +153,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
         getJeniskelamin = pengguna.getText().toString();
         getUsia = usia.getText().toString();
-        getBiaya = biaya.getText().toString();
 
         if (toGetDay.equals("1"))
         {
@@ -196,6 +192,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         try {
+                            Log.d("respon :", response.toString());
                             JSONObject jsonObject = new JSONObject(response);
                             Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
                             finish();
@@ -225,7 +222,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 params.put("jam",getWaktu);
                 params.put("jeniskelamin",getJeniskelamin);
                 params.put("usia",getUsia);
-                params.put("biaya",getBiaya);
                 return params;
             }
         };

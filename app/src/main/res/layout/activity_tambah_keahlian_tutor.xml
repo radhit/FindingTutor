@@ -44,16 +44,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Biaya (per Jam)"
-                    android:textSize="20sp"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/etbiaya"
-                    android:inputType="numberDecimal"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="Keterbatasan Hari"
                     android:textSize="20sp"/>
                 <Spinner

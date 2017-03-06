@@ -37,7 +37,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private Database db;
     private Spinner kelas,hari;
     private String pilihKelas, pilihHari;
-    private EditText pelajaran, biaya;
+    private EditText pelajaran;
     private TimePicker waktu;
     private ProgressDialog progressDialog;
 
@@ -47,7 +47,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tambah_keahlian_tutor);
         db = new Database(this);
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
-        biaya = (EditText) findViewById(R.id.etbiaya);
         waktu = (TimePicker) findViewById(R.id.tpwaktu);
         progressDialog =  new ProgressDialog(this);
 
@@ -66,9 +65,8 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 cekkelas = pilihKelas;
                 cekketersediaan = pilihHari;
                 cekpelajaran = pelajaran.getText().toString();
-                cekbiaya = biaya.getText().toString();
                 cekwaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
-                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches("") || cekbiaya.matches("") || cekwaktu.matches(""))
+                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches("") || cekwaktu.matches(""))
                 {
                     Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
                 }
@@ -127,14 +125,14 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void tambahKeahlian()
     {
-        final String stringUsername, stringKelas, stringPelajaran, stringBiaya, stringWaktu, stringHari;
+        final String stringUsername, stringKelas, stringPelajaran, stringWaktu, stringHari;
         stringUsername = db.getUser();
         stringKelas = pilihKelas;
         stringHari = pilihHari;
         stringPelajaran = pelajaran.getText().toString();
-        stringBiaya = biaya.getText().toString();
         stringWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
         progressDialog.setMessage("Tambah Keahlian...");
         progressDialog.show();
@@ -150,7 +148,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -158,7 +155,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.hide();
                         Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                        Log.d("cek",error.getMessage());
                     }
                 }){
             @Override
@@ -169,7 +165,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 params.put("pelajaran",stringPelajaran);
                 params.put("keterbatasanhari",stringHari);
                 params.put("jam",stringWaktu);
-                params.put("biaya",stringBiaya);
                 return params;
             }
         };
