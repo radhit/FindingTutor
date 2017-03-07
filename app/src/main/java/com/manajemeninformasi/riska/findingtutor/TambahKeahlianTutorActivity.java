@@ -61,7 +61,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cekkelas, cekpelajaran, cekbiaya, cekketersediaan, cekwaktu;
+                String cekkelas, cekpelajaran, cekketersediaan, cekwaktu;
                 cekkelas = pilihKelas;
                 cekketersediaan = pilihHari;
                 cekpelajaran = pelajaran.getText().toString();
@@ -133,7 +133,9 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         stringKelas = pilihKelas;
         stringHari = pilihHari;
         stringPelajaran = pelajaran.getText().toString();
-        stringWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+        stringWaktu = waktu.getCurrentHour().toString()+":"+waktu.getCurrentMinute().toString();
+        Log.d("jamnya atas",stringWaktu);
+        Log.d("menit",waktu.getCurrentMinute().toString());
         progressDialog.setMessage("Tambah Keahlian...");
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TAMBAHKEAHLIAN_URL,
@@ -165,6 +167,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 params.put("pelajaran",stringPelajaran);
                 params.put("keterbatasanhari",stringHari);
                 params.put("jam",stringWaktu);
+                Log.d("jamnya",stringWaktu);
                 return params;
             }
         };

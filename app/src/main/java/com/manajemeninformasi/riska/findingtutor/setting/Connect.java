@@ -5,9 +5,10 @@ package com.manajemeninformasi.riska.findingtutor.setting;
  */
 
 public class Connect {
-    public static final String ROOT_URL = "http://192.168.1.100/findingtutor/main/";
-    public static final String REGISTER_URL = ROOT_URL+"register_user.php";
-    public static final String LOGIN_URL = ROOT_URL+"login_user.php";
-    public static final String TAMBAHKEAHLIAN_URL = ROOT_URL+"tambah_keahlian.php";
-    public static final String PENCARIANTUTOR_URL = ROOT_URL+"pencarian_tutor.php";
+    public static final String ROOT_URL = "http://192.168.1.101/findingtutor/";
+    public static final String REGISTER_URL = ROOT_URL+"register_controller";
+    public static final String LOGIN_URL = ROOT_URL+"login_controller";
+    public static final String TAMBAHKEAHLIAN_URL = ROOT_URL+"tambahkeahlian_controller";
+    public static final String PENCARIANTUTOR_URL = ROOT_URL+"pencariantutor_controller";
+    public static final String GETDATAKEAHLIAN_URL = ROOT_URL+"getkeahlian_controller";
 }

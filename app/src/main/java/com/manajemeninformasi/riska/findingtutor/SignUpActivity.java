@@ -53,10 +53,10 @@ public class SignUpActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btnlogin);
 
         jenis = (RadioGroup) findViewById(R.id.rgjenis);
-        pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
+
 
         kelamin = (RadioGroup) findViewById(R.id.rgkelamin);
-        jeniskelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
+
 
         progressDialog = new ProgressDialog(this);
 
@@ -67,16 +67,19 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
+                jeniskelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
                 getNama = nama.getText().toString();
                 getAlamat = alamat.getText().toString();
+                getJenisuser = pengguna.getText().toString();
                 getJeniskelamin = jeniskelamin.getText().toString();
                 getUsia = usia.getText().toString();
                 getTelp = telp.getText().toString();
                 getEmail = email.getText().toString();
-                getJenisuser = pengguna.getText().toString();
                 getUsername = username.getText().toString();
                 getPass = pass.getText().toString();
                 if(getNama.matches("") || getAlamat.matches("") || getJeniskelamin.matches("") || getUsia.matches("") ||
