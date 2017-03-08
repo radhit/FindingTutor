@@ -40,10 +40,10 @@ import java.util.Map;
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinner;
-    private EditText pelajaran, alamat, usia, biaya;
+    private EditText pelajaran, alamat, usia;
     private RadioGroup jeniskelamin;
     private String pilihKelas;
-    private String getKelas, getPelajaran, getBiaya, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getUsername, getHari;
+    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
@@ -143,7 +143,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private void cariTutor()
     {
         RadioButton pengguna = (RadioButton) jeniskelamin.findViewById(jeniskelamin.getCheckedRadioButtonId());
-        getUsername = db.getUser();
+        final String getUsername, getNameuser;
+        getUsername = db.getUsername();
+        getNameuser = db.getNameuser();
         final String getTanggal;
         getKelas = pilihKelas;
         getPelajaran = pelajaran.getText().toString();
@@ -214,6 +216,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username",getUsername);
+                params.put("name",getNameuser);
                 params.put("kelas",getKelas);
                 params.put("pelajaran",getPelajaran);
                 params.put("alamat",getAlamat);

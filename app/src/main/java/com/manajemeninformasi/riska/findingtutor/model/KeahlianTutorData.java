@@ -10,16 +10,14 @@ public class KeahlianTutorData {
     private String kelas_keahlian;
     private String pelajaran_keahlian;
     private String keterbatasanHari_keahlian;
-    private String jam_keahlian;
 
-    public KeahlianTutorData(Integer id, String username, String kelas, String pelajaran, String keterbatasanHari, String jam)
+    public KeahlianTutorData(Integer id, String username, String kelas, String pelajaran, String keterbatasanHari)
     {
         this.id_keahlian = id;
         this.username_keahlian = username;
         this.kelas_keahlian = kelas;
         this.pelajaran_keahlian = pelajaran;
         this.keterbatasanHari_keahlian = keterbatasanHari;
-        this.jam_keahlian = jam;
     }
 
     public Integer getId_keahlian() {
@@ -60,13 +58,5 @@ public class KeahlianTutorData {
 
     public void setKeterbatasanHari_keahlian(String keterbatasanHari_keahlian) {
         this.keterbatasanHari_keahlian = keterbatasanHari_keahlian;
-    }
-
-    public String getJam_keahlian() {
-        return jam_keahlian;
-    }
-
-    public void setJam_keahlian(String jam_keahlian) {
-        this.jam_keahlian = jam_keahlian;
     }
 }

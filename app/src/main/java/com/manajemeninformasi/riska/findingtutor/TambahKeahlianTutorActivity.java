@@ -38,7 +38,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private Spinner kelas,hari;
     private String pilihKelas, pilihHari;
     private EditText pelajaran;
-    private TimePicker waktu;
     private ProgressDialog progressDialog;
 
     @Override
@@ -47,7 +46,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tambah_keahlian_tutor);
         db = new Database(this);
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
-        waktu = (TimePicker) findViewById(R.id.tpwaktu);
         progressDialog =  new ProgressDialog(this);
 
         Button back = (Button) findViewById(R.id.btnback);
@@ -65,8 +63,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 cekkelas = pilihKelas;
                 cekketersediaan = pilihHari;
                 cekpelajaran = pelajaran.getText().toString();
-                cekwaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
-                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches("") || cekwaktu.matches(""))
+                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches(""))
                 {
                     Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
                 }
@@ -129,13 +126,10 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private void tambahKeahlian()
     {
         final String stringUsername, stringKelas, stringPelajaran, stringWaktu, stringHari;
-        stringUsername = db.getUser();
+        stringUsername = db.getUsername();
         stringKelas = pilihKelas;
         stringHari = pilihHari;
         stringPelajaran = pelajaran.getText().toString();
-        stringWaktu = waktu.getCurrentHour().toString()+":"+waktu.getCurrentMinute().toString();
-        Log.d("jamnya atas",stringWaktu);
-        Log.d("menit",waktu.getCurrentMinute().toString());
         progressDialog.setMessage("Tambah Keahlian...");
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TAMBAHKEAHLIAN_URL,
@@ -166,8 +160,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 params.put("kelas",stringKelas);
                 params.put("pelajaran",stringPelajaran);
                 params.put("keterbatasanhari",stringHari);
-                params.put("jam",stringWaktu);
-                Log.d("jamnya",stringWaktu);
                 return params;
             }
         };

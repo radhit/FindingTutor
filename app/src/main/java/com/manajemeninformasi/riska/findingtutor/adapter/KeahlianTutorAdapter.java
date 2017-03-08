@@ -31,7 +31,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
         TextView pelajaran;
         TextView kelas;
         TextView hari;
-        TextView waktu;
 
     }
     public View getView(final int position, View ConvertView, ViewGroup parent)
@@ -46,7 +45,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
             viewKeahlian.pelajaran = (TextView) ConvertView.findViewById(R.id.tvpelajaran);
             viewKeahlian.kelas = (TextView) ConvertView.findViewById(R.id.tvkelas);
             viewKeahlian.hari = (TextView) ConvertView.findViewById(R.id.tvhari);
-            viewKeahlian.waktu = (TextView) ConvertView.findViewById(R.id.tvwaktu);
             ConvertView.setTag(viewKeahlian);
 
             Button delete = (Button) ConvertView.findViewById(R.id.btndelete);
@@ -65,7 +63,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
         viewKeahlian.pelajaran.setText(dataKeahlian.getPelajaran_keahlian());
         viewKeahlian.kelas.setText(dataKeahlian.getKelas_keahlian());
         viewKeahlian.hari.setText(dataKeahlian.getKeterbatasanHari_keahlian());
-        viewKeahlian.waktu.setText(dataKeahlian.getJam_keahlian());
 
         return ConvertView;
 

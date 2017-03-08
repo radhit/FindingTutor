@@ -52,22 +52,12 @@
                     android:entries="@array/hari"
                     android:prompt="@string/pilih_hari"
                     android:id="@+id/sphari"></Spinner>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Waktu"
-                    android:textSize="20sp"/>
-                <TimePicker
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/tpwaktu"></TimePicker>
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="36dp"
                 android:orientation="horizontal"
                 android:layout_below="@+id/top">
                 <Button

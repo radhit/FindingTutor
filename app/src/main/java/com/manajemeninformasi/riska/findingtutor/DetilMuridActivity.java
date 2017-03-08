@@ -2,6 +2,7 @@ package com.manajemeninformasi.riska.findingtutor;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,26 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+
+        nama = (TextView) findViewById(R.id.tvnama);
+        kelas = (TextView) findViewById(R.id.tvkelas);
+        pelajaran = (TextView) findViewById(R.id.tvpelajaran);
+        alamat = (TextView) findViewById(R.id.tvalamat);
+        tanggal = (TextView) findViewById(R.id.tvtanggal);
+        hari = (TextView) findViewById(R.id.tvhari);
+        jam = (TextView) findViewById(R.id.tvjam);
+        biaya = (TextView) findViewById(R.id.tvbiaya);
+
+        nama.setText(bundle.getString("nama"));
+        kelas.setText(bundle.getString("kelas"));
+        pelajaran.setText(bundle.getString("pelajaran"));
+        alamat.setText(bundle.getString("alamat"));
+        tanggal.setText(bundle.getString("tanggal"));
+        hari.setText(bundle.getString("hari"));
+        jam.setText(bundle.getString("jam"));
+        biaya.setText(bundle.getString("biaya"));
+
     }
 
 

@@ -40,7 +40,6 @@ public class KeahlianTutorActivity extends AppCompatActivity {
     private ListView listView;
     private List<KeahlianTutorData> keahlianTutorDataList;
     private KeahlianTutorAdapter mAdapter;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,12 @@ public class KeahlianTutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keahlian_tutor);
         db = new Database(this);
 
-        context = this;
-        username = db.getUser();
+        username = db.getUsername();
         listView = (ListView) findViewById(R.id.lvkeahlian);
         keahlianTutorDataList = new ArrayList<>();
         getKeahlianByUsername(username);
-        mAdapter = new KeahlianTutorAdapter(context, 0, keahlianTutorDataList);
+        mAdapter = new KeahlianTutorAdapter(this, 0, keahlianTutorDataList);
+        listView.setAdapter(mAdapter);
 
         back = (Button) findViewById(R.id.btnback);
         add = (Button) findViewById(R.id.btnadd);
@@ -71,8 +70,6 @@ public class KeahlianTutorActivity extends AppCompatActivity {
             }
         });
 
-        listView.setAdapter(mAdapter);
-        Log.d("coba", keahlianTutorDataList.toString());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,8 +109,7 @@ public class KeahlianTutorActivity extends AppCompatActivity {
                                             objectKeahlian.getString("username"),
                                             objectKeahlian.getString("kelas"),
                                             objectKeahlian.getString("pelajaran"),
-                                            objectKeahlian.getString("keterbatasanhari"),
-                                            objectKeahlian.getString("jam"));
+                                            objectKeahlian.getString("keterbatasanhari"));
                             Log.d("coba2",objectKeahlian.getString("username"));
 
                             keahlianTutorDataList.add(dataKeahlian);
