@@ -46,7 +46,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyCwH6FT975GOvqRVaf_-rmp429uGgFXhR0" />
 
         <activity
             android:name=".DetilMuridActivity"

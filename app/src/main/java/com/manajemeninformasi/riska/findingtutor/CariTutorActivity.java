@@ -27,6 +27,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
@@ -40,13 +45,14 @@ import java.util.Map;
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinner;
-    private EditText pelajaran, alamat, usia;
+    private EditText pelajaran, usia;
     private RadioGroup jeniskelamin;
     private String pilihKelas;
     private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
+    private PlaceAutocompleteFragment acAlamat;
     private Integer day, year, month, selectedDay;
     private ProgressDialog progressDialog;
 
@@ -59,7 +65,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         spinner.setOnItemSelectedListener(this);
 
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
-        alamat = (EditText) findViewById(R.id.etalamat);
         usia = (EditText) findViewById(R.id.etusia);
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
@@ -86,6 +91,20 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         kelasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(kelasAdapter);
 
+        acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
+        acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                getAlamat = place.getName().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+                Toast.makeText(CariTutorActivity.this, "Alamat tidak ditemukan, error: "+status, Toast.LENGTH_SHORT).show();
+                Log.d("error: ",status.toString());
+            }
+        });
+
         progressDialog =  new ProgressDialog(this);
 
         Button back = (Button) findViewById(R.id.btnback);
@@ -101,7 +120,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
                 getKelas = pilihKelas;
                 getPelajaran = pelajaran.getText().toString();
-                getAlamat = alamat.getText().toString();
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
                 getUsia = usia.getText().toString();
@@ -143,16 +161,18 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private void cariTutor()
     {
         RadioButton pengguna = (RadioButton) jeniskelamin.findViewById(jeniskelamin.getCheckedRadioButtonId());
-        final String getUsername, getNameuser;
+        final String getUsername, getNameuser, jam, menit;
         getUsername = db.getUsername();
         getNameuser = db.getNameuser();
         final String getTanggal;
         getKelas = pilihKelas;
         getPelajaran = pelajaran.getText().toString();
-        getAlamat = alamat.getText().toString();
+        //getAlamat = alamat.getText().toString();
         getTanggal = day+"/"+month+"/"+year;
         toGetDay = selectedDay.toString();
-        getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
+        jam = String.format("%02d",waktu.getCurrentHour());
+        menit = String.format("%02d",waktu.getCurrentMinute());
+        getWaktu = jam+":"+menit;
         getJeniskelamin = pengguna.getText().toString();
         getUsia = usia.getText().toString();
 

@@ -19,6 +19,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 
 import org.json.JSONException;
@@ -28,11 +32,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText nama,alamat,usia,telp,email,username,pass;
+    private EditText nama,usia,telp,email,username,pass;
     private RadioGroup jenis, kelamin;
     private RadioButton pengguna, jeniskelamin;
     private Button submit, back, login;
     private ProgressDialog progressDialog;
+    private PlaceAutocompleteFragment acAlamat;
     private String getNama,getAlamat, getUsia, getTelp , getEmail ,getUsername , getPass, getJeniskelamin, getJenisuser;
 
     @Override
@@ -42,7 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         nama = (EditText) findViewById(R.id.etnama);
-        alamat = (EditText) findViewById(R.id.etalamat);
         usia = (EditText) findViewById(R.id.etusia);
         telp = (EditText) findViewById(R.id.etnotelp);
         email = (EditText) findViewById(R.id.etemail);
@@ -53,9 +57,20 @@ public class SignUpActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.btnlogin);
 
         jenis = (RadioGroup) findViewById(R.id.rgjenis);
-
-
         kelamin = (RadioGroup) findViewById(R.id.rgkelamin);
+
+        acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
+        acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                getAlamat = place.getName().toString();
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.d("error: ",status.toString());
+            }
+        });
 
 
         progressDialog = new ProgressDialog(this);
@@ -74,7 +89,6 @@ public class SignUpActivity extends AppCompatActivity {
                 pengguna = (RadioButton) jenis.findViewById(jenis.getCheckedRadioButtonId());
                 jeniskelamin = (RadioButton) kelamin.findViewById(kelamin.getCheckedRadioButtonId());
                 getNama = nama.getText().toString();
-                getAlamat = alamat.getText().toString();
                 getJenisuser = pengguna.getText().toString();
                 getJeniskelamin = jeniskelamin.getText().toString();
                 getUsia = usia.getText().toString();
@@ -108,7 +122,6 @@ public class SignUpActivity extends AppCompatActivity {
     private void registerUser()
     {
         getNama = nama.getText().toString();
-        getAlamat = alamat.getText().toString();
         getJeniskelamin = jeniskelamin.getText().toString();
         getUsia = usia.getText().toString();
         getTelp = telp.getText().toString();

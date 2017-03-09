@@ -45,10 +45,11 @@
                     android:layout_height="wrap_content"
                     android:text="Alamat"
                     android:textSize="20sp"/>
-                <EditText
+                <fragment
+                    android:id="@+id/acalamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etalamat"/>
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
 
                 <TextView
                     android:layout_width="match_parent"
