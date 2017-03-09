@@ -26,13 +26,13 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".HomeTutorActivity"></activity>
+        <activity android:name=".HomeTutorActivity" />
         <activity android:name=".EditProfileTutorActivity" />
         <activity android:name=".CariMuridActivity" />
         <activity android:name=".KeahlianTutorActivity" />
         <activity android:name=".ProfileTutorActivity" />
         <activity android:name=".TambahKeahlianTutorActivity" />
-        <activity android:name=".HomeMuridActivity"></activity>
+        <activity android:name=".HomeMuridActivity" />
         <activity android:name=".CariTutorActivity" />
         <activity android:name=".ProfileMuridActivity" />
         <activity android:name=".EditProfileMuridActivity" />
@@ -50,8 +50,8 @@
 
         <activity
             android:name=".DetilMuridActivity"
-            android:label="@string/title_activity_detil_murid">
-        </activity>
+            android:label="@string/title_activity_detil_murid"></activity>
+        <activity android:name=".KetersediaanHariTutorActivity"></activity>
     </application>
 
 </manifest>

@@ -18,33 +18,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nama"
-            android:textSize="20sp"
+            android:textSize="24sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/tvnama"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alamat"
-            android:textSize="20sp"
+            android:textSize="24sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/tvalamat"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No Telepon"
-            android:textSize="20sp"
+            android:textSize="24sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/tvnotelp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:textSize="20sp"
+            android:textSize="24sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/tvemail"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ketersediaan Hari"
+            android:textSize="24sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="16dp"
+            android:id="@+id/tvhari"/>
 
     </LinearLayout>
     <LinearLayout

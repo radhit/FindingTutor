@@ -3,22 +3,53 @@ package com.manajemeninformasi.riska.findingtutor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.manajemeninformasi.riska.findingtutor.model.KeahlianTutorData;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileTutorActivity extends AppCompatActivity {
     Button back, edit;
     private Database db;
+    private String username;
+    private String nama,alamat,notelp,email,hari;
+    private TextView tvnama, tvalamat, tvtelp, tvemail, tvhari;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_tutor);
         db = new Database(this);
+        username = db.getUsername();
+        getProfileTutor(username);
+
+        tvnama = (TextView) findViewById(R.id.tvnama);
+        tvalamat = (TextView) findViewById(R.id.tvalamat);
+        tvtelp = (TextView) findViewById(R.id.tvnotelp);
+        tvemail = (TextView) findViewById(R.id.tvemail);
+        tvhari = (TextView) findViewById(R.id.tvhari);
+
         back = (Button) findViewById(R.id.btnback);
         edit = (Button) findViewById(R.id.btnedit);
         back.setOnClickListener(new View.OnClickListener() {
@@ -51,5 +82,53 @@ public class ProfileTutorActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
         finish();
         return super.onOptionsItemSelected(item);
+    }
+    public void getProfileTutor(final String username)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Connect.PROFILE_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("coba", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray arrayKeahlian = jsonObject.getJSONArray("result");
+                    JSONObject objectProfile = arrayKeahlian.getJSONObject(0);
+                    nama = objectProfile.getString("nama");
+                    alamat = objectProfile.getString("alamat");
+                    notelp= objectProfile.getString("telp");
+                    email= objectProfile.getString("email");
+                    hari= objectProfile.getString("hari");
+                    setView(nama,alamat,notelp,email,hari);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username",username);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void setView(String nama, String alamat, String notelp, String email, String hari)
+    {
+        tvnama.setText(nama);
+        tvalamat.setText(alamat);
+        tvtelp.setText(notelp);
+        tvemail.setText(email);
+        tvhari.setText(hari);
     }
 }

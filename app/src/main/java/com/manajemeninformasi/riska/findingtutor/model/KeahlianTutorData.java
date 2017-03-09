@@ -9,15 +9,13 @@ public class KeahlianTutorData {
     private String username_keahlian;
     private String kelas_keahlian;
     private String pelajaran_keahlian;
-    private String keterbatasanHari_keahlian;
 
-    public KeahlianTutorData(Integer id, String username, String kelas, String pelajaran, String keterbatasanHari)
+    public KeahlianTutorData(Integer id, String username, String kelas, String pelajaran)
     {
         this.id_keahlian = id;
         this.username_keahlian = username;
         this.kelas_keahlian = kelas;
         this.pelajaran_keahlian = pelajaran;
-        this.keterbatasanHari_keahlian = keterbatasanHari;
     }
 
     public Integer getId_keahlian() {
@@ -52,11 +50,4 @@ public class KeahlianTutorData {
         this.pelajaran_keahlian = pelajaran_keahlian;
     }
 
-    public String getKeterbatasanHari_keahlian() {
-        return keterbatasanHari_keahlian;
-    }
-
-    public void setKeterbatasanHari_keahlian(String keterbatasanHari_keahlian) {
-        this.keterbatasanHari_keahlian = keterbatasanHari_keahlian;
-    }
 }

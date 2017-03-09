@@ -12,5 +12,7 @@ public class Connect {
     public static final String PENCARIANTUTOR_URL = ROOT_URL+"pencariantutor_controller";
     public static final String GETDATAKEAHLIAN_URL = ROOT_URL+"getkeahlian_controller";
     public static final String GETMURID_URL = ROOT_URL+"getmurid_controller";
+    public static final String TAMBAHKETERSEDIAANHARI_URL = ROOT_URL+"ketersediaanhari_controller";
+    public static final String PROFILE_URL = ROOT_URL+"profile_controller";
 
 }

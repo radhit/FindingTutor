@@ -9,10 +9,36 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     tools:context="com.manajemeninformasi.riska.findingtutor.KeahlianTutorActivity">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/swipe">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Pelajaran"
+                android:textSize="24sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:text="Kelas"
+                android:textSize="24sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:text="Action"
+                android:textSize="24sp"/>
+        </LinearLayout>
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -48,5 +74,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

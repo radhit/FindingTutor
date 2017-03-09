@@ -30,7 +30,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
     {
         TextView pelajaran;
         TextView kelas;
-        TextView hari;
 
     }
     public View getView(final int position, View ConvertView, ViewGroup parent)
@@ -44,7 +43,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
             ConvertView = LayoutInflater.from(getContext()).inflate(R.layout.design_keahlian_tutor,parent,false);
             viewKeahlian.pelajaran = (TextView) ConvertView.findViewById(R.id.tvpelajaran);
             viewKeahlian.kelas = (TextView) ConvertView.findViewById(R.id.tvkelas);
-            viewKeahlian.hari = (TextView) ConvertView.findViewById(R.id.tvhari);
             ConvertView.setTag(viewKeahlian);
 
             Button delete = (Button) ConvertView.findViewById(R.id.btndelete);
@@ -62,7 +60,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
         }
         viewKeahlian.pelajaran.setText(dataKeahlian.getPelajaran_keahlian());
         viewKeahlian.kelas.setText(dataKeahlian.getKelas_keahlian());
-        viewKeahlian.hari.setText(dataKeahlian.getKeterbatasanHari_keahlian());
 
         return ConvertView;
 

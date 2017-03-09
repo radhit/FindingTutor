@@ -2,6 +2,7 @@ package com.manajemeninformasi.riska.findingtutor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,19 +34,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class KeahlianTutorActivity extends AppCompatActivity {
+public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     Button back, add;
     private Database db;
     private String username;
     private ListView listView;
     private List<KeahlianTutorData> keahlianTutorDataList;
     private KeahlianTutorAdapter mAdapter;
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_keahlian_tutor);
         db = new Database(this);
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
 
         username = db.getUsername();
         listView = (ListView) findViewById(R.id.lvkeahlian);
@@ -69,6 +73,7 @@ public class KeahlianTutorActivity extends AppCompatActivity {
                 toIntent(TambahKeahlianTutorActivity.class);
             }
         });
+        swipe.setOnRefreshListener(this);
 
     }
     @Override
@@ -108,14 +113,14 @@ public class KeahlianTutorActivity extends AppCompatActivity {
                                     new KeahlianTutorData(objectKeahlian.getInt("id"),
                                             objectKeahlian.getString("username"),
                                             objectKeahlian.getString("kelas"),
-                                            objectKeahlian.getString("pelajaran"),
-                                            objectKeahlian.getString("keterbatasanhari"));
+                                            objectKeahlian.getString("pelajaran"));
                             Log.d("coba2",objectKeahlian.getString("username"));
 
                             keahlianTutorDataList.add(dataKeahlian);
                         }
                     }
                     mAdapter.notifyDataSetChanged();
+                    swipe.setRefreshing(false);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -137,5 +142,16 @@ public class KeahlianTutorActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onRefresh() {
+        getKeahlianByUsername(username);
+    }
+
+    @Override
+    protected void onPostResume() {
+        getKeahlianByUsername(username);
+        super.onPostResume();
     }
 }

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         db = new Database(this);
         if (db.cekLogin().equals("Pentutor"))
         {
-            toIntent(HomeTutorActivity.class);
+            toIntent(KetersediaanHariTutorActivity.class);
             Log.d("cek", "Tutor");
             finish();
         }
