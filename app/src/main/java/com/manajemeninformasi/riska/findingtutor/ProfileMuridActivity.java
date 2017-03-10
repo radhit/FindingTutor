@@ -59,14 +59,16 @@ public class ProfileMuridActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toIntent(EditProfileTutorActivity.class);
+                Intent myIntent =  new Intent(getBaseContext(),EditProfileMuridActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nama", nama);
+                bundle.putString("alamat", alamat);
+                bundle.putString("telp", notelp);
+                bundle.putString("email", email);
+                myIntent.putExtra("bundle",bundle);
+                startActivityForResult(myIntent,0);
             }
         });
-    }
-    public void toIntent(Class x)
-    {
-        Intent myintent = new Intent(getBaseContext(),x);
-        startActivityForResult(myintent,0);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -126,6 +128,11 @@ public class ProfileMuridActivity extends AppCompatActivity {
         tvalamat.setText(alamat);
         tvtelp.setText(notelp);
         tvemail.setText(email);
+    }
+    @Override
+    protected void onPostResume() {
+        getProfileMurid(username);
+        super.onPostResume();
     }
 }
 

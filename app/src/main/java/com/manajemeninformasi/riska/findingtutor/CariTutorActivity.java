@@ -155,7 +155,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        pilihKelas = "";
+        //pilihKelas = "";
     }
 
     private void cariTutor()

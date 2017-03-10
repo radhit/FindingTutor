@@ -36,7 +36,7 @@ import java.util.Map;
 public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private Database db;
     private Spinner kelas,hari;
-    private String pilihKelas, pilihHari;
+    private String pilihKelas;
     private EditText pelajaran;
     private ProgressDialog progressDialog;
 
@@ -59,11 +59,10 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cekkelas, cekpelajaran, cekketersediaan, cekwaktu;
+                String cekkelas, cekpelajaran, cekketersediaan;
                 cekkelas = pilihKelas;
-                cekketersediaan = pilihHari;
                 cekpelajaran = pelajaran.getText().toString();
-                if(cekkelas.matches("") || cekketersediaan.matches("") || cekpelajaran.matches(""))
+                if(cekkelas.matches("") || cekpelajaran.matches(""))
                 {
                     Toast.makeText(getApplicationContext(),"Semua data harus di isi!",Toast.LENGTH_SHORT).show();
                 }
@@ -91,21 +90,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
             }
         });
 
-        hari = (Spinner) findViewById(R.id.sphari);
-        ArrayAdapter<CharSequence> hariAdapter = ArrayAdapter.createFromResource(this, R.array.hari, android.R.layout.simple_spinner_item);
-        hariAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        hari.setAdapter(hariAdapter);
-        hari.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                pilihHari = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                pilihHari = "";
-            }
-        });
     }
 
     @Override
@@ -125,10 +109,9 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
 
     private void tambahKeahlian()
     {
-        final String stringUsername, stringKelas, stringPelajaran, stringWaktu, stringHari;
+        final String stringUsername, stringKelas, stringPelajaran;
         stringUsername = db.getUsername();
         stringKelas = pilihKelas;
-        stringHari = pilihHari;
         stringPelajaran = pelajaran.getText().toString();
         progressDialog.setMessage("Tambah Keahlian...");
         progressDialog.show();
@@ -160,7 +143,6 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
                 params.put("username",stringUsername);
                 params.put("kelas",stringKelas);
                 params.put("pelajaran",stringPelajaran);
-                params.put("keterbatasanhari",stringHari);
                 return params;
             }
         };

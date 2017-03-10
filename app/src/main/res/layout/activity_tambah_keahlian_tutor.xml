@@ -41,17 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/etpelajaran"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Keterbatasan Hari"
-                    android:textSize="20sp"/>
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:entries="@array/hari"
-                    android:prompt="@string/pilih_hari"
-                    android:id="@+id/sphari"></Spinner>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

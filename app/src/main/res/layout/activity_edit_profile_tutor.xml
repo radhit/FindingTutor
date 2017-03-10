@@ -34,11 +34,12 @@
                         android:layout_height="wrap_content"
                         android:text="Alamat"
                         android:textSize="20sp"/>
-                    <EditText
+                    <fragment
+                        android:id="@+id/acalamat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/etalamat"/>
-                    <TextView
+                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
+                        <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="No Telepon"
@@ -46,6 +47,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:id="@+id/etnotelp"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -55,13 +57,106 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
                         android:id="@+id/etemail"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ketersediaan Hari"
+                    android:textSize="20sp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:orientation="vertical"
+                    android:layout_gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Senin"
+                            android:textSize="18sp"
+                            android:id="@+id/cbsenin"/>
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Selasa"
+                            android:textSize="18sp"
+                            android:id="@+id/cbselasa"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Rabu"
+                            android:textSize="18sp"
+                            android:id="@+id/cbrabu"/>
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Kamis"
+                            android:textSize="18sp"
+                            android:id="@+id/cbkamis"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Jumat"
+                            android:textSize="18sp"
+                            android:id="@+id/cbjumat"/>
+
+                        <CheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Sabtu"
+                            android:textSize="18sp"
+                            android:id="@+id/cbsabtu"/>
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="-24dp"
+                        android:text="Minggu"
+                        android:textSize="18sp"
+                        android:id="@+id/cbminggu"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="18dp">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

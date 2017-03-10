@@ -88,13 +88,15 @@ public class SignInActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString("jenis").equals("Pentutor"))
                         {
-                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("jenis"));
+                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("alamat")
+                                    ,jsonObject.getString("jenis"));
                             toIntent(HomeTutorActivity.class);
                             Log.d("ini tutor",jsonObject.getString("name"));
                         }
                         else
                         {
-                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("jenis"));
+                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("alamat")
+                                    ,jsonObject.getString("jenis"));
                             toIntent(HomeMuridActivity.class);
                             Log.d("ini murid",jsonObject.getString("name"));
                         }

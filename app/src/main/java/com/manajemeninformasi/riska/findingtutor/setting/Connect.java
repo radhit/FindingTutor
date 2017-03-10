@@ -14,5 +14,6 @@ public class Connect {
     public static final String GETMURID_URL = ROOT_URL+"getmurid_controller";
     public static final String TAMBAHKETERSEDIAANHARI_URL = ROOT_URL+"ketersediaanhari_controller";
     public static final String PROFILE_URL = ROOT_URL+"profile_controller";
+    public static final String EDITPROFILE_URL = ROOT_URL+"editprofile_controller";
 
 }

@@ -61,7 +61,14 @@ public class ProfileTutorActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toIntent(EditProfileTutorActivity.class);
+                Intent myIntent =  new Intent(getBaseContext(),EditProfileTutorActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nama", nama);
+                bundle.putString("alamat", alamat);
+                bundle.putString("telp", notelp);
+                bundle.putString("email", email);
+                myIntent.putExtra("bundle",bundle);
+                startActivityForResult(myIntent,0);
             }
         });
     }
@@ -130,5 +137,10 @@ public class ProfileTutorActivity extends AppCompatActivity {
         tvtelp.setText(notelp);
         tvemail.setText(email);
         tvhari.setText(hari);
+    }
+    @Override
+    protected void onPostResume() {
+        getProfileTutor(username);
+        super.onPostResume();
     }
 }

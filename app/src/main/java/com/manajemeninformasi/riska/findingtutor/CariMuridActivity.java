@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +38,16 @@ public class CariMuridActivity extends AppCompatActivity {
     private ListView listView;
     private List<CariMuridData> cariMuridDataList;
     private CariMuridAdapter mAdapter;
+    private Bundle bundle;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cari_murid);
         db = new Database(this);
+        username = db.getUsername();
+        bundle = getIntent().getBundleExtra("bundle");
 
         listView = (ListView) findViewById(R.id.lvcarimurid);
         cariMuridDataList = new ArrayList<>();
@@ -110,7 +115,15 @@ public class CariMuridActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
                 }
-            });
+            }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("username",username);
+                params.put("kriteria",bundle.getString("kriteria"));
+                return params;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }

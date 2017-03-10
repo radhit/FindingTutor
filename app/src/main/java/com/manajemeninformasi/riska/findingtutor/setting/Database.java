@@ -19,6 +19,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_JENIS = "jenis_user";
+    public static final String COLUMN_ALAMAT = "alamat";
     public static final int VERSION = 2;
     public Database(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -26,23 +27,25 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists "+TABLE_NAME+"("+COLUMN_ID+" TEXT, "+COLUMN_USERNAME+" TEXT, "+COLUMN_NAME+" TEXT, "+COLUMN_JENIS+" TEXT);");
+        db.execSQL("create table if not exists "+TABLE_NAME+"("+COLUMN_ID+" TEXT, "+COLUMN_USERNAME+" TEXT, "+COLUMN_NAME+" TEXT, "
+                +COLUMN_ALAMAT+" TEXT, "+COLUMN_JENIS+" TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS"+TABLE_NAME);
     }
-    public void add(String id, String username, String name, String jenis)
+    public void add(String id, String username, String name, String alamat, String jenis)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID, id);
         values.put(COLUMN_USERNAME, username);
         values.put(COLUMN_NAME, name);
+        values.put(COLUMN_ALAMAT, alamat);
         values.put(COLUMN_JENIS, jenis);
         db.insert(TABLE_NAME,null,values);
-        Log.d("data masuk", username);
+        Log.d("data masuk", alamat);
     }
     public void delete()
     {
@@ -91,6 +94,20 @@ public class Database extends SQLiteOpenHelper {
         String nameuser = cursor.getString(cursor.getColumnIndex("name"));
         cursor.close();
         return nameuser;
+    }
+    public String getAlamatuser()
+    {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+        {
+            return "";
+        }
+        String alamat = cursor.getString(cursor.getColumnIndex("alamat"));
+        cursor.close();
+        return alamat;
     }
 
 }

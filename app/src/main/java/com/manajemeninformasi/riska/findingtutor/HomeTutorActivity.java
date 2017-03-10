@@ -25,7 +25,7 @@ public class HomeTutorActivity extends AppCompatActivity {
         cari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toIntent(CariMuridActivity.class);
+                toIntent(KriteriaMuridActivity.class);
             }
         });
         keahlian.setOnClickListener(new View.OnClickListener() {
