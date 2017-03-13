@@ -72,11 +72,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
             }
         });
     }
-    public void toIntent(Class x)
-    {
-        Intent myintent = new Intent(getBaseContext(),x);
-        startActivityForResult(myintent,0);
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);

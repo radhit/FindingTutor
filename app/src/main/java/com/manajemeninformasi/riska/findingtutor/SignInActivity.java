@@ -90,8 +90,9 @@ public class SignInActivity extends AppCompatActivity {
                         {
                             db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("alamat")
                                     ,jsonObject.getString("jenis"));
-                            toIntent(HomeTutorActivity.class);
+                            toIntent(KetersediaanHariTutorActivity.class);
                             Log.d("ini tutor",jsonObject.getString("name"));
+                            finish();
                         }
                         else
                         {
@@ -99,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
                                     ,jsonObject.getString("jenis"));
                             toIntent(HomeMuridActivity.class);
                             Log.d("ini murid",jsonObject.getString("name"));
+                            finish();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

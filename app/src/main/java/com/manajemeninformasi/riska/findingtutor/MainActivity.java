@@ -1,6 +1,8 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     toIntent(SignInActivity.class);
+                    finish();
                 }
             });
             signup = (Button) findViewById(R.id.btnsignup);
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     toIntent(SignUpActivity.class);
+                    finish();
                 }
             });
         }
@@ -53,5 +57,27 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent myintent = new Intent(getBaseContext(),x);
         startActivityForResult(myintent,0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Keluar");
+        alertDialog.setMessage("Anda yakin ingin keluar?")
+                .setCancelable(false)
+                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        System.exit(0);
+                    }
+                })
+                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
     }
 }

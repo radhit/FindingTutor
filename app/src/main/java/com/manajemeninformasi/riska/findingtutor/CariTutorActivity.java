@@ -47,25 +47,42 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private Spinner spinner;
     private EditText pelajaran, usia;
     private RadioGroup jeniskelamin;
+    private RadioButton jkTutor;
     private String pilihKelas;
-    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari;
+    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis ;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
     private PlaceAutocompleteFragment acAlamat;
     private Integer day, year, month, selectedDay;
     private ProgressDialog progressDialog;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cari_tutor);
         db = new Database(this);
+        bundle = getIntent().getBundleExtra("bundle");
+
         spinner = (Spinner) findViewById(R.id.spkelas);
         spinner.setOnItemSelectedListener(this);
 
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
         usia = (EditText) findViewById(R.id.etusia);
+        usia.setText(bundle.getString("usia"));
+        kriteriaJenis = bundle.getString("jeniskelamin");
+
+        if (kriteriaJenis.equals("Laki-laki"))
+        {
+            RadioButton rblaki = (RadioButton) findViewById(R.id.rblakilaki);
+            rblaki.setChecked(true);
+        }
+        else if (kriteriaJenis.equals("Perempuan"))
+        {
+            RadioButton rbperempuan = (RadioButton) findViewById(R.id.rbperempuan);
+            rbperempuan.setChecked(true);
+        }
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
         day = tanggal.getDayOfMonth();
@@ -160,20 +177,23 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
     private void cariTutor()
     {
-        RadioButton pengguna = (RadioButton) jeniskelamin.findViewById(jeniskelamin.getCheckedRadioButtonId());
+
+        Log.d("jenis kelamin",kriteriaJenis);
+        int selectedId = jeniskelamin.getCheckedRadioButtonId();
+
+        jkTutor = (RadioButton) findViewById(selectedId);
         final String getUsername, getNameuser, jam, menit;
         getUsername = db.getUsername();
         getNameuser = db.getNameuser();
         final String getTanggal;
         getKelas = pilihKelas;
         getPelajaran = pelajaran.getText().toString();
-        //getAlamat = alamat.getText().toString();
         getTanggal = day+"/"+month+"/"+year;
         toGetDay = selectedDay.toString();
         jam = String.format("%02d",waktu.getCurrentHour());
         menit = String.format("%02d",waktu.getCurrentMinute());
         getWaktu = jam+":"+menit;
-        getJeniskelamin = pengguna.getText().toString();
+        getJeniskelamin = jkTutor.getText().toString();
         getUsia = usia.getText().toString();
 
         if (toGetDay.equals("1"))

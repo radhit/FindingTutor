@@ -53,6 +53,7 @@ public class KetersediaanHariTutorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toIntent(HomeTutorActivity.class);
+                finish();
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
