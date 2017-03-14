@@ -49,6 +49,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jarak"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jarak"
+            android:textSize="16sp"
+            android:id="@+id/tvjarak"
+            android:layout_marginBottom="12dp"
+            android:textStyle="italic"
+            android:paddingLeft="12dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="16dp">
         <LinearLayout
             android:layout_width="0dp"
