@@ -21,7 +21,6 @@
             android:text="Nama"
             android:textSize="16sp"
             android:id="@+id/tvnama"
-            android:layout_marginBottom="12dp"
             android:textStyle="italic"
             android:paddingLeft="12dp"/>
     </LinearLayout>
@@ -42,7 +41,6 @@
             android:text="Alamat"
             android:textSize="16sp"
             android:id="@+id/tvalamat"
-            android:layout_marginBottom="12dp"
             android:textStyle="italic"
             android:paddingLeft="12dp"/>
     </LinearLayout>
@@ -63,7 +61,6 @@
             android:text="Jarak"
             android:textSize="16sp"
             android:id="@+id/tvjarak"
-            android:layout_marginBottom="12dp"
             android:textStyle="italic"
             android:paddingLeft="12dp"/>
     </LinearLayout>
@@ -88,7 +85,6 @@
                 android:text="Kelas"
                 android:textSize="16sp"
                 android:id="@+id/tvkelas"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
@@ -111,7 +107,6 @@
                 android:text="Pelajaran"
                 android:textSize="16sp"
                 android:id="@+id/tvpelajaran"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
@@ -140,7 +135,6 @@
                 android:text="Hari"
                 android:textSize="16sp"
                 android:id="@+id/tvhari"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
@@ -162,7 +156,6 @@
                 android:text="Tanggal"
                 android:textSize="16sp"
                 android:id="@+id/tvtanggal"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
@@ -190,7 +183,6 @@
                 android:text="Jam"
                 android:textSize="16sp"
                 android:id="@+id/tvjam"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
@@ -212,7 +204,6 @@
                 android:text="Biaya"
                 android:textSize="16sp"
                 android:id="@+id/tvbiaya"
-                android:layout_marginBottom="12dp"
                 android:textStyle="italic"
                 android:paddingLeft="12dp"/>
         </LinearLayout>
