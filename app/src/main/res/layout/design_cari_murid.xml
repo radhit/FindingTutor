@@ -5,13 +5,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:text="Nama"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="italic"
             android:id="@+id/tvnama"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -23,7 +25,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="Pelajaran"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:textStyle="italic"
                 android:id="@+id/tvpelajaran"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -31,6 +34,7 @@
                 android:layout_weight="1"
                 android:text="Biaya"
                 android:textSize="16sp"
+                android:textStyle="italic"
                 android:id="@+id/tvbiaya"/>
         </LinearLayout>
         <Button

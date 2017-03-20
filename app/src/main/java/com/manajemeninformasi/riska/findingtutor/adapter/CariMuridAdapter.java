@@ -36,7 +36,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
     {
         TextView nama;
         TextView pelajaran;
-        TextView biaya;
+        TextView jarak;
     }
     public View getView(final int position, View ConvertView, ViewGroup parent)
     {
@@ -49,7 +49,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
             ConvertView = LayoutInflater.from(getContext()).inflate(R.layout.design_cari_murid,parent,false);
             viewMurid.nama= (TextView) ConvertView.findViewById(R.id.tvnama);
             viewMurid.pelajaran = (TextView) ConvertView.findViewById(R.id.tvpelajaran);
-            viewMurid.biaya = (TextView) ConvertView.findViewById(R.id.tvbiaya);
+            viewMurid.jarak = (TextView) ConvertView.findViewById(R.id.tvbiaya);
             ConvertView.setTag(viewMurid);
 
             Button detil = (Button) ConvertView.findViewById(R.id.btndetil);
@@ -77,7 +77,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         }
         viewMurid.nama.setText(dataMurid.getNameuser_pencarian());
         viewMurid.pelajaran.setText(dataMurid.getPelajaran_pencarian());
-        viewMurid.biaya.setText(dataMurid.getBiaya_pencarian());
+        viewMurid.jarak.setText(dataMurid.getJarak_pencarian().toString());
         return ConvertView;
     }
 

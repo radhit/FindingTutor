@@ -105,76 +105,86 @@ public class EditProfileTutorActivity extends AppCompatActivity {
 
     private void editProfile() {
         final String username = db.getUsername();
+        int count = 0;
 
         nama = etnama.getText().toString();
         telp = ettelp.getText().toString();
         email = etemail.getText().toString();
 
         selectedDay = new StringBuilder();
-        if (senin.isChecked()){
-            selectedDay.append("Senin, ");
+        if (senin.isChecked()) {
+            selectedDay.append("Senin,");
+            count = 0;
         }
-        if (selasa.isChecked()){
-            selectedDay.append("Selasa, ");
+        if (selasa.isChecked()) {
+            selectedDay.append("Selasa,");
+            count = 0;
         }
-        if (rabu.isChecked()){
-            selectedDay.append("Rabu, ");
+        if (rabu.isChecked()) {
+            selectedDay.append("Rabu,");
+            count = 0;
         }
-        if (kamis.isChecked()){
-            selectedDay.append("Kamis, ");
+        if (kamis.isChecked()) {
+            selectedDay.append("Kamis,");
+            count = 0;
         }
-        if (jumat.isChecked()){
-            selectedDay.append("Jumat, ");
+        if (jumat.isChecked()) {
+            selectedDay.append("Jumat,");
+            count = 0;
         }
-        if (sabtu.isChecked()){
-            selectedDay.append("Sabtu, ");
+        if (sabtu.isChecked()) {
+            selectedDay.append("Sabtu,");
+            count = 0;
         }
-        if (minggu.isChecked()){
-            selectedDay.append("Minggu");
+        if (minggu.isChecked()) {
+            selectedDay.append("Minggu,");
+            count = 0;
         }
-        if (selectedDay.toString().equals(""))
-        {
-            selectedDay.append("NULL");
+        if (selectedDay.toString().equals("")) {
+            Toast.makeText(this, "Minimal 1 hari", Toast.LENGTH_SHORT).show();
+            count = 1;
         }
+        if (count == 0) {
 
-        progressDialog.setMessage("Ubah Profil...");
-        progressDialog.show();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.EDITPROFILE_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
-                            finish();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            progressDialog.setMessage("Ubah Profil...");
+            progressDialog.show();
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.EDITPROFILE_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            progressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                finish();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.hide();
-                        error.printStackTrace();
-                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username",username);
-                params.put("nama",nama);
-                params.put("alamat",alamat);
-                params.put("telp",telp);
-                params.put("email",email);
-                params.put("ketersediaanhari",selectedDay.toString());
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.hide();
+                            error.printStackTrace();
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", username);
+                    params.put("nama", nama);
+                    params.put("alamat", alamat);
+                    params.put("telp", telp);
+                    params.put("email", email);
+                    params.put("ketersediaanhari", selectedDay.toString());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }
     }
 
     @Override

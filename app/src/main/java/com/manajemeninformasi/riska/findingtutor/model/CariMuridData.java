@@ -15,9 +15,10 @@ public class CariMuridData {
     private String hari_pencarian;
     private String jam_pencarian;
     private String biaya_pencarian;
+    private Float jarak_pencarian;
 
     public CariMuridData(Integer id, String username, String name, String kelas, String pelajaran, String alamat,
-                         String tanggal, String hari, String jam, String biaya)
+                         String tanggal, String hari, String jam, String biaya, Float jarak)
     {
         this.id_pencarian = id;
         this.username_pencarian = username;
@@ -29,6 +30,15 @@ public class CariMuridData {
         this.hari_pencarian = hari;
         this.jam_pencarian = jam;
         this.biaya_pencarian = biaya;
+        this.jarak_pencarian = jarak;
+    }
+
+    public Float getJarak_pencarian() {
+        return jarak_pencarian;
+    }
+
+    public void setJarak_pencarian(Float jarak_pencarian) {
+        this.jarak_pencarian = jarak_pencarian;
     }
 
     public Integer getId_pencarian() {

@@ -1,6 +1,10 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +21,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.manajemeninformasi.riska.findingtutor.adapter.CariMuridAdapter;
 import com.manajemeninformasi.riska.findingtutor.adapter.KeahlianTutorAdapter;
 import com.manajemeninformasi.riska.findingtutor.model.CariMuridData;
@@ -28,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,14 +48,22 @@ public class CariMuridActivity extends AppCompatActivity {
     private CariMuridAdapter mAdapter;
     private Bundle bundle;
     private String username;
+    private Geocoder geocoder;
+    private Float jarak;
+    private String alamatTutordb, alamatMurid;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cari_murid);
         db = new Database(this);
+        db = new Database(this);
+        alamatTutordb = db.getAlamatuser();
         username = db.getUsername();
         bundle = getIntent().getBundleExtra("bundle");
+
+        progressDialog = new ProgressDialog(this);
 
         listView = (ListView) findViewById(R.id.lvcarimurid);
         cariMuridDataList = new ArrayList<>();
@@ -79,6 +95,8 @@ public class CariMuridActivity extends AppCompatActivity {
     }
     public void getMurid()
     {
+        progressDialog.setMessage("Please Wait ...");
+        progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.GETMURID_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -90,6 +108,8 @@ public class CariMuridActivity extends AppCompatActivity {
                         for (int i=0; i<arrayMurid.length();i++)
                         {
                             JSONObject objectMurid = arrayMurid.getJSONObject(i);
+                            alamatMurid = objectMurid.getString("alamat");
+                            jarak = getJarak(alamatMurid);
                             CariMuridData dataMurid = new
                                     CariMuridData(objectMurid.getInt("id"),
                                     objectMurid.getString("username"),
@@ -100,11 +120,13 @@ public class CariMuridActivity extends AppCompatActivity {
                                     objectMurid.getString("tanggal"),
                                     objectMurid.getString("hari"),
                                     objectMurid.getString("jam"),
-                                    objectMurid.getString("biaya"));
+                                    objectMurid.getString("biaya"),
+                                    jarak);
                             cariMuridDataList.add(dataMurid);
                         }
                     }
                     mAdapter.notifyDataSetChanged();
+                    progressDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -113,6 +135,7 @@ public class CariMuridActivity extends AppCompatActivity {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.hide();
                     Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }){
@@ -126,5 +149,34 @@ public class CariMuridActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
+    }
+    public float getJarak(String alamat)
+    {
+        geocoder = new Geocoder(getBaseContext());
+        try {
+            List<Address> listMurid = geocoder.getFromLocationName(alamat,1);
+            Address alamatMurid = listMurid.get(0);
+            Double latMurid = alamatMurid.getLatitude();
+            Double longMurid = alamatMurid.getLongitude();
+
+            List<Address> listTutor = geocoder.getFromLocationName(alamatTutordb,1);
+            Address alamatTutor = listTutor.get(0);
+            Double latTutor = alamatTutor.getLatitude();
+            Double longTutor = alamatTutor.getLongitude();
+            Location murid = new Location("murid");
+            Location tutor = new Location("tutor");
+            murid.setLatitude(latMurid);
+            murid.setLongitude(longMurid);
+            tutor.setLatitude(latTutor);
+            tutor.setLongitude(longTutor);
+
+            float getJarak = tutor.distanceTo(murid)/1000;
+            return getJarak;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
