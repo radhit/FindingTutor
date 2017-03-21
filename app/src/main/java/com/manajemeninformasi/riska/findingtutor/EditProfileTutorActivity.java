@@ -37,9 +37,9 @@ import java.util.Map;
 public class EditProfileTutorActivity extends AppCompatActivity {
     private Database db;
     private Button back, submit;
-    private EditText etnama, etalamat, ettelp, etemail;
+    private EditText etnama, ettelp, etemail;
     private CheckBox senin,selasa,rabu,kamis,jumat,sabtu,minggu;
-    private String nama, alamat, telp, email;
+    private String nama, alamat, telp, email, username;
     private ProgressDialog progressDialog;
     private PlaceAutocompleteFragment acAlamat;
     private StringBuilder selectedDay;
@@ -49,12 +49,14 @@ public class EditProfileTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_tutor);
         db = new Database(this);
+        username = db.getUsername();
         Bundle bundle = getIntent().getBundleExtra("bundle");
         progressDialog = new ProgressDialog(this);
 
         etnama = (EditText) findViewById(R.id.etnama);
         ettelp = (EditText) findViewById(R.id.etnotelp);
         etemail = (EditText) findViewById(R.id.etemail);
+
         senin = (CheckBox) findViewById(R.id.cbsenin);
         selasa = (CheckBox) findViewById(R.id.cbselasa);
         rabu = (CheckBox) findViewById(R.id.cbrabu);
@@ -68,7 +70,6 @@ public class EditProfileTutorActivity extends AppCompatActivity {
         etemail.setText(bundle.getString("email"));
 
         acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
-        //acAlamat.setText(bundle.getString("alamat"));
         acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -104,7 +105,7 @@ public class EditProfileTutorActivity extends AppCompatActivity {
     }
 
     private void editProfile() {
-        final String username = db.getUsername();
+
         int count = 0;
 
         nama = etnama.getText().toString();
@@ -156,6 +157,8 @@ public class EditProfileTutorActivity extends AppCompatActivity {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                db.updateAlamat(username,alamat);
+                                //Log.d("alamat",alamat);
                                 finish();
                             } catch (JSONException e) {
                                 e.printStackTrace();

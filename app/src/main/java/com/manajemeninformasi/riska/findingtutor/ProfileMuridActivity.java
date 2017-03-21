@@ -90,7 +90,6 @@ public class ProfileMuridActivity extends AppCompatActivity {
                 Connect.PROFILE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("coba", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray arrayKeahlian = jsonObject.getJSONArray("result");

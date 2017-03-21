@@ -45,7 +45,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_ALAMAT, alamat);
         values.put(COLUMN_JENIS, jenis);
         db.insert(TABLE_NAME,null,values);
-        Log.d("data masuk", alamat);
+
     }
     public void delete()
     {
@@ -122,6 +122,14 @@ public class Database extends SQLiteOpenHelper {
         String alamat = cursor.getString(cursor.getColumnIndex("alamat"));
         cursor.close();
         return alamat;
+    }
+    public void updateAlamat(String username, String alamat)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("alamat",alamat);
+        db.update(TABLE_NAME,values,"username='"+username+"'",null);
+        Log.d("data masuk", alamat);
     }
 
 }

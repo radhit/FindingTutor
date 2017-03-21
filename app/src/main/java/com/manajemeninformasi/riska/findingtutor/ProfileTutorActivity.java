@@ -93,7 +93,6 @@ public class ProfileTutorActivity extends AppCompatActivity {
                 Connect.PROFILE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("coba", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONObject arrayKeahlian = jsonObject.getJSONObject("result");
@@ -105,7 +104,6 @@ public class ProfileTutorActivity extends AppCompatActivity {
                     email= objectProfile.getString("email_user");
 
                     JSONArray arrayHari = arrayKeahlian.getJSONArray("hari");
-                    Log.d("ceke",arrayHari.toString());
                     hari="";
                     for (int i=0; i< arrayHari.length();i++)
                     {
@@ -113,7 +111,6 @@ public class ProfileTutorActivity extends AppCompatActivity {
                         hari = hari+" "+objectHari.getString("hari_tutor");
                     }
                     setView(nama,alamat,notelp,email, hari);
-                    //setViewHari(hari);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -146,10 +143,6 @@ public class ProfileTutorActivity extends AppCompatActivity {
         tvemail.setText(email);
         tvhari.setText(hari);
     }
-//    private void setViewHari(String hari)
-//    {
-//        tvhari.setText(hari);
-//    }
     @Override
     protected void onResume() {
         getProfileTutor(username);

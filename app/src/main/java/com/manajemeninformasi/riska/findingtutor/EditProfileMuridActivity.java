@@ -35,7 +35,7 @@ import java.util.Map;
 public class EditProfileMuridActivity extends AppCompatActivity {
     private Database db;
     private EditText etnama, etnotelp, etemail;
-    private String nama, alamat, notelp, email;
+    private String nama, alamat, notelp, email, username;
     private Button back, submit;
     private ProgressDialog progressDialog;
     private PlaceAutocompleteFragment acAlamat;
@@ -45,6 +45,7 @@ public class EditProfileMuridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_murid);
         db = new Database(this);
+        username = db.getUsername();
         Bundle bundle = getIntent().getBundleExtra("bundle");
         progressDialog = new ProgressDialog(this);
 
@@ -57,7 +58,6 @@ public class EditProfileMuridActivity extends AppCompatActivity {
         etemail.setText(bundle.getString("email"));
 
         acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
-        acAlamat.setText(bundle.getString("alamat"));
         acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -112,7 +112,7 @@ public class EditProfileMuridActivity extends AppCompatActivity {
     }
     public void updateUser()
     {
-        final String username = db.getUsername();
+
         nama = etnama.getText().toString();
         email = etemail.getText().toString();
         notelp = etnotelp.getText().toString();
@@ -127,6 +127,7 @@ public class EditProfileMuridActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+                            db.updateAlamat(username,alamat);
                             finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
