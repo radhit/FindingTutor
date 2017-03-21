@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,14 @@ public class CariMuridActivity extends AppCompatActivity {
                                     jarak);
                             cariMuridDataList.add(dataMurid);
                         }
+                    }
+                    if (bundle.getString("kriteria").matches("jarak")) {
+                        mAdapter.sort(new Comparator<CariMuridData>() {
+                            @Override
+                            public int compare(CariMuridData arg1, CariMuridData arg0) {
+                                return arg1.getJarak_pencarian().compareTo(arg0.getJarak_pencarian());
+                            }
+                        });
                     }
                     mAdapter.notifyDataSetChanged();
                     progressDialog.dismiss();

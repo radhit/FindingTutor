@@ -32,8 +32,8 @@ import java.util.Map;
 public class ProfileTutorActivity extends AppCompatActivity {
     Button back, edit;
     private Database db;
-    private String username;
-    private String nama,alamat,notelp,email,hari;
+    private String username, jenis;
+    private String nama,alamat,notelp,email,hari="";
     private TextView tvnama, tvalamat, tvtelp, tvemail, tvhari;
 
     @Override
@@ -42,6 +42,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_tutor);
         db = new Database(this);
         username = db.getUsername();
+        jenis = db.getJenis();
         getProfileTutor(username);
 
         tvnama = (TextView) findViewById(R.id.tvnama);
@@ -95,14 +96,24 @@ public class ProfileTutorActivity extends AppCompatActivity {
                 Log.d("coba", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray arrayKeahlian = jsonObject.getJSONArray("result");
-                    JSONObject objectProfile = arrayKeahlian.getJSONObject(0);
-                    nama = objectProfile.getString("nama");
-                    alamat = objectProfile.getString("alamat");
-                    notelp= objectProfile.getString("telp");
-                    email= objectProfile.getString("email");
-                    hari= objectProfile.getString("hari");
-                    setView(nama,alamat,notelp,email,hari);
+                    JSONObject arrayKeahlian = jsonObject.getJSONObject("result");
+                    JSONArray arrayUser = arrayKeahlian.getJSONArray("user");
+                    JSONObject objectProfile = arrayUser.getJSONObject(0);
+                    nama = objectProfile.getString("nama_user");
+                    alamat = objectProfile.getString("alamat_user");
+                    notelp= objectProfile.getString("telp_user");
+                    email= objectProfile.getString("email_user");
+
+                    JSONArray arrayHari = arrayKeahlian.getJSONArray("hari");
+                    Log.d("ceke",arrayHari.toString());
+                    hari="";
+                    for (int i=0; i< arrayHari.length();i++)
+                    {
+                        JSONObject objectHari = arrayHari.getJSONObject(i);
+                        hari = hari+" "+objectHari.getString("hari_tutor");
+                    }
+                    setView(nama,alamat,notelp,email, hari);
+                    //setViewHari(hari);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -119,6 +130,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username",username);
+                params.put("jenis",jenis);
                 return params;
             }
         };
@@ -134,9 +146,13 @@ public class ProfileTutorActivity extends AppCompatActivity {
         tvemail.setText(email);
         tvhari.setText(hari);
     }
+//    private void setViewHari(String hari)
+//    {
+//        tvhari.setText(hari);
+//    }
     @Override
-    protected void onPostResume() {
+    protected void onResume() {
         getProfileTutor(username);
-        super.onPostResume();
+        super.onResume();
     }
 }
