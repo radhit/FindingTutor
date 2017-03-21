@@ -139,7 +139,6 @@ public class HomeMuridActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                        Log.d("cek",error.getMessage());
                     }
                 }){
             @Override

@@ -3,12 +3,13 @@
     <string name="title_activity_keahlian_tutor">KeahlianTutorActivity</string>
     <string name="pilih_kriteria">Pilih Kriteria Murid</string>
     <string-array name="kriteria">
+        <item>Semua Murid</item>
         <item>Berdasarkan Jarak Terdekat</item>
+        <item>Berdasarkan Pelajaran/Keahlian</item>
         <item>Berdasarkan Ketersediaan Hari</item>
         <item>Berdasarkan Jenis Kelamin</item>
         <item>Berdasarkan Kelas</item>
         <item>Berdasarkan Usia</item>
-        <item>Semua Murid</item>
     </string-array>
     <string name="pilih_kelas">Pilih Kelas</string>
     <string-array name="kelas">

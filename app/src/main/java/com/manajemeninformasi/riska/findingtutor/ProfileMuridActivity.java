@@ -31,7 +31,7 @@ import java.util.Map;
 public class ProfileMuridActivity extends AppCompatActivity {
     Button back, edit;
     private Database db;
-    private String username;
+    private String username, jenis;
     private String nama,alamat,notelp,email;
     private TextView tvnama, tvalamat, tvtelp, tvemail;
 
@@ -41,6 +41,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_murid);
         db = new Database(this);
         username = db.getUsername();
+        jenis = db.getJenis();
 
         tvnama = (TextView) findViewById(R.id.tvnama);
         tvalamat = (TextView) findViewById(R.id.tvalamat);
@@ -115,6 +116,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username",username);
+                params.put("jenis",jenis);
                 return params;
             }
         };

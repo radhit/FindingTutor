@@ -63,6 +63,16 @@ public class KriteriaMuridActivity extends AppCompatActivity implements AdapterV
             myIntent.putExtra("bundle",bundle);
             startActivityForResult(myIntent,0);
         }
+        else if(pilihKriteria.toString().equals("Berdasarkan Pelajaran/Keahlian"))
+        {
+            kriteria = "pelajaran";
+            Intent myIntent =  new Intent(getBaseContext(),CariMuridActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("kriteria", kriteria);
+            myIntent.putExtra("bundle",bundle);
+            startActivityForResult(myIntent,0);
+        }
+
         else if(pilihKriteria.toString().equals("Berdasarkan Ketersediaan Hari"))
         {
             kriteria = "hari";

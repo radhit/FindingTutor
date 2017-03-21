@@ -45,11 +45,11 @@ import java.util.Map;
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinner;
-    private EditText pelajaran, usia;
+    private EditText pelajaran, usia, durasi;
     private RadioGroup jeniskelamin;
     private RadioButton jkTutor;
     private String pilihKelas;
-    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis ;
+    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis, getDurasi ;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
@@ -69,6 +69,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         spinner.setOnItemSelectedListener(this);
 
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
+        durasi = (EditText) findViewById(R.id.etdurasi);
         usia = (EditText) findViewById(R.id.etusia);
         usia.setText(bundle.getString("usia"));
         kriteriaJenis = bundle.getString("jeniskelamin");
@@ -137,11 +138,12 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             public void onClick(View v) {
                 getKelas = pilihKelas;
                 getPelajaran = pelajaran.getText().toString();
+                getDurasi = durasi.getText().toString();
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour()+":"+waktu.getCurrentMinute();
                 getUsia = usia.getText().toString();
                 if (getKelas.matches("") || getPelajaran.matches("") || getAlamat.matches("")
-                        || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches(""))
+                        || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches("") || getDurasi.matches(""))
                 {
                     Toast.makeText(CariTutorActivity.this, "Semua data harus di isi lengkap!", Toast.LENGTH_SHORT).show();
                 }
@@ -195,6 +197,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         getWaktu = jam+":"+menit;
         getJeniskelamin = jkTutor.getText().toString();
         getUsia = usia.getText().toString();
+        getDurasi = durasi.getText().toString();
 
         if (toGetDay.equals("1"))
         {
@@ -263,6 +266,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 params.put("tanggal", getTanggal);
                 params.put("hari",getHari);
                 params.put("jam",getWaktu);
+                params.put("durasi",getDurasi);
                 params.put("jeniskelamin",getJeniskelamin);
                 params.put("usia",getUsia);
                 return params;

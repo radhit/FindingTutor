@@ -72,25 +72,25 @@ public class KetersediaanHariTutorActivity extends AppCompatActivity {
     {
         selectedDay = new StringBuilder();
         if (senin.isChecked()){
-            selectedDay.append("Senin, ");
+            selectedDay.append("Senin,");
         }
         if (selasa.isChecked()){
-            selectedDay.append("Selasa, ");
+            selectedDay.append("Selasa,");
         }
         if (rabu.isChecked()){
-            selectedDay.append("Rabu, ");
+            selectedDay.append("Rabu,");
         }
         if (kamis.isChecked()){
-            selectedDay.append("Kamis, ");
+            selectedDay.append("Kamis,");
         }
         if (jumat.isChecked()){
-            selectedDay.append("Jumat, ");
+            selectedDay.append("Jumat,");
         }
         if (sabtu.isChecked()){
-            selectedDay.append("Sabtu, ");
+            selectedDay.append("Sabtu,");
         }
         if (minggu.isChecked()){
-            selectedDay.append("Minggu");
+            selectedDay.append("Minggu,");
         }
         //Toast.makeText(this, selectedDay.toString(), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TAMBAHKETERSEDIAANHARI_URL,

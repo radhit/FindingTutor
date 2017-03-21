@@ -50,7 +50,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,13 +64,24 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Waktu"
+                    android:text="Jam Mulai"
                     android:textSize="20sp"/>
                 <TimePicker
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/tpwaktu"></TimePicker>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Durasi"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etdurasi"
+                    android:hint="Dalam Menit"
+                    android:inputType="number"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
