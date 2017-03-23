@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,8 +50,9 @@ public class CariMuridActivity extends AppCompatActivity {
     private CariMuridAdapter mAdapter;
     private Bundle bundle;
     private String username;
+    private Float getJarak;
     private Geocoder geocoder;
-    private Float jarak;
+    private Double latTutor, longTutor, latMurid, longMurid;
     private String alamatTutordb, alamatMurid;
     private ProgressDialog progressDialog;
 
@@ -110,31 +112,11 @@ public class CariMuridActivity extends AppCompatActivity {
                         {
                             JSONObject objectMurid = arrayMurid.getJSONObject(i);
                             alamatMurid = objectMurid.getString("alamat");
-                            jarak = getJarak(alamatMurid);
-                            CariMuridData dataMurid = new
-                                    CariMuridData(objectMurid.getInt("id"),
-                                    objectMurid.getString("username"),
-                                    objectMurid.getString("name"),
-                                    objectMurid.getString("kelas"),
-                                    objectMurid.getString("pelajaran"),
-                                    objectMurid.getString("alamat"),
-                                    objectMurid.getString("tanggal"),
-                                    objectMurid.getString("hari"),
-                                    objectMurid.getString("jam"),
-                                    objectMurid.getString("biaya"),
-                                    jarak);
-                            cariMuridDataList.add(dataMurid);
+                            getDistance(objectMurid, alamatMurid);
                         }
                     }
-                    if (bundle.getString("kriteria").matches("jarak")) {
-                        mAdapter.sort(new Comparator<CariMuridData>() {
-                            @Override
-                            public int compare(CariMuridData arg1, CariMuridData arg0) {
-                                return arg1.getJarak_pencarian().compareTo(arg0.getJarak_pencarian());
-                            }
-                        });
-                    }
-                    mAdapter.notifyDataSetChanged();
+
+
                     progressDialog.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -158,34 +140,80 @@ public class CariMuridActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
     }
-    public float getJarak(String alamat)
+
+    public void getDistance(final JSONObject objectJarak, String alamat)
     {
         geocoder = new Geocoder(getBaseContext());
         try {
-            List<Address> listMurid = geocoder.getFromLocationName(alamat,1);
+            List<Address> listMurid = geocoder.getFromLocationName(alamat, 1);
             Address alamatMurid = listMurid.get(0);
-            Double latMurid = alamatMurid.getLatitude();
-            Double longMurid = alamatMurid.getLongitude();
+            latMurid = alamatMurid.getLatitude();
+            longMurid = alamatMurid.getLongitude();
 
-            List<Address> listTutor = geocoder.getFromLocationName(alamatTutordb,1);
+            List<Address> listTutor = geocoder.getFromLocationName(alamatTutordb, 1);
             Address alamatTutor = listTutor.get(0);
-            Double latTutor = alamatTutor.getLatitude();
-            Double longTutor = alamatTutor.getLongitude();
-            Location murid = new Location("murid");
-            Location tutor = new Location("tutor");
-            murid.setLatitude(latMurid);
-            murid.setLongitude(longMurid);
-            tutor.setLatitude(latTutor);
-            tutor.setLongitude(longTutor);
-
-            float getJarak = tutor.distanceTo(murid)/1000;
-            return getJarak;
-        }
-        catch (IOException e){
+            latTutor = alamatTutor.getLatitude();
+            longTutor = alamatTutor.getLongitude();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                "https://maps.googleapis.com/maps/api/directions/json?" +
+                "origin=" +latTutor+ "," +longTutor+
+                "&destination="+latMurid+"," +longMurid+
+                "&key=AIzaSyCwH6FT975GOvqRVaf_-rmp429uGgFXhR0", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.length()>0)
+                    {
+                        JSONArray arrayDistanceMap = jsonObject.getJSONArray("routes");
+                        JSONObject objectDistanceMap = arrayDistanceMap.getJSONObject(0);
+                        JSONArray jarak = objectDistanceMap.getJSONArray("legs");
+                        JSONObject objectDistance = jarak.getJSONObject(0);
+                        JSONObject jarakFinal = objectDistance.getJSONObject("distance");
+                        getJarak = Float.valueOf(jarakFinal.getString("value"))/1000;
+                        Log.d("jarak",getJarak.toString());
+                        CariMuridData dataMurid = new
+                                CariMuridData(objectJarak.getInt("id"),
+                                objectJarak.getString("username"),
+                                objectJarak.getString("name"),
+                                objectJarak.getString("kelas"),
+                                objectJarak.getString("pelajaran"),
+                                objectJarak.getString("alamat"),
+                                objectJarak.getString("tanggal"),
+                                objectJarak.getString("hari"),
+                                objectJarak.getString("jam"),
+                                objectJarak.getString("biaya"),
+                                getJarak);
+                        cariMuridDataList.add(dataMurid);
+                    }
+                    if (bundle.getString("kriteria").matches("jarak")) {
+                        mAdapter.sort(new Comparator<CariMuridData>() {
+                            @Override
+                            public int compare(CariMuridData arg1, CariMuridData arg0) {
+                                return arg1.getJarak_pencarian().compareTo(arg0.getJarak_pencarian());
+                            }
+                        });
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.hide();
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }
+

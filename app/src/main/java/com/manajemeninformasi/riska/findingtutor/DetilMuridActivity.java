@@ -1,5 +1,6 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -7,16 +8,32 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.manajemeninformasi.riska.findingtutor.model.CariMuridData;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -59,20 +76,8 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         hari.setText(bundle.getString("hari"));
         jam.setText(bundle.getString("jam"));
         biaya.setText(bundle.getString("biaya"));
+        jarak.setText(String.valueOf(bundle.getFloat("jarak"))+" Km");
 
-    }
-
-    public void jarak(double latMurid, double longMurid, double latTutor, double longTutor)
-    {
-        Location murid = new Location("murid");
-        Location tutor = new Location("tutor");
-        murid.setLatitude(latMurid);
-        murid.setLongitude(longMurid);
-        tutor.setLatitude(latTutor);
-        tutor.setLongitude(longTutor);
-
-        float getJarak = tutor.distanceTo(murid)/1000;
-        jarak.setText(String.valueOf(getJarak)+" Km");
     }
 
 
@@ -99,21 +104,96 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
             Address alamatMurid = listMurid.get(0);
             Double latMurid = alamatMurid.getLatitude();
             Double longMurid = alamatMurid.getLongitude();
-            LatLng latlongMurid = new LatLng(latMurid, longMurid);
+            LatLng latlongMurid= new LatLng(latMurid, longMurid);
 
             List<Address> listTutor = geocoder.getFromLocationName(alamatTutordb,1);
             Address alamatTutor = listTutor.get(0);
             Double latTutor = alamatTutor.getLatitude();
             Double longTutor = alamatTutor.getLongitude();
+            LatLng latlongTutor = new LatLng(latTutor, longTutor);
+
+            getLine(latMurid,longMurid,latTutor,longTutor);
 
 
+            mMap.addMarker(new MarkerOptions().position(latlongTutor).title(alamatTutordb));
             mMap.addMarker(new MarkerOptions().position(latlongMurid).title(alamat.getText().toString()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latlongMurid));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latlongTutor));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-            jarak(latMurid, longMurid, latTutor, longTutor);
         }
         catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void getLine(Double latMurid, Double longMurid, Double latTutor, Double longTutor)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                "https://maps.googleapis.com/maps/api/directions/json?" +
+                        "origin=" +latTutor+ "," +longTutor+
+                        "&destination="+latMurid+"," +longMurid+
+                        "&key=AIzaSyCwH6FT975GOvqRVaf_-rmp429uGgFXhR0", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.length()>0)
+                    {
+                        JSONArray arrayDirectionMap = jsonObject.getJSONArray("routes");
+                        JSONObject objectDirectionMap = arrayDirectionMap.getJSONObject(0);
+                        JSONObject polyline = objectDirectionMap.getJSONObject("overview_polyline");
+                        String encodedString = polyline.getString("points");
+                        List<LatLng> list = decodePoly(encodedString);
+                        Polyline line = mMap.addPolyline(new PolylineOptions()
+                                .addAll(list)
+                                .width(15)
+                                .color(Color.RED)
+                                .geodesic(true)
+                        );
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+    private List<LatLng> decodePoly(String encoded) {
+        List<LatLng> poly = new ArrayList<>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng( (((double) lat / 1E5)),
+                    (((double) lng / 1E5) ));
+            poly.add(p);
+        }
+
+        return poly;
     }
 }

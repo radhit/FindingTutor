@@ -67,6 +67,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                     bundle.putString("hari", dataMurid.getHari_pencarian());
                     bundle.putString("jam", dataMurid.getJam_pencarian());
                     bundle.putString("biaya", dataMurid.getBiaya_pencarian());
+                    bundle.putFloat("jarak", dataMurid.getJarak_pencarian());
                     detilMurid.putExtra("bundle",bundle);
                     contextMurid.startActivity(detilMurid);
                 }
@@ -77,7 +78,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         }
         viewMurid.nama.setText(dataMurid.getNameuser_pencarian());
         viewMurid.pelajaran.setText(dataMurid.getPelajaran_pencarian());
-        viewMurid.jarak.setText(dataMurid.getJarak_pencarian().toString());
+        viewMurid.jarak.setText(dataMurid.getJarak_pencarian().toString()+" Km");
         return ConvertView;
     }
 
