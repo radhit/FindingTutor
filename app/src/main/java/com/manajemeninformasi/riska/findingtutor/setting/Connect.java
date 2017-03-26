@@ -17,5 +17,7 @@ public class Connect {
     public static final String EDITPROFILE_URL = ROOT_URL+"editprofile_controller";
     public static final String GETKRITERIATUTOR_URL = ROOT_URL+"getkriteria_controller";
     public static final String DELETEKRITERIA_URL = ROOT_URL+"deletekriteria_controller";
-
+    public static final String TRANSAKSI = ROOT_URL+"transaksi_controller";
+    public static final String TIMESERVER = ROOT_URL+"timeServer_controller";
+    public static final String GETDATA = ROOT_URL+"transaksiDurasi_controller";
 }

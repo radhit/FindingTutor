@@ -52,7 +52,10 @@
             android:name=".DetilMuridActivity"
             android:label="@string/title_activity_detil_murid" />
         <activity android:name=".KetersediaanHariTutorActivity" />
-        <activity android:name=".KriteriaMuridActivity"></activity>
+        <activity android:name=".KriteriaMuridActivity" />
+        <activity android:name=".GeneratorActivity" />
+        <activity android:name=".ReaderActivity" />
+        <activity android:name=".CountdownActivity"></activity>
     </application>
 
 </manifest>

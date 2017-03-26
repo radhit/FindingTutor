@@ -24,7 +24,8 @@
         android:orientation="vertical">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="cari tutor"
             android:id="@+id/btncari"
             android:background="@drawable/button"
@@ -32,7 +33,17 @@
             android:layout_marginBottom="16dp"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="scan"
+            android:id="@+id/btnscan"
+            android:background="@drawable/button"
+            android:textColor="@color/colorButtonSubmit"
+            android:layout_marginBottom="16dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="profile"
             android:id="@+id/btnprofile"
             android:background="@drawable/button"

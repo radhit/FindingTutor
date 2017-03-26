@@ -13,9 +13,18 @@
     </string-array>
     <string name="pilih_kelas">Pilih Kelas</string>
     <string-array name="kelas">
-        <item>SD</item>
-        <item>SMP</item>
-        <item>SMA</item>
+        <item>SD - Kelas 1</item>
+        <item>SD - Kelas 2</item>
+        <item>SD - Kelas 3</item>
+        <item>SD - Kelas 4</item>
+        <item>SD - Kelas 5</item>
+        <item>SD - Kelas 6</item>
+        <item>SMP - Kelas 7</item>
+        <item>SMP - Kelas 8</item>
+        <item>SMP - Kelas 9</item>
+        <item>SMA - Kelas 10</item>
+        <item>SMA - Kelas 11</item>
+        <item>SMA - Kelas 12</item>
         <item>UMUM</item>
     </string-array>
     <string name="pilih_hari">Pilih Hari</string>

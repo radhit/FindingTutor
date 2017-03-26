@@ -175,7 +175,7 @@ public class CariMuridActivity extends AppCompatActivity {
                         JSONArray jarak = objectDistanceMap.getJSONArray("legs");
                         JSONObject objectDistance = jarak.getJSONObject(0);
                         JSONObject jarakFinal = objectDistance.getJSONObject("distance");
-                        getJarak = Float.valueOf(jarakFinal.getString("value"))/1000;
+                        getJarak = Float.valueOf(jarakFinal.getString("value"));
                         Log.d("jarak",getJarak.toString());
                         CariMuridData dataMurid = new
                                 CariMuridData(objectJarak.getInt("id"),
@@ -188,8 +188,10 @@ public class CariMuridActivity extends AppCompatActivity {
                                 objectJarak.getString("hari"),
                                 objectJarak.getString("jam"),
                                 objectJarak.getString("biaya"),
-                                getJarak);
+                                getJarak,
+                                objectJarak.getInt("durasi"));
                         cariMuridDataList.add(dataMurid);
+                        Log.d("durasi", String.valueOf(objectJarak.getInt("durasi")));
                     }
                     if (bundle.getString("kriteria").matches("jarak")) {
                         mAdapter.sort(new Comparator<CariMuridData>() {

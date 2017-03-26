@@ -1,15 +1,20 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,7 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.manajemeninformasi.riska.findingtutor.model.CariMuridData;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
 import org.json.JSONArray;
@@ -33,17 +38,21 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak;
+    private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak, durasi;
     private Bundle bundle;
     private Database db;
     private String alamatTutordb;
     private Geocoder geocoder;
+    private Button accept;
+    private Context context;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         alamatTutordb = db.getAlamatuser();
         Log.d("alamat tutor : ", alamatTutordb);
         bundle = getIntent().getBundleExtra("bundle");
+        progressDialog = new ProgressDialog(this);
 
         nama = (TextView) findViewById(R.id.tvnama);
         kelas = (TextView) findViewById(R.id.tvkelas);
@@ -67,6 +77,9 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         jam = (TextView) findViewById(R.id.tvjam);
         biaya = (TextView) findViewById(R.id.tvbiaya);
         jarak = (TextView) findViewById(R.id.tvjarak);
+        durasi = (TextView) findViewById(R.id.tvdurasi);
+
+        accept = (Button) findViewById(R.id.btnaccept);
 
         nama.setText(bundle.getString("nama"));
         kelas.setText(bundle.getString("kelas"));
@@ -77,6 +90,20 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         jam.setText(bundle.getString("jam"));
         biaya.setText(bundle.getString("biaya"));
         jarak.setText(String.valueOf(bundle.getFloat("jarak"))+" Km");
+        durasi.setText(String.valueOf(bundle.getInt("durasi")));
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transaksi();
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("id", bundle.getInt("id"));
+//                bundle.putString("username",db.getUsername());
+//                bundle.putInt("durasi", bundle.getInt("durasi"));
+//                transaksi.putExtra("bundle",bundle);
+//                context.startActivity(transaksi);
+            }
+        });
 
     }
 
@@ -195,5 +222,44 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         }
 
         return poly;
+    }
+    public void transaksi()
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TRANSAKSI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                    Intent genIntent = new Intent(DetilMuridActivity.this, GeneratorActivity.class);
+                    genIntent.putExtra("QR_CODES", String.valueOf(bundle.getInt("id"))+"-"+db.getUsername());
+                    startActivity(genIntent);
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.hide();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id_pencarian", String.valueOf(bundle.getInt("id")));
+                params.put("username", db.getUsername());
+                params.put("durasi", String.valueOf(bundle.getInt("durasi")));
+                params.put("qr_codes", String.valueOf(bundle.getInt("id"))+"-"+db.getUsername());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

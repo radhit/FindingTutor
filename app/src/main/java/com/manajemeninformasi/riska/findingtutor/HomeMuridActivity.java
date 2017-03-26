@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeMuridActivity extends AppCompatActivity {
-    Button cari, profile;
+    Button cari, profile, scan;
     private Database db;
     private String id, username, jeniskelamin, usia, usernamedb;
     private Intent myIntent;
@@ -46,6 +46,7 @@ public class HomeMuridActivity extends AppCompatActivity {
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         cari = (Button) findViewById(R.id.btncari);
+        scan = (Button) findViewById(R.id.btnscan);
         profile = (Button) findViewById(R.id.btnprofile);
         cari.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,12 @@ public class HomeMuridActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toIntent(ProfileMuridActivity.class);
+            }
+        });
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toIntent(ReaderActivity.class);
             }
         });
     }
