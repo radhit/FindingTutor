@@ -86,6 +86,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         }
 
         tanggal = (DatePicker) findViewById(R.id.dptanggal);
+        tanggal.setMinDate(System.currentTimeMillis() - 1000);
         day = tanggal.getDayOfMonth();
         month = tanggal.getMonth();
         year = tanggal.getYear();
@@ -94,7 +95,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onDateChanged(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
                 day = dayOfMonth;
-                month = monthOfYear;
+                month = monthOfYear+1;
                 year = years;
                 calendar.set(year, month, day);
                 selectedDay = calendar.get(Calendar.DAY_OF_WEEK);

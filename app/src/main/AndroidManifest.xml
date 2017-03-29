@@ -55,7 +55,10 @@
         <activity android:name=".KriteriaMuridActivity" />
         <activity android:name=".GeneratorActivity" />
         <activity android:name=".ReaderActivity" />
-        <activity android:name=".CountdownActivity"></activity>
+        <activity android:name=".CountdownActivity" />
+        <activity android:name=".HistoryMuridActivity" />
+        <activity android:name=".HistoryTutorActivity" />
+        <activity android:name=".TransaksiMuridActivity"></activity>
     </application>
 
 </manifest>

@@ -15,12 +15,5 @@
         android:text="QRCode Scanner"
         android:textSize="25dp"
         android:layout_centerHorizontal="true"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="SCAN"
-        android:id="@+id/scan_btn"/>
 </RelativeLayout>
 

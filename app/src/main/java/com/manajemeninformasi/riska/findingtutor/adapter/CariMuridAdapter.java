@@ -118,7 +118,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
 
         Calendar tanggalLes = Calendar.getInstance();
         tanggalLes.set(Calendar.DAY_OF_MONTH,tanggal);
-        tanggalLes.set(Calendar.MONTH,bulan);
+        tanggalLes.set(Calendar.MONTH,bulan-1);
         tanggalLes.set(Calendar.YEAR,tahun);
 
         long diff = tanggalLes.getTimeInMillis()-today.getTimeInMillis();
@@ -167,6 +167,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                     Intent detilMurid =  new Intent(contextMurid,DetilMuridActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("id",dataMurid.getId_pencarian());
+                    bundle.putString("username",dataMurid.getUsername_pencarian());
                     bundle.putString("nama", dataMurid.getNameuser_pencarian());
                     bundle.putString("kelas", dataMurid.getKelas_pencarian());
                     bundle.putString("pelajaran", dataMurid.getPelajaran_pencarian());

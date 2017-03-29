@@ -13,14 +13,13 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ft3"
-        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/ivlogo"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_below="@+id/ivlogo"
+        android:id="@+id/btn1"
         android:orientation="vertical">
         <Button
             android:layout_width="match_parent"
@@ -30,22 +29,31 @@
             android:id="@+id/btncari"
             android:background="@drawable/button"
             android:textColor="@color/colorButtonSubmit"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="scan"
-            android:id="@+id/btnscan"
+            android:text="Transaksi Berjalan"
+            android:id="@+id/btntransaksi"
             android:background="@drawable/button"
             android:textColor="@color/colorButtonSubmit"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="profile"
             android:id="@+id/btnprofile"
+            android:background="@drawable/button"
+            android:textColor="@color/colorButtonSubmit"
+            android:layout_marginBottom="12dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Riwayat Transaksi"
+            android:id="@+id/btnhistory"
             android:background="@drawable/button"
             android:textColor="@color/colorButtonSubmit"/>
     </LinearLayout>
