@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Ketersediaan Hari"
+        android:text="Available"
         android:textColor="@android:color/holo_red_light"
         android:textSize="36sp" />
 
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Senin"
+                android:text="Monday"
                 android:textSize="18sp"
                 android:id="@+id/cbsenin"/>
 
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Selasa"
+                android:text="Tuesday"
                 android:textSize="18sp"
                 android:id="@+id/cbselasa"/>
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Rabu"
+                android:text="Wednesday"
                 android:textSize="18sp"
                 android:id="@+id/cbrabu"/>
 
@@ -63,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Kamis"
+                android:text="Thusday"
                 android:textSize="18sp"
                 android:id="@+id/cbkamis"/>
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jumat"
+                android:text="Friday"
                 android:textSize="18sp"
                 android:id="@+id/cbjumat"/>
 
@@ -84,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sabtu"
+                android:text="Saturday"
                 android:textSize="18sp"
                 android:id="@+id/cbsabtu"/>
         </LinearLayout>
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="-24dp"
-            android:text="Minggu"
+            android:text="Sunday"
             android:textSize="18sp"
             android:id="@+id/cbminggu"/>
     </LinearLayout>

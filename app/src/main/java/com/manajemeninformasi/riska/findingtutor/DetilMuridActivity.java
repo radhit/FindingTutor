@@ -96,12 +96,6 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
                 transaksi();
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("id", bundle.getInt("id"));
-//                bundle.putString("username",db.getUsername());
-//                bundle.putInt("durasi", bundle.getInt("durasi"));
-//                transaksi.putExtra("bundle",bundle);
-//                context.startActivity(transaksi);
             }
         });
 

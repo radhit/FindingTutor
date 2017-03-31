@@ -24,7 +24,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kelas"
+                    android:text="Class"
                     android:textSize="20sp"/>
                 <Spinner
                     android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pelajaran"
+                    android:text="Lesson"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"

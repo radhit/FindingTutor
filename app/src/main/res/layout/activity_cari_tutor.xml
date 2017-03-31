@@ -23,7 +23,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Kelas"
+                    android:text="Class"
                     android:textSize="20sp"/>
                 <Spinner
                     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pelajaran"
+                    android:text="Lesson"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Alamat"
+                    android:text="Address"
                     android:textSize="20sp"/>
                 <fragment
                     android:id="@+id/acalamat"
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tanggal"
+                    android:text="Date"
                     android:textSize="20sp"/>
                 <DatePicker
                     android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jam Mulai"
+                    android:text="Time"
                     android:textSize="20sp"/>
                 <TimePicker
                     android:layout_width="300dp"
@@ -74,7 +74,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Durasi"
+                    android:text="Duration"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"
@@ -88,13 +88,13 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:gravity="center"
-                    android:text="KRITERIA TUTOR"
+                    android:text="CRITERIA TUTOR"
                     android:textColor="@color/colorPrimaryLight"
                     android:textSize="36sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Jenis Kelamin"
+                    android:text="Gender"
                     android:textSize="20sp"/>
 
                 <RadioGroup
@@ -116,7 +116,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Usia"
+                    android:text="Age"
                     android:textSize="20sp"/>
                 <EditText
                     android:layout_width="match_parent"

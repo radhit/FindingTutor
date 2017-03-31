@@ -25,9 +25,9 @@ tools:context="com.manajemeninformasi.riska.findingtutor.CountdownActivity">
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="DURASI TRANSAKSI"
+    android:text="DURATION TRANSAKSI"
     android:id="@+id/textView8"
-    android:textSize="39dp"
+    android:textSize="32dp"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true" />
