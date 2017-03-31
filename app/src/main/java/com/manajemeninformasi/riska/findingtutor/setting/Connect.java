@@ -21,4 +21,5 @@ public class Connect {
     public static final String TIMESERVER = ROOT_URL+"timeServer_controller";
     public static final String GETDATA = ROOT_URL+"transaksiDurasi_controller";
     public static final String TRANSAKSIMURID = ROOT_URL+"transaksimurid_controller";
+    public static final String HISTORYMURID = ROOT_URL+"historymurid_controller";
 }

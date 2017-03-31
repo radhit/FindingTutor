@@ -19,7 +19,7 @@
             app:srcCompat="@android:drawable/btn_star_big_on" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvrating"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight=".9"
@@ -27,28 +27,34 @@
             android:textColor="@android:color/holo_orange_dark"
             android:textSize="40sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".7"
         android:orientation="vertical"
         android:paddingLeft="18dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1">
+
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 app:srcCompat="@android:drawable/ic_menu_recent_history" />
+
             <TextView
+                android:id="@+id/tvtanggal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tanggal,Jam"
-                android:textStyle="italic"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="italic" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -58,12 +64,14 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 app:srcCompat="@android:drawable/ic_menu_edit" />
+
             <TextView
+                android:id="@+id/tvpelajaran"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pelajaran"
-                android:textStyle="italic"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="italic" />
         </LinearLayout>
     </LinearLayout>
 
@@ -73,6 +81,7 @@
         android:layout_weight=".3"
         android:background="?android:attr/colorPressedHighlight"
         android:text="rating"
+        android:id="@+id/btnrating"
         android:textColor="@color/zxing_status_text" />
 
 

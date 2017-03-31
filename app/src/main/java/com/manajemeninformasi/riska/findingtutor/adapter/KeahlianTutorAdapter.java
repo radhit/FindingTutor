@@ -30,7 +30,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
     {
         TextView pelajaran;
         TextView kelas;
-
     }
     public View getView(final int position, View ConvertView, ViewGroup parent)
     {
