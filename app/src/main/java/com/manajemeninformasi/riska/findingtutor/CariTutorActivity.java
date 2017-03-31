@@ -95,7 +95,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             @Override
             public void onDateChanged(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
                 day = dayOfMonth;
-                month = monthOfYear+1;
+                month = monthOfYear;
                 year = years;
                 calendar.set(year, month, day);
                 selectedDay = calendar.get(Calendar.DAY_OF_WEEK);
@@ -191,6 +191,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         final String getTanggal;
         getKelas = pilihKelas;
         getPelajaran = pelajaran.getText().toString();
+        month = month+1;
         getTanggal = day+"/"+month+"/"+year;
         toGetDay = selectedDay.toString();
         jam = String.format("%02d",waktu.getCurrentHour());

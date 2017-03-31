@@ -58,7 +58,7 @@
         <activity android:name=".CountdownActivity" />
         <activity android:name=".HistoryMuridActivity" />
         <activity android:name=".HistoryTutorActivity" />
-        <activity android:name=".TransaksiMuridActivity"></activity>
+        <activity android:name=".TransaksiMuridActivity" />
     </application>
 
 </manifest>
