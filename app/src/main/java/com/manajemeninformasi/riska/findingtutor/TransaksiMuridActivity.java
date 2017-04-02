@@ -1,6 +1,9 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,9 +30,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransaksiMuridActivity extends AppCompatActivity {
-    private Button scan, back;
+    private Button scan, back, cancel;
     private Database db;
-    private String namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi;
+    private String namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, qrcode;
     private TextView tvnama, tvalamat, tvusia, tvtelp, tvpelajaran, tvdurasi;
 
     @Override
@@ -44,6 +47,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         tvdurasi = (TextView) findViewById(R.id.tvdurasi);
         scan = (Button) findViewById(R.id.btnscan);
         back = (Button) findViewById(R.id.btnback);
+        cancel = (Button) findViewById(R.id.btncancel);
         db = new Database(this);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +62,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
             }
         });
         transaksi(db.getUsername());
+
     }
 
     private void transaksi(final String username) {
@@ -71,6 +76,8 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                 //            JSONObject object = jsonObject.getJSONArray("result").getJSONObject(0);
                             //JSONObject object = jsonObject.getJSONObject("result");
                             String message = jsonObject.getString("message");
+                            qrcode = jsonObject.getString("data_transaksi");
+                            Log.d("qr_code", qrcode);
                             //JSONArray arrayMessage = object.getJSONArray("message");
                             Log.d("lala", message);
                             if (message.equals("Tidak ada transaksi sedang berjalan"))
@@ -99,6 +106,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
 
 
                                 setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi);
+                                waktu(qrcode);
                             }
 
                         } catch (JSONException e) {
@@ -123,6 +131,179 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+        //waktu(qrcode);
+    }
+
+    private void waktu(final String qrcode) {
+        final CountDownTimer countDownTimer = new CountDownTimer(120 * 60 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long hour = millisUntilFinished / 3600000;
+                long sisaHour = millisUntilFinished % 3600000;
+
+                long minute = sisaHour / 60000;
+                    long sisaMinute = sisaHour % 60000;
+
+                    long second = sisaMinute / 1000;
+
+                    if(second%5 == 0) {
+                    Log.d("sini","lala");
+                    ambilData(qrcode, 3);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                    ambilData(qrcode, 2);
+            }
+        }; countDownTimer.start();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder altdial = new AlertDialog.Builder(TransaksiMuridActivity.this);
+                altdial.setMessage("Apakah Anda Yakin?").setCancelable(false)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.CANCELTRANSAKSI, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            final JSONObject jsonObject = new JSONObject(response);
+                                            Toast.makeText(TransaksiMuridActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                },new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        //    progresDialog.hide();
+                                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("qr_codes", qrcode
+                                        );
+                                        return params;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(TransaksiMuridActivity.this);
+                                requestQueue.add(stringRequest);
+
+                                countDownTimer.cancel();
+                                Intent genIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
+                                startActivity(genIntent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alert = altdial.create();
+                alert.show();
+            }
+        });
+    }
+
+    private void ambilData(final String qrcode, final int temp){
+        Log.d("qrcode", qrcode);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TIMESERVER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String current_data) {
+                try {
+                    final JSONObject jsonObject = new JSONObject(current_data);
+                    //String min = jsonObject.getString("min");
+                    final String status = jsonObject.getString("status");
+                    Log.d("status", jsonObject.getString("status"));
+
+                    if (status.equals("0") && temp==2) {
+                        Toast.makeText(TransaksiMuridActivity.this, "Pentutor tidak datang dalam kurun waktu yang telah ditentukan!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransaksiMuridActivity.this, " Transaksi dibatalkan!", Toast.LENGTH_SHORT).show();
+                        Intent aIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
+                        startActivity(aIntent);
+                        finish();
+                    }
+
+                    else if(status.equals("cancel") && temp==3)
+                    {
+                        AlertDialog.Builder altd = new AlertDialog.Builder(TransaksiMuridActivity.this);
+                        altd.setMessage("Apakah Memberatkan Anda?").setCancelable(false)
+                                .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        pembatalan(qrcode);
+                                    }
+                                }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        pembatalan(qrcode);
+                                    }
+                                });
+                        AlertDialog alert = altd.create();
+                        alert.setTitle("Transaksi Dibatalkan Oleh Pentutor");
+                        alert.show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //    progresDialog.hide();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("qr_codes", qrcode);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void pembatalan(final String qrcode) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    final JSONObject jsonObject = new JSONObject(response);
+                    Toast.makeText(TransaksiMuridActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //    progresDialog.hide();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("qr_codes", qrcode);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(TransaksiMuridActivity.this);
+        requestQueue.add(stringRequest);
+
+        Intent aIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
+        startActivity(aIntent);
+        finish();
     }
 
     private void setView(String namaTutor, String alamatTutor, String usiaTutor, String telpTutor, String pelajaran, String durasi) {

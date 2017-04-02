@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -74,6 +75,7 @@ public class GeneratorActivity extends AppCompatActivity {
                 //textView.setText(hour+":"+minute+":"+second);
 
                 if(second%5 == 0) {
+                    Log.d("jalan","jalan");
                     getData(tes,3);
                 }
 
@@ -122,7 +124,7 @@ public class GeneratorActivity extends AppCompatActivity {
                                 requestQueue.add(stringRequest);
 
                                 countDownTimer.cancel();
-                                Intent genIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                                Intent genIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
                                 startActivity(genIntent);
                                 finish();
                             }
@@ -162,14 +164,14 @@ public class GeneratorActivity extends AppCompatActivity {
                     if (status.equals("0") && temp == 2) {
                         Toast.makeText(GeneratorActivity.this, "QR Codes gagal di scan dalam kurun waktu yang telah ditentukan!", Toast.LENGTH_SHORT).show();
                         Toast.makeText(GeneratorActivity.this, " Transaksi dibatalkan!", Toast.LENGTH_SHORT).show();
-                        Intent aIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                        Intent aIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
                         startActivity(aIntent);
                         finish();
                     }
                     else if(temp == 1) {
                         if (status.equals("2")) {
                             Toast.makeText(GeneratorActivity.this, "Transaksi telah Selesai Terima Kasih Telah Menggunakan Aplikasi Ini", Toast.LENGTH_SHORT).show();
-                            Intent tIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                            Intent tIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
                             startActivity(tIntent);
                             finish();
                         } else {
@@ -183,70 +185,12 @@ public class GeneratorActivity extends AppCompatActivity {
                                     .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    try {
-                                                        final JSONObject jsonObject = new JSONObject(response);
-                                                        Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            },new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    //    progresDialog.hide();
-                                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                                                }
-                                            }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("qr_codes", s);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
-                                            requestQueue.add(stringRequest);
-
-                                            Intent aIntent = new Intent(GeneratorActivity.this, MainActivity.class);
-                                            startActivity(aIntent);
-                                            finish();
+                                            pembatalan(s);
                                         }
                                     }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            try {
-                                                final JSONObject jsonObject = new JSONObject(response);
-                                                Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    },new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            //    progresDialog.hide();
-                                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    }) {
-                                        @Override
-                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                            Map<String, String> params = new HashMap<>();
-                                            params.put("qr codes", s);
-                                            return params;
-                                        }
-                                    };
-                                    RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
-                                    requestQueue.add(stringRequest);
-
-                                    Intent aIntent = new Intent(GeneratorActivity.this, MainActivity.class);
-                                    startActivity(aIntent);
-                                    finish();
+                                    pembatalan(s);
                                 }
                             });
                             AlertDialog alert = altd.create();
@@ -279,5 +223,38 @@ public class GeneratorActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
+    }
+
+    private void pembatalan(final String s) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    final JSONObject jsonObject = new JSONObject(response);
+                    Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //    progresDialog.hide();
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("qr_codes", s);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
+        requestQueue.add(stringRequest);
+
+        Intent aIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
+        startActivity(aIntent);
+        finish();
     }
 }
