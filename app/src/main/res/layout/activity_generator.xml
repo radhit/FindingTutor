@@ -43,5 +43,14 @@
         android:text="Transaksi Selesai"
         android:id="@+id/btnEnd"
         android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true" />
+        android:layout_toStartOf="@+id/textView5" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transaksi Dibatalkan"
+        android:id="@+id/btnBatal"
+        android:layout_marginStart="91dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_toEndOf="@+id/btnEnd" />
+
 </RelativeLayout>

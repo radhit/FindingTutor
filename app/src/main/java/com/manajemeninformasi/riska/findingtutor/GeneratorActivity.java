@@ -1,8 +1,10 @@
 package com.manajemeninformasi.riska.findingtutor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GeneratorActivity extends AppCompatActivity {
-    Button gen_btn;
+    Button gen_btn, batal_btn;
     ImageView image;
     String s;
 
@@ -41,6 +43,7 @@ public class GeneratorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generator);
 
         gen_btn = (Button) findViewById(R.id.btnEnd);
+        batal_btn =(Button) findViewById(R.id.btnBatal);
         image = (ImageView) findViewById(R.id.image);
         s = getIntent().getStringExtra("QR_CODES");
 
@@ -57,7 +60,7 @@ public class GeneratorActivity extends AppCompatActivity {
         waktu(s);
     }
     private void waktu(final String tes) {
-        CountDownTimer countDownTimer = new CountDownTimer(120 * 60 * 1000, 1000) {
+        final CountDownTimer countDownTimer = new CountDownTimer(120 * 60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long hour = millisUntilFinished / 3600000;
@@ -69,6 +72,11 @@ public class GeneratorActivity extends AppCompatActivity {
 
                 long second = sisaMinute / 1000;
                 //textView.setText(hour+":"+minute+":"+second);
+
+                if(second%5 == 0) {
+                    getData(tes,3);
+                }
+
                 tombol(tes);
             }
 
@@ -78,6 +86,57 @@ public class GeneratorActivity extends AppCompatActivity {
 
             }
         }; countDownTimer.start();
+        batal_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder altdial = new AlertDialog.Builder(GeneratorActivity.this);
+                altdial.setMessage("Apakah Anda Yakin?").setCancelable(false)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.CANCELTRANSAKSI, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            final JSONObject jsonObject = new JSONObject(response);
+                                            Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                },new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        //    progresDialog.hide();
+                                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("qr_codes", s);
+                                        return params;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
+                                requestQueue.add(stringRequest);
+
+                                countDownTimer.cancel();
+                                Intent genIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                                startActivity(genIntent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alert = altdial.create();
+                alert.show();
+            }
+        });
     }
 
     private void tombol(final String status) {
@@ -116,6 +175,85 @@ public class GeneratorActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(GeneratorActivity.this, "Transaksi masih sedang berjalan", Toast.LENGTH_SHORT).show();
                         }
+                    }
+                    else if(temp == 3) {
+                        if(status.equals("cancel")){
+                            AlertDialog.Builder altd = new AlertDialog.Builder(GeneratorActivity.this);
+                            altd.setMessage("Apakah Memberatkan Anda?").setCancelable(false)
+                                    .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        final JSONObject jsonObject = new JSONObject(response);
+                                                        Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            },new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    //    progresDialog.hide();
+                                                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                                }
+                                            }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("qr_codes", s);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
+                                            requestQueue.add(stringRequest);
+
+                                            Intent aIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                                            startActivity(aIntent);
+                                            finish();
+                                        }
+                                    }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                final JSONObject jsonObject = new JSONObject(response);
+                                                Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    },new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            //    progresDialog.hide();
+                                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("qr codes", s);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
+                                    requestQueue.add(stringRequest);
+
+                                    Intent aIntent = new Intent(GeneratorActivity.this, MainActivity.class);
+                                    startActivity(aIntent);
+                                    finish();
+                                }
+                            });
+                            AlertDialog alert = altd.create();
+                            alert.setTitle("Transaksi Dibatalkan Oleh Murid");
+                            alert.show();
+                        }
+//                            Toast.makeText(GeneratorActivity.this, "Nilai status adalah: " + status, Toast.LENGTH_SHORT).show();
                     }
                     //waktu(s);
                     //tombol(s);

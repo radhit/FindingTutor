@@ -22,4 +22,6 @@ public class Connect {
     public static final String GETDATA = ROOT_URL+"transaksiDurasi_controller";
     public static final String TRANSAKSIMURID = ROOT_URL+"transaksimurid_controller";
     public static final String HISTORYMURID = ROOT_URL+"historymurid_controller";
+    public static final String DELETETRANSAKSI = ROOT_URL+"deleteTransaksi_controller";
+    public static final String CANCELTRANSAKSI = ROOT_URL+"cancelTransaksi_controller";
 }

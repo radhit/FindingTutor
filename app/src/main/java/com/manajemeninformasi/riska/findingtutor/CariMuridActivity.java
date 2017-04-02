@@ -112,6 +112,7 @@ public class CariMuridActivity extends AppCompatActivity {
                         {
                             JSONObject objectMurid = arrayMurid.getJSONObject(i);
                             alamatMurid = objectMurid.getString("alamat");
+                            Log.d("ataas",alamatMurid);
                             getDistance(objectMurid, alamatMurid);
                         }
                     }
@@ -147,11 +148,13 @@ public class CariMuridActivity extends AppCompatActivity {
         geocoder = new Geocoder(getBaseContext());
         try {
             List<Address> listMurid = geocoder.getFromLocationName(alamat, 1);
+            Log.d("askdjas", listMurid.toString());
             Address alamatMurid = listMurid.get(0);
             latMurid = alamatMurid.getLatitude();
             longMurid = alamatMurid.getLongitude();
 
             List<Address> listTutor = geocoder.getFromLocationName(alamatTutordb, 1);
+            Log.d("tutor", listTutor.toString());
             Address alamatTutor = listTutor.get(0);
             latTutor = alamatTutor.getLatitude();
             longTutor = alamatTutor.getLongitude();
