@@ -73,12 +73,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.d("respon :", jsonObject.toString());
-                //            JSONObject object = jsonObject.getJSONArray("result").getJSONObject(0);
-                            //JSONObject object = jsonObject.getJSONObject("result");
                             String message = jsonObject.getString("message");
-                            qrcode = jsonObject.getString("data_transaksi");
-                            Log.d("qr_code", qrcode);
-                            //JSONArray arrayMessage = object.getJSONArray("message");
                             Log.d("lala", message);
                             if (message.equals("Tidak ada transaksi sedang berjalan"))
                             {
@@ -92,6 +87,8 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
                             }
                             else {
+                                qrcode = jsonObject.getString("data_transaksi");
+
                                 JSONArray arraytransaksi = jsonObject.getJSONArray("transaksi");
                                 JSONObject objecttransaksi = arraytransaksi.getJSONObject(0);
                                 durasi = String.valueOf(objecttransaksi.getInt("durasi_pencarian"));
@@ -131,7 +128,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-        //waktu(qrcode);
     }
 
     private void waktu(final String qrcode) {
@@ -178,7 +174,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 },new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        //    progresDialog.hide();
                                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 }) {
@@ -218,7 +213,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
             public void onResponse(String current_data) {
                 try {
                     final JSONObject jsonObject = new JSONObject(current_data);
-                    //String min = jsonObject.getString("min");
                     final String status = jsonObject.getString("status");
                     Log.d("status", jsonObject.getString("status"));
 
@@ -257,7 +251,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //    progresDialog.hide();
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -287,7 +280,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //    progresDialog.hide();
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
