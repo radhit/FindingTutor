@@ -49,7 +49,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
     private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak, durasi;
     private Bundle bundle;
     private Database db;
-    private String alamatTutordb;
+    private String alamatTutordb, status, qrcode;
     private Geocoder geocoder;
     private Button accept;
     private Context context;
@@ -98,6 +98,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(db.selectFlag().equals("kosong"))
                 {
                     transaksi();
@@ -122,14 +123,6 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
 
 
                 long second = sisaMinute / 1000;
-                //textView.setText(hour+":"+minute+":"+second);
-
-//                if(second%5 == 0) {
-//                    Log.d("jalan","jalan");
-//                    //getData(tes,3);
-//                }
-
-                //tombol(tes);
             }
 
             @Override
@@ -141,7 +134,6 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
             }
         }; countDownTimer.start();
     }
-
 
     /**
      * Manipulates the map once available.

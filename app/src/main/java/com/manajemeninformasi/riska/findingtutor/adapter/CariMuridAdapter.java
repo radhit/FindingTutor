@@ -118,7 +118,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
 
         Calendar tanggalLes = Calendar.getInstance();
         tanggalLes.set(Calendar.DAY_OF_MONTH,tanggal);
-        tanggalLes.set(Calendar.MONTH,bulan-1);
+        tanggalLes.set(Calendar.MONTH,bulan);
         tanggalLes.set(Calendar.YEAR,tahun);
 
         long diff = tanggalLes.getTimeInMillis()-today.getTimeInMillis();

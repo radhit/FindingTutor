@@ -5,7 +5,7 @@ package com.manajemeninformasi.riska.findingtutor.setting;
  */
 
 public class Connect {
-    public static final String ROOT_URL = "http://10.151.44.247/findingtutor/";
+    public static final String ROOT_URL = "http://10.151.44.249/findingtutor/";
     public static final String REGISTER_URL = ROOT_URL+"register_controller";
     public static final String LOGIN_URL = ROOT_URL+"login_controller";
     public static final String TAMBAHKEAHLIAN_URL = ROOT_URL+"tambahkeahlian_controller";
@@ -24,4 +24,6 @@ public class Connect {
     public static final String HISTORYMURID = ROOT_URL+"historymurid_controller";
     public static final String DELETETRANSAKSI = ROOT_URL+"deleteTransaksi_controller";
     public static final String CANCELTRANSAKSI = ROOT_URL+"cancelTransaksi_controller";
+    public static final String PUNISHTUTOR = ROOT_URL+"punishTutor_controller";
+    public static final String PUNISHMURID = ROOT_URL+"punishMurid_controller";
 }

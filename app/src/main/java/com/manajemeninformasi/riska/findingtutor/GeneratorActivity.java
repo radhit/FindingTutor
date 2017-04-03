@@ -105,7 +105,7 @@ public class GeneratorActivity extends AppCompatActivity {
                                         try {
                                             final JSONObject jsonObject = new JSONObject(response);
                                             db.updateFlag("punish");
-                                            Log.d("flag", db.selectFlag());
+                                            //Log.d("flag", db.selectFlag());
                                             Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                         } catch (JSONException e) {
                                             e.printStackTrace();

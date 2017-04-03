@@ -138,11 +138,11 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                 long sisaHour = millisUntilFinished % 3600000;
 
                 long minute = sisaHour / 60000;
-                    long sisaMinute = sisaHour % 60000;
+                long sisaMinute = sisaHour % 60000;
 
-                    long second = sisaMinute / 1000;
+                long second = sisaMinute / 1000;
 
-                    if(second%5 == 0) {
+                if(second%5 == 0) {
                     Log.d("sini","lala");
                     ambilData(qrcode, 3);
                 }
@@ -150,7 +150,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                    ambilData(qrcode, 2);
+                ambilData(qrcode, 2);
             }
         }; countDownTimer.start();
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -235,12 +235,12 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                         Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
                                     }
                                 }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        pembatalan(qrcode);
-                                        Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                pembatalan(qrcode);
+                                Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         AlertDialog alert = altd.create();
                         alert.setTitle("Transaksi Dibatalkan Oleh Pentutor");
                         alert.show();
