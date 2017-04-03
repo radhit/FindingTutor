@@ -20,6 +20,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_JENIS = "jenis_user";
     public static final String COLUMN_ALAMAT = "alamat";
+    public static final String COLUMN_FLAG = "flag";
     public static final int VERSION = 2;
     public Database(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -28,7 +29,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists "+TABLE_NAME+"("+COLUMN_ID+" TEXT, "+COLUMN_USERNAME+" TEXT, "+COLUMN_NAME+" TEXT, "
-                +COLUMN_ALAMAT+" TEXT, "+COLUMN_JENIS+" TEXT);");
+                +COLUMN_ALAMAT+" TEXT, "+COLUMN_JENIS+" TEXT, "+COLUMN_FLAG+" TEXT);");
     }
 
     @Override
@@ -130,6 +131,33 @@ public class Database extends SQLiteOpenHelper {
         values.put("alamat",alamat);
         db.update(TABLE_NAME,values,"username='"+username+"'",null);
         Log.d("data masuk", alamat);
+    }
+    public void updateFlag(String punish)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("flag",punish);
+        db.update(TABLE_NAME,values,null,null);
+    }
+    public String selectFlag()
+    {
+        String flag;
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if(cursor.getCount()==0)
+        {
+            return "";
+        }
+        if (cursor.isNull(5))
+        {
+            flag = "kosong";
+        }
+        else
+        flag = cursor.getString(cursor.getColumnIndex("flag"));
+        cursor.close();
+        return flag;
     }
 
 }

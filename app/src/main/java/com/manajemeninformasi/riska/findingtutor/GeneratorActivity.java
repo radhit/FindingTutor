@@ -26,6 +26,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.manajemeninformasi.riska.findingtutor.setting.Connect;
+import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +38,7 @@ public class GeneratorActivity extends AppCompatActivity {
     Button gen_btn, batal_btn;
     ImageView image;
     String s;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class GeneratorActivity extends AppCompatActivity {
         batal_btn =(Button) findViewById(R.id.btnBatal);
         image = (ImageView) findViewById(R.id.image);
         s = getIntent().getStringExtra("QR_CODES");
+        db = new Database(this);
 
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try{
@@ -101,6 +104,8 @@ public class GeneratorActivity extends AppCompatActivity {
                                     public void onResponse(String response) {
                                         try {
                                             final JSONObject jsonObject = new JSONObject(response);
+                                            db.updateFlag("punish");
+                                            Log.d("flag", db.selectFlag());
                                             Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -117,6 +122,7 @@ public class GeneratorActivity extends AppCompatActivity {
                                     protected Map<String, String> getParams() throws AuthFailureError {
                                         Map<String, String> params = new HashMap<>();
                                         params.put("qr_codes", s);
+                                        params.put("jenis_user",db.getJenis());
                                         return params;
                                     }
                                 };

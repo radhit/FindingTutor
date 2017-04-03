@@ -232,11 +232,13 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         pembatalan(qrcode);
+                                        Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
                                     }
                                 }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         pembatalan(qrcode);
+                                        Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                         AlertDialog alert = altd.create();

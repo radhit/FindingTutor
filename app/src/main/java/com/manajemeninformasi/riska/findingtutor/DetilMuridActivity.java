@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,14 +92,54 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         biaya.setText(bundle.getString("biaya"));
         jarak.setText(String.valueOf(bundle.getFloat("jarak"))+" Km");
         durasi.setText(String.valueOf(bundle.getInt("durasi")));
+//        db.updateFlag("free");
+        //Log.d("flag", db.selectFlag());
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transaksi();
+                if(db.selectFlag().equals("kosong"))
+                {
+                    transaksi();
+
+                } else if (db.selectFlag().equals("punish"))
+                    waktu();
             }
         });
 
+    }
+
+    private void waktu() {
+        Toast.makeText(this, "Terkena Punish", Toast.LENGTH_SHORT).show();
+        final CountDownTimer countDownTimer = new CountDownTimer(10 * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long hour = millisUntilFinished / 3600000;
+                long sisaHour = millisUntilFinished % 3600000;
+
+                long minute = sisaHour / 60000;
+                long sisaMinute = sisaHour % 60000;
+
+
+                long second = sisaMinute / 1000;
+                //textView.setText(hour+":"+minute+":"+second);
+
+//                if(second%5 == 0) {
+//                    Log.d("jalan","jalan");
+//                    //getData(tes,3);
+//                }
+
+                //tombol(tes);
+            }
+
+            @Override
+            public void onFinish() {
+                db.updateFlag(null);
+                Log.d("flag sekarang ", db.selectFlag());
+                //getData(tes,2);
+
+            }
+        }; countDownTimer.start();
     }
 
 
