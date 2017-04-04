@@ -10,6 +10,21 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.manajemeninformasi.riska.findingtutor.setting.Connect;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class RatingActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private TextView tvnama, tvpelajaran, tvtanggal, tvbiaya;
@@ -47,14 +62,45 @@ public class RatingActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RatingActivity.this, "Id:"+bundle.getString("id")+"Rating: "+ratingBar.getRating()+"komentar:"+etkomentar.getText().toString(), Toast.LENGTH_SHORT).show();
+                rating(bundle.getInt("id"), ratingBar.getRating(), etkomentar.getText().toString());
+                //Toast.makeText(RatingActivity.this, "Id:"+bundle.getInt("id")+"Rating: "+ratingBar.getRating()+"komentar:"+etkomentar.getText().toString(), Toast.LENGTH_SHORT).show();
                 Log.d("data = ",String.valueOf(ratingBar.getRating()));
                 //submitRating();
             }
         });
     }
 
-    private void submitRating() {
-
+    private void rating(final int id, final float rating, final String komentar) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.RATING,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id",String.valueOf(id));
+                params.put("rating",String.valueOf(rating));
+                params.put("komentar", komentar);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

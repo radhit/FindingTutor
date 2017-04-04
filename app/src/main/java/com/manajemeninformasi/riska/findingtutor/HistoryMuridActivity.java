@@ -43,15 +43,10 @@ public class HistoryMuridActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lvhistorymurid);
         database = new Database(this);
         username = database.getUsername();
-
-        historyMuridDatas = new ArrayList<>();
-        getHistory(username);
-        mAdapter = new HistoryMuridAdapter(this, 0, historyMuridDatas);
-        listView.setAdapter(mAdapter);
-
     }
 
     private void getHistory(final String username) {
+        historyMuridDatas = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.HISTORYMURID, new Response.Listener<String>() {
             @Override
@@ -77,6 +72,8 @@ public class HistoryMuridActivity extends AppCompatActivity {
                                     objectHistory.getString("komentar"));
                             historyMuridDatas.add(dataMurid);
                         }
+                        mAdapter = new HistoryMuridAdapter(HistoryMuridActivity.this, 0, historyMuridDatas);
+                        listView.setAdapter(mAdapter);
                     }
                     mAdapter.notifyDataSetChanged();
 
@@ -101,4 +98,11 @@ public class HistoryMuridActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    protected void onResume() {
+        getHistory(username);
+        super.onResume();
+    }
+
 }

@@ -180,8 +180,14 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                     if (finalHargaawal.isNaN()){
                         bundle.putString("biaya", "Transaksi Tidak Valid");
                     } else{
-                        Integer hargaakhir = finalHargaawal.intValue();
+                        String biayaDatabase = dataMurid.getBiaya_pencarian();
+                        Double hargaFix = finalHargaawal + Double.parseDouble(biayaDatabase);
+                        Integer hargaakhir = hargaFix.intValue();
                         hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
+//                        Integer hargaakhir = hargaFix.intValue();
+
+//                        Integer hargaakhir = finalHargaawal.intValue();
+//                        hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
                         bundle.putString("biaya", String.valueOf(hargaakhir));
                     }
 

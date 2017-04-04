@@ -170,7 +170,10 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                     public void onResponse(String response) {
                                         try {
                                             final JSONObject jsonObject = new JSONObject(response);
+                                            Log.d("masuk sini", response);
                                             Toast.makeText(TransaksiMuridActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                                            db.updateFlag("punish");
+
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -184,8 +187,8 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
                                         Map<String, String> params = new HashMap<>();
-                                        params.put("qr_codes", qrcode
-                                        );
+                                        params.put("qr_codes", qrcode);
+                                        params.put("jenis_user",db.getJenis());
                                         return params;
                                     }
                                 };
@@ -193,8 +196,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 requestQueue.add(stringRequest);
 
                                 countDownTimer.cancel();
-                                Intent genIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
-                                startActivity(genIntent);
                                 finish();
                             }
                         })

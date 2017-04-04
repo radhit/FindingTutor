@@ -53,10 +53,7 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
 
         username = db.getUsername();
         listView = (ListView) findViewById(R.id.lvkeahlian);
-        keahlianTutorDataList = new ArrayList<>();
-        getKeahlianByUsername(username);
-        mAdapter = new KeahlianTutorAdapter(this, 0, keahlianTutorDataList);
-        listView.setAdapter(mAdapter);
+
 
         back = (Button) findViewById(R.id.btnback);
         add = (Button) findViewById(R.id.btnadd);
@@ -96,6 +93,7 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
     }
     public void getKeahlianByUsername(final String Username)
     {
+        keahlianTutorDataList = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.GETDATAKEAHLIAN_URL, new Response.Listener<String>() {
             @Override
@@ -118,6 +116,9 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
 
                             keahlianTutorDataList.add(dataKeahlian);
                         }
+
+                        mAdapter = new KeahlianTutorAdapter(KeahlianTutorActivity.this, 0, keahlianTutorDataList);
+                        listView.setAdapter(mAdapter);
                     }
                     mAdapter.notifyDataSetChanged();
                     swipe.setRefreshing(false);
@@ -150,8 +151,8 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
     }
 
     @Override
-    protected void onPostResume() {
+    protected void onResume() {
         getKeahlianByUsername(username);
-        super.onPostResume();
+        super.onResume();
     }
 }

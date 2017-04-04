@@ -130,8 +130,6 @@ public class GeneratorActivity extends AppCompatActivity {
                                 requestQueue.add(stringRequest);
 
                                 countDownTimer.cancel();
-                                Intent genIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
-                                startActivity(genIntent);
                                 finish();
                             }
                         })

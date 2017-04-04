@@ -23,8 +23,10 @@ public class Connect {
     public static final String TRANSAKSIMURID = ROOT_URL+"transaksimurid_controller";
     public static final String HISTORYMURID = ROOT_URL+"historymurid_controller";
     public static final String HISTORYTUTOR = ROOT_URL+"historytutor_controller";
+    public static final String ADDHISTORY = ROOT_URL+"addhistory_controller";
     public static final String DELETETRANSAKSI = ROOT_URL+"deleteTransaksi_controller";
     public static final String CANCELTRANSAKSI = ROOT_URL+"cancelTransaksi_controller";
+    public static final String RATING = ROOT_URL+"rating_controller";
     public static final String PUNISHTUTOR = ROOT_URL+"punishTutor_controller";
     public static final String PUNISHMURID = ROOT_URL+"punishMurid_controller";
 }
