@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
 public class HomeTutorActivity extends AppCompatActivity {
-    Button cari, keahlian, profile;
+    Button cari, keahlian, profile, history;
     private Database db;
 
     @Override
@@ -24,6 +24,7 @@ public class HomeTutorActivity extends AppCompatActivity {
         cari = (Button) findViewById(R.id.btncari);
         keahlian = (Button) findViewById(R.id.btnkeahlian);
         profile = (Button) findViewById(R.id.btnprofile);
+        history = (Button) findViewById(R.id.btnhistory);
         cari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +41,12 @@ public class HomeTutorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toIntent(ProfileTutorActivity.class);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toIntent(HistoryTutorActivity.class);
             }
         });
     }

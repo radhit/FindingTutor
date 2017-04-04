@@ -310,7 +310,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         Calendar tanggalLes = Calendar.getInstance();
 
         tanggalLes.set(Calendar.DAY_OF_MONTH,tanggal);
-        tanggalLes.set(Calendar.MONTH,bulan);
+        tanggalLes.set(Calendar.MONTH,bulan-1);
         tanggalLes.set(Calendar.YEAR,tahun);
 
 

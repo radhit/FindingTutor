@@ -1,6 +1,8 @@
 package com.manajemeninformasi.riska.findingtutor.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -11,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.manajemeninformasi.riska.findingtutor.DetilMuridActivity;
+import com.manajemeninformasi.riska.findingtutor.GeneratorActivity;
 import com.manajemeninformasi.riska.findingtutor.R;
+import com.manajemeninformasi.riska.findingtutor.RatingActivity;
 import com.manajemeninformasi.riska.findingtutor.model.HistoryMuridData;
 import com.manajemeninformasi.riska.findingtutor.model.KeahlianTutorData;
 
@@ -23,13 +28,13 @@ import java.util.List;
 
 public class HistoryMuridAdapter extends ArrayAdapter<HistoryMuridData>{
     List<HistoryMuridData> historyData;
-    Context contextMurid;
+    Context contextHistory;
 
 
     public HistoryMuridAdapter(Context context, int resource, List<HistoryMuridData> objects) {
         super(context, resource, objects);
         this.historyData = objects;
-        this.contextMurid = context;
+        this.contextHistory = context;
     }
     private static class viewHolder
     {
@@ -66,7 +71,16 @@ public class HistoryMuridAdapter extends ArrayAdapter<HistoryMuridData>{
         viewHistory.btnrating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(contextHistory, RatingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",dataMurid.getId_history());
+                bundle.putString("nama_tutor", dataMurid.getNama_tutor());
+                bundle.putString("pelajaran", dataMurid.getPelajaran());
+                bundle.putString("tanggal", dataMurid.getTanggal());
+                bundle.putString("biaya", dataMurid.getBiaya());
+                bundle.putString("komentar",dataMurid.getKomentar());
+                intent.putExtra("bundle",bundle);
+                contextHistory.startActivity(intent);
             }
         });
 

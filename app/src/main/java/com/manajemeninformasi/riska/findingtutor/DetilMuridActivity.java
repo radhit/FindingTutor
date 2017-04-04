@@ -284,6 +284,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
                 params.put("username_murid", bundle.getString("username"));
                 params.put("durasi", String.valueOf(bundle.getInt("durasi")));
                 params.put("qr_codes", String.valueOf(bundle.getInt("id"))+"-"+db.getUsername());
+                params.put("biaya_final", bundle.getString("biaya"));
                 return params;
             }
         };

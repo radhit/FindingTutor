@@ -10,4 +10,6 @@
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorButtonBack">#FC3535</color>
     <color name="colorButtonSubmit">#35ABFF</color>
+    <color name="colorRating">#ffd700</color>
+    <color name="colorRating2">#bda200</color>
 </resources>
