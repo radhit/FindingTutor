@@ -32,8 +32,8 @@ import java.util.Map;
 public class TransaksiMuridActivity extends AppCompatActivity {
     private Button scan, back, cancel;
     private Database db;
-    private String namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, qrcode;
-    private TextView tvnama, tvalamat, tvusia, tvtelp, tvpelajaran, tvdurasi;
+    private String namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, qrcode, biaya;
+    private TextView tvnama, tvalamat, tvusia, tvtelp, tvpelajaran, tvdurasi, tvbiaya;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         tvtelp = (TextView) findViewById(R.id.tvnotelp);
         tvpelajaran = (TextView) findViewById(R.id.tvpelajaran);
         tvdurasi = (TextView) findViewById(R.id.tvdurasi);
+        tvbiaya = (TextView) findViewById(R.id.tvbiaya);
         scan = (Button) findViewById(R.id.btnscan);
         back = (Button) findViewById(R.id.btnback);
         cancel = (Button) findViewById(R.id.btncancel);
@@ -83,7 +84,9 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 telpTutor = "-";
                                 pelajaran = "-";
                                 durasi = "-";
-                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi);
+                                biaya = "-";
+
+                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
                                 Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
                             }
                             else {
@@ -93,6 +96,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 JSONObject objecttransaksi = arraytransaksi.getJSONObject(0);
                                 durasi = String.valueOf(objecttransaksi.getInt("durasi_pencarian"));
                                 pelajaran = objecttransaksi.getString("pelajaran_pencarian");
+                                biaya = objecttransaksi.getString("biayatutor_pencarian");
 
                                 JSONArray arraydatatutor = jsonObject.getJSONArray("data_tutor");
                                 JSONObject objectdata = arraydatatutor.getJSONObject(0);
@@ -102,7 +106,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 telpTutor = objectdata.getString("telp_user");
 
 
-                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi);
+                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
                                 waktu(qrcode);
                             }
 
@@ -300,13 +304,15 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setView(String namaTutor, String alamatTutor, String usiaTutor, String telpTutor, String pelajaran, String durasi) {
+    private void setView(String namaTutor, String alamatTutor, String usiaTutor, String telpTutor, String pelajaran, String durasi, String biaya) {
         tvnama.setText(namaTutor);
         tvalamat.setText(alamatTutor);
         tvusia.setText(usiaTutor);
         tvtelp.setText(telpTutor);
         tvpelajaran.setText(pelajaran);
         tvdurasi.setText(durasi);
+        tvbiaya.setText(biaya);
+//        Log.d("biaya", biaya);
     }
 
     public void toIntent(Class x)

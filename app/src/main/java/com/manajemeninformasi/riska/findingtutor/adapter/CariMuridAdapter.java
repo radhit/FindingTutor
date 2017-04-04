@@ -118,7 +118,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
 
         Calendar tanggalLes = Calendar.getInstance();
         tanggalLes.set(Calendar.DAY_OF_MONTH,tanggal);
-        tanggalLes.set(Calendar.MONTH,bulan);
+        tanggalLes.set(Calendar.MONTH,bulan-1);
         tanggalLes.set(Calendar.YEAR,tahun);
 
         long diff = tanggalLes.getTimeInMillis()-today.getTimeInMillis();
@@ -147,6 +147,8 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         } else if(jarak.getjarak() > 15000 ){
             hargaawal = hargaawal + 20000;
         }
+
+
         ///////////////
 
         if(ConvertView == null)
@@ -160,7 +162,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
 
             Button detil = (Button) ConvertView.findViewById(R.id.btndetil);
             detil.setTag(position);
-            final double finalHargaawal = hargaawal;
+            final Double finalHargaawal = hargaawal;
             detil.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -175,7 +177,14 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                     bundle.putString("tanggal", dataMurid.getTanggal_pencarian());
                     bundle.putString("hari", dataMurid.getHari_pencarian());
                     bundle.putString("jam", dataMurid.getJam_pencarian());
-                    bundle.putString("biaya", String.valueOf(finalHargaawal));
+                    if (finalHargaawal.isNaN()){
+                        bundle.putString("biaya", "Transaksi Tidak Valid");
+                    } else{
+                        Integer hargaakhir = finalHargaawal.intValue();
+                        hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
+                        bundle.putString("biaya", String.valueOf(hargaakhir));
+                    }
+
                     bundle.putFloat("jarak", dataMurid.getJarak_pencarian());
                     bundle.putInt("durasi", dataMurid.getDurasi());
                     detilMurid.putExtra("bundle",bundle);
