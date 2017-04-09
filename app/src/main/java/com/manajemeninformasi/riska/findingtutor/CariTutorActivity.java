@@ -50,11 +50,11 @@ import java.util.Map;
 
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
-    private Spinner spinner;
-    private EditText pelajaran, usia, durasi;
+    private Spinner spinnerKelas, spinnerDurasi;
+    private EditText pelajaran, usia;
     private RadioGroup jeniskelamin;
     private RadioButton jkTutor;
-    private String pilihKelas, flag, status;
+    private String pilihKelas, flag, status, pilihDurasi;
     private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis, getDurasi ;
     private DatePicker tanggal;
     private Calendar calendar;
@@ -73,11 +73,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         bundle = getIntent().getBundleExtra("bundle");
         status = db.selectFlag();
 
-        spinner = (Spinner) findViewById(R.id.spkelas);
-        spinner.setOnItemSelectedListener(this);
+
 
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
-        durasi = (EditText) findViewById(R.id.etdurasi);
         usia = (EditText) findViewById(R.id.etusia);
         usia.setText(bundle.getString("usia"));
         kriteriaJenis = bundle.getString("jeniskelamin");
@@ -115,9 +113,18 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         waktu = (TimePicker) findViewById(R.id.tpwaktu);
 
+        spinnerKelas = (Spinner) findViewById(R.id.spkelas);
+        spinnerKelas.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> kelasAdapter = ArrayAdapter.createFromResource(this, R.array.kelas, android.R.layout.simple_spinner_item);
         kelasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(kelasAdapter);
+        spinnerKelas.setAdapter(kelasAdapter);
+
+        spinnerDurasi = (Spinner) findViewById(R.id.spdurasi);
+        spinnerDurasi.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> durasiAdapter = ArrayAdapter.createFromResource(this, R.array.durasi, android.R.layout.simple_spinner_item);
+        durasiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDurasi.setAdapter(durasiAdapter);
+
 
         acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
         acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -157,7 +164,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 }
                 getKelas = pilihKelas;
                 getPelajaran = pelajaran.getText().toString();
-                getDurasi = durasi.getText().toString();
+                getDurasi = pilihDurasi;
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour() + ":" + waktu.getCurrentMinute();
                 getUsia = usia.getText().toString();
@@ -186,12 +193,31 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        pilihKelas = parent.getItemAtPosition(position).toString();
+
+        Spinner spin = (Spinner)parent;
+        Spinner spin2 = (Spinner)parent;
+        if(spin.getId() == R.id.spkelas)
+        {
+            pilihKelas = parent.getItemAtPosition(position).toString();
+        }
+        if(spin2.getId() == R.id.spdurasi)
+        {
+            pilihDurasi = parent.getItemAtPosition(position).toString();
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        //pilihKelas = "";
+        Spinner spin = (Spinner)parent;
+        Spinner spin2 = (Spinner)parent;
+        if(spin.getId() == R.id.spkelas)
+        {
+            pilihKelas = "SD - Kelas 1";
+        }
+        if(spin2.getId() == R.id.spdurasi)
+        {
+            pilihDurasi = "30 Menit";
+        }
     }
 
     private void cariTutor()
@@ -215,7 +241,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         getWaktu = jam+":"+menit;
         getJeniskelamin = jkTutor.getText().toString();
         getUsia = usia.getText().toString();
-        getDurasi = durasi.getText().toString();
+        getDurasi = pilihDurasi;
 
         if (toGetDay.equals("1"))
         {

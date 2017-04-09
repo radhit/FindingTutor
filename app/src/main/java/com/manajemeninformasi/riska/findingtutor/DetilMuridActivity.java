@@ -54,6 +54,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
     private Button accept;
     private Context context;
     private ProgressDialog progressDialog;
+    private Float jarakMurid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
 
         accept = (Button) findViewById(R.id.btnaccept);
 
+        jarakMurid = bundle.getFloat("jarak")/1000;
+
         nama.setText(bundle.getString("nama"));
         kelas.setText(bundle.getString("kelas"));
         pelajaran.setText(bundle.getString("pelajaran"));
@@ -90,7 +93,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         hari.setText(bundle.getString("hari"));
         jam.setText(bundle.getString("jam"));
         biaya.setText(bundle.getString("biaya"));
-        jarak.setText(String.valueOf(bundle.getFloat("jarak"))+" Km");
+        jarak.setText(String.format("%.2f",jarakMurid)+" Km");
         durasi.setText(String.valueOf(bundle.getInt("durasi")));
 //        db.updateFlag("free");
         //Log.d("flag", db.selectFlag());

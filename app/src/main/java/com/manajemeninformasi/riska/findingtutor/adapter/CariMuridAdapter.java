@@ -49,7 +49,8 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         final CariMuridData dataMurid = getItem(position);
         CariMuridAdapter.viewHolder viewMurid;
         Integer kesulitan=0;
-        double hargaawal = 0;
+        Double hargaawal;
+        Float jarakmurid;
 
 
         ////////////
@@ -157,7 +158,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
             ConvertView = LayoutInflater.from(getContext()).inflate(R.layout.design_cari_murid,parent,false);
             viewMurid.nama= (TextView) ConvertView.findViewById(R.id.tvnama);
             viewMurid.pelajaran = (TextView) ConvertView.findViewById(R.id.tvpelajaran);
-            viewMurid.jarak = (TextView) ConvertView.findViewById(R.id.tvbiaya);
+            viewMurid.jarak = (TextView) ConvertView.findViewById(R.id.tvjarak);
             ConvertView.setTag(viewMurid);
 
             Button detil = (Button) ConvertView.findViewById(R.id.btndetil);
@@ -201,9 +202,10 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         else {
             viewMurid = (CariMuridAdapter.viewHolder) ConvertView.getTag();
         }
+        jarakmurid = dataMurid.getJarak_pencarian()/1000;
         viewMurid.nama.setText(dataMurid.getNameuser_pencarian());
         viewMurid.pelajaran.setText(dataMurid.getPelajaran_pencarian());
-        viewMurid.jarak.setText(dataMurid.getJarak_pencarian().toString()+" Km");
+        viewMurid.jarak.setText(String.format("%.2f",jarakmurid)+" Km");
 
 
 //        viewMurid.biaya.setText(hargaawal + " ");

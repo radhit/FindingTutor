@@ -38,5 +38,12 @@
         <item>Sabtu</item>
         <item>Tidak Ada</item>
     </string-array>
+    <string name="pilih_durasi">Pilih Hari</string>
+    <string-array name="durasi">
+        <item>30 Menit</item>
+        <item>60 Menit</item>
+        <item>90 Menit</item>
+        <item>120 Menit</item>
+    </string-array>
     <string name="title_activity_detil_murid">Map</string>
 </resources>

@@ -28,14 +28,15 @@
                 android:textSize="18sp"
                 android:textStyle="italic"
                 android:id="@+id/tvpelajaran"/>
+
             <TextView
+                android:id="@+id/tvjarak"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Biaya"
+                android:text="Jarak"
                 android:textSize="16sp"
-                android:textStyle="italic"
-                android:id="@+id/tvbiaya"/>
+                android:textStyle="italic" />
         </LinearLayout>
         <Button
             android:layout_width="0dp"

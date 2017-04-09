@@ -76,12 +76,12 @@
                     android:layout_height="wrap_content"
                     android:text="Duration"
                     android:textSize="20sp"/>
-                <EditText
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etdurasi"
-                    android:hint="Dalam Menit"
-                    android:inputType="number"/>
+                    android:id="@+id/spdurasi"
+                    android:entries="@array/durasi"
+                    android:prompt="@string/pilih_durasi"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

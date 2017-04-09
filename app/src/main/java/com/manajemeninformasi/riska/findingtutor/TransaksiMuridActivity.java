@@ -62,11 +62,11 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                 finish();
             }
         });
-        transaksi(db.getUsername());
+        getTransaksi(db.getUsername());
 
     }
 
-    private void transaksi(final String username) {
+    private void getTransaksi(final String username) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TRANSAKSIMURID,
                 new Response.Listener<String>() {
                     @Override
@@ -224,8 +224,8 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                     if (status.equals("0") && temp==2) {
                         Toast.makeText(TransaksiMuridActivity.this, "Pentutor tidak datang dalam kurun waktu yang telah ditentukan!", Toast.LENGTH_SHORT).show();
                         Toast.makeText(TransaksiMuridActivity.this, " Transaksi dibatalkan!", Toast.LENGTH_SHORT).show();
-                        Intent aIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
-                        startActivity(aIntent);
+//                        Intent aIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
+//                        startActivity(aIntent);
                         finish();
                     }
 
@@ -236,13 +236,13 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        pembatalan(qrcode);
+                                        hapusTransaksi(qrcode);
                                         Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
                                     }
                                 }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                pembatalan(qrcode);
+                                hapusTransaksi(qrcode);
                                 Toast.makeText(TransaksiMuridActivity.this, "Pesanan anda sedang di proses ulang", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -273,7 +273,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
 
     }
 
-    private void pembatalan(final String qrcode) {
+    private void hapusTransaksi(final String qrcode) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -320,5 +320,10 @@ public class TransaksiMuridActivity extends AppCompatActivity {
     {
         Intent myintent = new Intent(getBaseContext(),x);
         startActivityForResult(myintent,0);
+    }
+    @Override
+    protected void onResume() {
+        getTransaksi(db.getUsername());
+        super.onResume();
     }
 }
