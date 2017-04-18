@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".7"
+        android:text="pelajaran"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:id="@+id/tvpelajaran"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".4"
+        android:text="tutor"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:id="@+id/tvtutor"/>
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".3"
+        android:background="@color/cast_intro_overlay_button_background_color"
+        android:text="detil"
+        android:textColor="@color/zxing_status_text"
+        android:id="@+id/btndetil"/>
+
+</LinearLayout>

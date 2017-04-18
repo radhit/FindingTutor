@@ -15,9 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.manajemeninformasi.riska.findingtutor.adapter.HistoryTutorAdapter;
-import com.manajemeninformasi.riska.findingtutor.model.HistoryMuridData;
-import com.manajemeninformasi.riska.findingtutor.model.HistoryTutorData;
+import com.manajemeninformasi.riska.findingtutor.adapter.ListTransaksiMuridAdapter;
+import com.manajemeninformasi.riska.findingtutor.model.ListTransaksiMuridData;
 import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
@@ -30,26 +29,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HistoryTutorActivity extends AppCompatActivity {
+public class ListTransaksiMuridActivity extends AppCompatActivity {
     private ListView listView;
     private Database database;
     private String username;
-    private List<HistoryTutorData> historyTutorDataList;
-    private HistoryTutorAdapter mAdapter;
+    private List<ListTransaksiMuridData> listTransaksiMuridDatas;
+    private ListTransaksiMuridAdapter mAdapter;
     private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_tutor);
-        listView = (ListView) findViewById(R.id.lvhistorymurid);
+        setContentView(R.layout.activity_list_transaksi_murid);
+        listView = (ListView) findViewById(R.id.lvtransaksimurid);
         database = new Database(this);
         username = database.getUsername();
-
-        historyTutorDataList = new ArrayList<>();
-        getHistory(username);
-        mAdapter = new HistoryTutorAdapter(this, 0, historyTutorDataList);
-        listView.setAdapter(mAdapter);
         back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +53,16 @@ public class HistoryTutorActivity extends AppCompatActivity {
         });
     }
 
-    private void getHistory(final String username) {
+    @Override
+    protected void onResume() {
+        getTransaksi(username);
+        super.onResume();
+    }
+
+    private void getTransaksi(final String username) {
+        listTransaksiMuridDatas = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                Connect.HISTORYTUTOR, new Response.Listener<String>() {
+                Connect.LISTTRANSAKSIMURID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("coba", response);
@@ -69,17 +70,29 @@ public class HistoryTutorActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.length() > 0)
                     {
-                        JSONArray arrayHistory = jsonObject.getJSONArray("result");
-                        for (int i=0; i< arrayHistory.length();i++)
+                        JSONObject arrayTransaksi = jsonObject.getJSONObject("result");
+                        Log.d("result", arrayTransaksi.toString());
+                        String message = arrayTransaksi.getString("message");
+                        Log.d("lala", message);
+                        if (message.equals("Tidak ada transaksi sedang berjalan"))
                         {
-                            JSONObject objectHistory = arrayHistory.getJSONObject(i);
-                            HistoryTutorData dataTutor = new HistoryTutorData(
-                                    objectHistory.getInt("id_history"),
-                                    objectHistory.getString("tanggal"),
-                                    objectHistory.getString("rating"),
-                                    objectHistory.getString("komentar"));
-                            historyTutorDataList.add(dataTutor);
+                            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                         }
+                        JSONArray arrayListTransaksi = arrayTransaksi.getJSONArray("list");
+
+                        for (int i=0; i< arrayListTransaksi.length();i++)
+                        {
+                            JSONObject objectTransaksi = arrayListTransaksi.getJSONObject(i);
+                            ListTransaksiMuridData dataTransaksi = new ListTransaksiMuridData(
+                                    objectTransaksi.getInt("id_transaksi"),
+                                    objectTransaksi.getInt("id_pencariantutor"),
+                                    objectTransaksi.getString("pelajaran"),
+                                    objectTransaksi.getString("nama_tutor"),
+                                    objectTransaksi.getString("username_murid"));
+                            listTransaksiMuridDatas.add(dataTransaksi);
+                        }
+                        mAdapter = new ListTransaksiMuridAdapter(ListTransaksiMuridActivity.this, 0, listTransaksiMuridDatas);
+                        listView.setAdapter(mAdapter);
                     }
                     mAdapter.notifyDataSetChanged();
 
@@ -103,5 +116,6 @@ public class HistoryTutorActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
     }
 }

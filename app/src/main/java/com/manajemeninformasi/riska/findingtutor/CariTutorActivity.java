@@ -365,6 +365,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         hargaawal = fuzzy.defuzzyfikasi();
         Double hargafix = hargaawal+Double.parseDouble(flag);
 
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         alertDialogBuilder.setTitle("Konfirmasi");

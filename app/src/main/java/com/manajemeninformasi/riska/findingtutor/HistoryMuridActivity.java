@@ -3,6 +3,8 @@ package com.manajemeninformasi.riska.findingtutor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class HistoryMuridActivity extends AppCompatActivity {
     private String username;
     private List<HistoryMuridData> historyMuridDatas;
     private HistoryMuridAdapter mAdapter;
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,13 @@ public class HistoryMuridActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lvhistorymurid);
         database = new Database(this);
         username = database.getUsername();
+        back = (Button) findViewById(R.id.btnback);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getHistory(final String username) {

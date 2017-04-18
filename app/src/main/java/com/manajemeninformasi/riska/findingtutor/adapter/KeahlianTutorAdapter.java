@@ -44,15 +44,6 @@ public class KeahlianTutorAdapter extends ArrayAdapter<KeahlianTutorData> {
             viewKeahlian.kelas = (TextView) ConvertView.findViewById(R.id.tvkelas);
             ConvertView.setTag(viewKeahlian);
 
-            Button delete = (Button) ConvertView.findViewById(R.id.btndelete);
-            delete.setTag(position);
-            delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
         }
         else {
             viewKeahlian = (viewHolder) ConvertView.getTag();

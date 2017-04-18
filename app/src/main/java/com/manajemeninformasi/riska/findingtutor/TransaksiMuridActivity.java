@@ -34,11 +34,14 @@ public class TransaksiMuridActivity extends AppCompatActivity {
     private Database db;
     private String namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, qrcode, biaya;
     private TextView tvnama, tvalamat, tvusia, tvtelp, tvpelajaran, tvdurasi, tvbiaya;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaksi_murid);
+        bundle = getIntent().getBundleExtra("bundle");
+
         tvnama = (TextView) findViewById(R.id.tvnama);
         tvalamat = (TextView) findViewById(R.id.tvalamat);
         tvusia = (TextView) findViewById(R.id.tvusia);
@@ -49,7 +52,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         scan = (Button) findViewById(R.id.btnscan);
         back = (Button) findViewById(R.id.btnback);
         cancel = (Button) findViewById(R.id.btncancel);
-        db = new Database(this);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,11 +64,11 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                 finish();
             }
         });
-        getTransaksi(db.getUsername());
+        getTransaksi(bundle.getInt("id"));
 
     }
 
-    private void getTransaksi(final String username) {
+    private void getTransaksi(final Integer id) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TRANSAKSIMURID,
                 new Response.Listener<String>() {
                     @Override
@@ -74,22 +76,22 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.d("respon :", jsonObject.toString());
-                            String message = jsonObject.getString("message");
-                            Log.d("lala", message);
-                            if (message.equals("Tidak ada transaksi sedang berjalan"))
-                            {
-                                namaTutor = "-";
-                                alamatTutor = "-";
-                                usiaTutor = "-";
-                                telpTutor = "-";
-                                pelajaran = "-";
-                                durasi = "-";
-                                biaya = "-";
-
-                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
-                                Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
-                            }
-                            else {
+//                            String message = jsonObject.getString("message");
+//                            Log.d("lala", message);
+//                            if (message.equals("Tidak ada transaksi sedang berjalan"))
+//                            {
+//                                namaTutor = "-";
+//                                alamatTutor = "-";
+//                                usiaTutor = "-";
+//                                telpTutor = "-";
+//                                pelajaran = "-";
+//                                durasi = "-";
+//                                biaya = "-";
+//
+//                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
+//                                Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
+////                            }
+//                            else {
                                 qrcode = jsonObject.getString("data_transaksi");
 
                                 JSONArray arraytransaksi = jsonObject.getJSONArray("transaksi");
@@ -108,7 +110,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
 
                                 setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
                                 waktu(qrcode);
-                            }
+                            //}
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -126,7 +128,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id",String.valueOf(id));
                 return params;
             }
         };
@@ -323,7 +325,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
     }
     @Override
     protected void onResume() {
-        getTransaksi(db.getUsername());
+        getTransaksi(bundle.getInt("id"));
         super.onResume();
     }
 }

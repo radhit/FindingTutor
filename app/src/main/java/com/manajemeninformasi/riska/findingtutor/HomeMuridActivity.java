@@ -79,7 +79,7 @@ public class HomeMuridActivity extends AppCompatActivity {
         transaksi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toIntent(TransaksiMuridActivity.class);
+                toIntent(ListTransaksiMuridActivity.class);
             }
         });
         history.setOnClickListener(new View.OnClickListener() {
