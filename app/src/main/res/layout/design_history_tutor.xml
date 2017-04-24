@@ -59,7 +59,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                app:srcCompat="@android:drawable/stat_notify_chat" />
+                app:srcCompat="@android:drawable/sym_action_chat" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
