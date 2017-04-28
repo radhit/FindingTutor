@@ -134,7 +134,7 @@ public class CariMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",db.getIduser());
                 params.put("kriteria",bundle.getString("kriteria"));
                 return params;
             }
@@ -182,7 +182,7 @@ public class CariMuridActivity extends AppCompatActivity {
                         Log.d("jarak",getJarak.toString());
                         CariMuridData dataMurid = new
                                 CariMuridData(objectJarak.getInt("id"),
-                                objectJarak.getString("username"),
+                                objectJarak.getInt("id_user"),
                                 objectJarak.getString("name"),
                                 objectJarak.getString("kelas"),
                                 objectJarak.getString("pelajaran"),
@@ -194,7 +194,6 @@ public class CariMuridActivity extends AppCompatActivity {
                                 getJarak,
                                 objectJarak.getInt("durasi"));
                         cariMuridDataList.add(dataMurid);
-                        Log.d("durasi", String.valueOf(objectJarak.getInt("durasi")));
                     }
                     if (bundle.getString("kriteria").matches("jarak")) {
                         mAdapter.sort(new Comparator<CariMuridData>() {

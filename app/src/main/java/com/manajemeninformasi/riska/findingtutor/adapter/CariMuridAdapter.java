@@ -170,7 +170,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                     Intent detilMurid =  new Intent(contextMurid,DetilMuridActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("id",dataMurid.getId_pencarian());
-                    bundle.putString("username",dataMurid.getUsername_pencarian());
+                    bundle.putInt("id_user",dataMurid.getIduser_pencarian());
                     bundle.putString("nama", dataMurid.getNameuser_pencarian());
                     bundle.putString("kelas", dataMurid.getKelas_pencarian());
                     bundle.putString("pelajaran", dataMurid.getPelajaran_pencarian());

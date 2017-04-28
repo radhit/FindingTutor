@@ -32,7 +32,7 @@ import java.util.Map;
 public class HomeMuridActivity extends AppCompatActivity {
     Button cari, profile, transaksi, history;
     private Database db;
-    private String id, username, jeniskelamin, usia, usernamedb;
+    private String jeniskelamin, usia;
     private Intent myIntent;
 
     @Override
@@ -40,7 +40,6 @@ public class HomeMuridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_murid);
         db = new Database(this);
-        usernamedb = db.getUsername();
         usia = "";
         jeniskelamin = "";
 
@@ -101,8 +100,8 @@ public class HomeMuridActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray arrayKriteria = jsonObject.getJSONArray("result");
                     JSONObject objectKriteria = arrayKriteria.getJSONObject(0);
-                    id = objectKriteria.getString("id");
-                    username = objectKriteria.getString("username");
+//                    id = objectKriteria.getString("id");
+//                    id_user = objectKriteria.getString("username");
                     jeniskelamin = objectKriteria.getString("jeniskelamin");
                     usia = objectKriteria.getString("usia");
 
@@ -127,7 +126,7 @@ public class HomeMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",usernamedb);
+                params.put("id_user",db.getIduser());
                 return params;
             }
         };
@@ -158,7 +157,7 @@ public class HomeMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",usernamedb);
+                params.put("id_user",db.getIduser());
                 return params;
             }
         };

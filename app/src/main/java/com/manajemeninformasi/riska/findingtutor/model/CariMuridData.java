@@ -6,7 +6,7 @@ package com.manajemeninformasi.riska.findingtutor.model;
 
 public class CariMuridData {
     private Integer id_pencarian;
-    private String username_pencarian;
+    private Integer iduser_pencarian;
     private String nameuser_pencarian;
     private String kelas_pencarian;
     private String pelajaran_pencarian;
@@ -18,11 +18,11 @@ public class CariMuridData {
     private Float jarak_pencarian;
     private Integer durasi;
 
-    public CariMuridData(Integer id, String username, String name, String kelas, String pelajaran, String alamat,
+    public CariMuridData(Integer id, Integer id_user, String name, String kelas, String pelajaran, String alamat,
                          String tanggal, String hari, String jam, String biaya, Float jarak, Integer durasi)
     {
         this.id_pencarian = id;
-        this.username_pencarian = username;
+        this.iduser_pencarian = id_user;
         this.nameuser_pencarian = name;
         this.kelas_pencarian = kelas;
         this.pelajaran_pencarian = pelajaran;
@@ -59,13 +59,20 @@ public class CariMuridData {
         this.id_pencarian = id_pencarian;
     }
 
-    public String getUsername_pencarian() {
-        return username_pencarian;
+    public Integer getIduser_pencarian() {
+        return iduser_pencarian;
     }
 
-    public void setUsername_pencarian(String username_pencarian) {
-        this.username_pencarian = username_pencarian;
+    public void setIduser_pencarian(Integer iduser_pencarian) {
+        this.iduser_pencarian = iduser_pencarian;
     }
+    //    public String getUsername_pencarian() {
+//        return username_pencarian;
+//    }
+//
+//    public void setUsername_pencarian(String username_pencarian) {
+//        this.username_pencarian = username_pencarian;
+//    }
 
     public String getNameuser_pencarian() {
         return nameuser_pencarian;

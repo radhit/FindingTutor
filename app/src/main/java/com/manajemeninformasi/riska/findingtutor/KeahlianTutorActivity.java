@@ -37,7 +37,6 @@ import java.util.Map;
 public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
     Button back, add;
     private Database db;
-    private String username;
     private ListView listView;
     private List<KeahlianTutorData> keahlianTutorDataList;
     private KeahlianTutorAdapter mAdapter;
@@ -51,7 +50,6 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
         db = new Database(this);
         swipe = (SwipeRefreshLayout) findViewById(R.id.swipe);
 
-        username = db.getUsername();
         listView = (ListView) findViewById(R.id.lvkeahlian);
 
 
@@ -91,7 +89,7 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
         Intent myintent = new Intent(getBaseContext(),x);
         startActivityForResult(myintent,0);
     }
-    public void getKeahlianByUsername(final String Username)
+    public void getKeahlianByUsername(final String Id_user)
     {
         keahlianTutorDataList = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -109,10 +107,8 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
                             JSONObject objectKeahlian = arrayKeahlian.getJSONObject(i);
                             KeahlianTutorData dataKeahlian =
                                     new KeahlianTutorData(objectKeahlian.getInt("id"),
-                                            objectKeahlian.getString("username"),
                                             objectKeahlian.getString("kelas"),
                                             objectKeahlian.getString("pelajaran"));
-                            Log.d("coba2",objectKeahlian.getString("username"));
 
                             keahlianTutorDataList.add(dataKeahlian);
                         }
@@ -137,7 +133,7 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",Username);
+                params.put("id_user",Id_user);
                 return params;
             }
         };
@@ -147,12 +143,12 @@ public class KeahlianTutorActivity extends AppCompatActivity implements SwipeRef
 
     @Override
     public void onRefresh() {
-        getKeahlianByUsername(username);
+        getKeahlianByUsername(db.getIduser());
     }
 
     @Override
     protected void onResume() {
-        getKeahlianByUsername(username);
+        getKeahlianByUsername(db.getIduser());
         super.onResume();
     }
 }

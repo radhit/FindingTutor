@@ -40,7 +40,6 @@ public class ProfileMuridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_murid);
         db = new Database(this);
-        username = db.getUsername();
         jenis = db.getJenis();
 
         tvnama = (TextView) findViewById(R.id.tvnama);
@@ -48,7 +47,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
         tvtelp = (TextView) findViewById(R.id.tvnotelp);
         tvemail = (TextView) findViewById(R.id.tvemail);
 
-        getProfileMurid(username);
+        getProfileMurid(db.getIduser());
         back = (Button) findViewById(R.id.btnback);
         edit = (Button) findViewById(R.id.btnedit);
         back.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
         finish();
         return super.onOptionsItemSelected(item);
     }
-    public void getProfileMurid(final String username)
+    public void getProfileMurid(final String id_user)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.PROFILE_URL, new Response.Listener<String>() {
@@ -114,7 +113,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",id_user);
                 params.put("jenis",jenis);
                 return params;
             }
@@ -132,7 +131,7 @@ public class ProfileMuridActivity extends AppCompatActivity {
     }
     @Override
     protected void onPostResume() {
-        getProfileMurid(username);
+        getProfileMurid(db.getIduser());
         super.onPostResume();
     }
 }

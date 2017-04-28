@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class TambahKeahlianTutorActivity extends AppCompatActivity {
     private Database db;
-    private Spinner kelas,hari;
+    private Spinner kelas;
     private String pilihKelas;
     private EditText pelajaran;
     private ProgressDialog progressDialog;
@@ -59,7 +59,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cekkelas, cekpelajaran, cekketersediaan;
+                String cekkelas, cekpelajaran;
                 cekkelas = pilihKelas;
                 cekpelajaran = pelajaran.getText().toString();
                 if(cekkelas.matches("") || cekpelajaran.matches(""))
@@ -109,8 +109,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
 
     private void tambahKeahlian()
     {
-        final String stringUsername, stringKelas, stringPelajaran;
-        stringUsername = db.getUsername();
+        final String stringKelas, stringPelajaran;
         stringKelas = pilihKelas;
         stringPelajaran = pelajaran.getText().toString();
         progressDialog.setMessage("Tambah Keahlian...");
@@ -140,7 +139,7 @@ public class TambahKeahlianTutorActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",stringUsername);
+                params.put("id_user",db.getIduser());
                 params.put("kelas",stringKelas);
                 params.put("pelajaran",stringPelajaran);
                 return params;

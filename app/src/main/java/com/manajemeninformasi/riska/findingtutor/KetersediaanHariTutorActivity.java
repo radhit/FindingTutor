@@ -38,7 +38,6 @@ public class KetersediaanHariTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ketersediaan_hari_tutor);
         db = new Database(this);
-        username = db.getUsername();
         progressDialog = new ProgressDialog(this);
         senin = (CheckBox) findViewById(R.id.cbsenin);
         selasa = (CheckBox) findViewById(R.id.cbselasa);
@@ -119,7 +118,7 @@ public class KetersediaanHariTutorActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",db.getIduser());
                 params.put("hari",selectedDay.toString());
                 return params;
             }

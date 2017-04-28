@@ -145,7 +145,7 @@ public class EditProfileMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",db.getIduser());
                 params.put("nama",nama);
                 params.put("alamat",alamat);
                 params.put("telp",notelp);

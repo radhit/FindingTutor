@@ -32,7 +32,7 @@ import java.util.Map;
 public class ProfileTutorActivity extends AppCompatActivity {
     Button back, edit;
     private Database db;
-    private String username, jenis;
+    private String jenis;
     private String nama,alamat,notelp,email,hari="";
     private TextView tvnama, tvalamat, tvtelp, tvemail, tvhari;
 
@@ -41,9 +41,8 @@ public class ProfileTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_tutor);
         db = new Database(this);
-        username = db.getUsername();
         jenis = db.getJenis();
-        getProfileTutor(username);
+        getProfileTutor(db.getIduser());
 
         tvnama = (TextView) findViewById(R.id.tvnama);
         tvalamat = (TextView) findViewById(R.id.tvalamat);
@@ -87,7 +86,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
         finish();
         return super.onOptionsItemSelected(item);
     }
-    public void getProfileTutor(final String username)
+    public void getProfileTutor(final String id_user)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.PROFILE_URL, new Response.Listener<String>() {
@@ -126,7 +125,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",id_user);
                 params.put("jenis",jenis);
                 return params;
             }
@@ -145,7 +144,7 @@ public class ProfileTutorActivity extends AppCompatActivity {
     }
     @Override
     protected void onResume() {
-        getProfileTutor(username);
+        getProfileTutor(db.getIduser());
         super.onResume();
     }
 }

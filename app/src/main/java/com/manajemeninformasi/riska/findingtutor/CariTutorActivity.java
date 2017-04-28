@@ -407,7 +407,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                             @Override
                             protected Map<String, String> getParams() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<>();
-                                params.put("username",getUsername);
+                                params.put("id_user",db.getIduser());
                                 params.put("name",getNameuser);
                                 params.put("kelas",getKelas);
                                 params.put("pelajaran",getPelajaran);
