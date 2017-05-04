@@ -74,7 +74,7 @@ public class ReaderActivity extends AppCompatActivity {
                         finish();
                     } else if(jsonObject.getString("status").equals("2")){
                         Toast.makeText(ReaderActivity.this, "Transaksi telah Selesai Terima Kasih Telah Menggunakan Aplikasi Ini", Toast.LENGTH_SHORT).show();
-                        tambahHistory(contents);
+                        //tambahHistory(contents);
 //                        Intent gxIntent = new Intent(ReaderActivity.this, MainActivity.class);
 //                        startActivity(gxIntent);
                         finish();
@@ -100,33 +100,33 @@ public class ReaderActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void tambahHistory(final String qr_codes) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.ADDHISTORY, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    final JSONObject jsonObject = new JSONObject(response);
-                    Toast.makeText(ReaderActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //    progresDialog.hide();
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("qr_codes", qr_codes);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(ReaderActivity.this);
-        requestQueue.add(stringRequest);
-    }
+//    private void tambahHistory(final String qr_codes) {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.ADDHISTORY, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    final JSONObject jsonObject = new JSONObject(response);
+//                    Toast.makeText(ReaderActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        },new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                //    progresDialog.hide();
+//                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("qr_codes", qr_codes);
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(ReaderActivity.this);
+//        requestQueue.add(stringRequest);
+//    }
 
 }

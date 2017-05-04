@@ -34,7 +34,6 @@ import java.util.Map;
 public class HistoryMuridActivity extends AppCompatActivity {
     private ListView listView;
     private Database database;
-    private String username;
     private List<HistoryMuridData> historyMuridDatas;
     private HistoryMuridAdapter mAdapter;
     private Button back;
@@ -45,7 +44,6 @@ public class HistoryMuridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_murid);
         listView = (ListView) findViewById(R.id.lvhistorymurid);
         database = new Database(this);
-        username = database.getUsername();
         back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +53,7 @@ public class HistoryMuridActivity extends AppCompatActivity {
         });
     }
 
-    private void getHistory(final String username) {
+    private void getHistory(final String id_user) {
         historyMuridDatas = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.HISTORYMURID, new Response.Listener<String>() {
@@ -101,7 +99,7 @@ public class HistoryMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",id_user);
                 return params;
             }
         };
@@ -111,7 +109,7 @@ public class HistoryMuridActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        getHistory(username);
+        getHistory(database.getIduser());
         super.onResume();
     }
 

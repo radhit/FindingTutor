@@ -146,7 +146,6 @@ public class GeneratorActivity extends AppCompatActivity {
     }
 
     private void tombol(final String status) {
-        //getData(status);
         gen_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,21 +161,17 @@ public class GeneratorActivity extends AppCompatActivity {
             public void onResponse(String current_data) {
                 try {
                     final JSONObject jsonObject = new JSONObject(current_data);
-                    //String min = jsonObject.getString("min");
                     final String status = jsonObject.getString("status");
 
                     if (status.equals("0") && temp == 2) {
                         Toast.makeText(GeneratorActivity.this, "QR Codes gagal di scan dalam kurun waktu yang telah ditentukan!", Toast.LENGTH_SHORT).show();
                         Toast.makeText(GeneratorActivity.this, " Transaksi dibatalkan!", Toast.LENGTH_SHORT).show();
-//                        Intent aIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
-//                        startActivity(aIntent);
                         finish();
                     }
                     else if(temp == 1) {
                         if (status.equals("2")) {
                             Toast.makeText(GeneratorActivity.this, "Transaksi telah Selesai Terima Kasih Telah Menggunakan Aplikasi Ini", Toast.LENGTH_SHORT).show();
-//                            Intent tIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
-//                            startActivity(tIntent);
+                            tambahHistory(s);
                             hapusTransaksi(s);
                             finish();
                         } else {
@@ -191,11 +186,13 @@ public class GeneratorActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             hapusTransaksi(s);
+                                            finish();
                                         }
                                     }) .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     hapusTransaksi(s);
+                                    finish();
                                 }
                             });
                             AlertDialog alert = altd.create();
@@ -229,7 +226,33 @@ public class GeneratorActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
+    private void tambahHistory(final String qr_codes) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.ADDHISTORY, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    final JSONObject jsonObject = new JSONObject(response);
+                    Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("qr_codes", qr_codes);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
+        requestQueue.add(stringRequest);
+    }
     private void hapusTransaksi(final String s) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.DELETETRANSAKSI, new Response.Listener<String>() {
             @Override
@@ -257,9 +280,5 @@ public class GeneratorActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
         requestQueue.add(stringRequest);
-
-        Intent aIntent = new Intent(GeneratorActivity.this, HomeTutorActivity.class);
-        startActivity(aIntent);
-        finish();
     }
 }

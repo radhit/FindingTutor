@@ -9,15 +9,12 @@ public class ListTransaksiMuridData {
     private Integer id_pencariantutor;
     private String pelajaran;
     private String tutor;
-    private String username_murid;
-
-    public ListTransaksiMuridData(Integer id_transaksi, Integer id_pencariantutor, String pelajaran, String tutor, String username_murid)
+    public ListTransaksiMuridData(Integer id_transaksi, Integer id_pencariantutor, String pelajaran, String tutor)
     {
         this.id_transaksi = id_transaksi;
         this.id_pencariantutor = id_pencariantutor;
         this.pelajaran = pelajaran;
         this.tutor = tutor;
-        this.username_murid = username_murid;
     }
 
     public Integer getId_transaksi() {
@@ -50,13 +47,5 @@ public class ListTransaksiMuridData {
 
     public void setTutor(String tutor) {
         this.tutor = tutor;
-    }
-
-    public String getUsername_murid() {
-        return username_murid;
-    }
-
-    public void setUsername_murid(String username_murid) {
-        this.username_murid = username_murid;
     }
 }

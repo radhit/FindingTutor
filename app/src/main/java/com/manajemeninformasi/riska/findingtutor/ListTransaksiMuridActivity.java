@@ -32,7 +32,6 @@ import java.util.Map;
 public class ListTransaksiMuridActivity extends AppCompatActivity {
     private ListView listView;
     private Database database;
-    private String username;
     private List<ListTransaksiMuridData> listTransaksiMuridDatas;
     private ListTransaksiMuridAdapter mAdapter;
     private Button back;
@@ -43,7 +42,6 @@ public class ListTransaksiMuridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_transaksi_murid);
         listView = (ListView) findViewById(R.id.lvtransaksimurid);
         database = new Database(this);
-        username = database.getUsername();
         back = (Button) findViewById(R.id.btnback);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,11 +53,11 @@ public class ListTransaksiMuridActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        getTransaksi(username);
+        getTransaksi(database.getIduser());
         super.onResume();
     }
 
-    private void getTransaksi(final String username) {
+    private void getTransaksi(final String id_user) {
         listTransaksiMuridDatas = new ArrayList<>();
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Connect.LISTTRANSAKSIMURID, new Response.Listener<String>() {
@@ -87,8 +85,7 @@ public class ListTransaksiMuridActivity extends AppCompatActivity {
                                     objectTransaksi.getInt("id_transaksi"),
                                     objectTransaksi.getInt("id_pencariantutor"),
                                     objectTransaksi.getString("pelajaran"),
-                                    objectTransaksi.getString("nama_tutor"),
-                                    objectTransaksi.getString("username_murid"));
+                                    objectTransaksi.getString("nama_tutor"));
                             listTransaksiMuridDatas.add(dataTransaksi);
                         }
                         mAdapter = new ListTransaksiMuridAdapter(ListTransaksiMuridActivity.this, 0, listTransaksiMuridDatas);
@@ -110,7 +107,7 @@ public class ListTransaksiMuridActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("username",username);
+                params.put("id_user",id_user);
                 return params;
             }
         };
