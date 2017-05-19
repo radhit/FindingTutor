@@ -100,8 +100,6 @@ public class HomeMuridActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray arrayKriteria = jsonObject.getJSONArray("result");
                     JSONObject objectKriteria = arrayKriteria.getJSONObject(0);
-//                    id = objectKriteria.getString("id");
-//                    id_user = objectKriteria.getString("username");
                     jeniskelamin = objectKriteria.getString("jeniskelamin");
                     usia = objectKriteria.getString("usia");
 

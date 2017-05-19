@@ -225,7 +225,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         Log.d("jenis kelamin",kriteriaJenis);
         int selectedId = jeniskelamin.getCheckedRadioButtonId();
-
         jkTutor = (RadioButton) findViewById(selectedId);
         final String getUsername, getNameuser, jam, menit;
         getUsername = db.getUsername();
