@@ -139,7 +139,7 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
 //        Log.d("tk", tingkatKesulitan.getTingkatKesulitan() + " " + waktu.getWaktu() + " " + jarak.getjarak());
         fuzzy.hitungY();
 
-        hargaawal = fuzzy.defuzzyfikasi();
+        hargaawal = fuzzy.defuzzyfikasi()*dataMurid.getDurasi()/90;
         Log.d("hargaawal", fuzzy.defuzzyfikasi() + " ");
         if(jarak.getjarak() > 5000 && jarak.getjarak() <= 10000){
             hargaawal = hargaawal + 5000;

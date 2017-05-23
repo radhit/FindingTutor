@@ -363,7 +363,10 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         hargaawal = fuzzy.defuzzyfikasi();
         Double hargafix = hargaawal+Double.parseDouble(flag);
-
+        String durasi = spinnerDurasi.getSelectedItem().toString();
+        Integer jumlah = Integer.parseInt(durasi.split(" ")[0]);
+        Integer hargaakhir = hargafix.intValue()*jumlah/90;
+        hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
@@ -371,7 +374,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Estimasi Biaya Transaksi Anda sebesar : " + hargafix)
+                .setMessage("Estimasi Biaya Transaksi Anda sebesar : " + hargaakhir)
                 .setCancelable(false)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {

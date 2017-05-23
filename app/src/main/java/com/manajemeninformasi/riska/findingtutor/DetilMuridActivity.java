@@ -202,7 +202,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
                         List<LatLng> list = decodePoly(encodedString);
                         Polyline line = mMap.addPolyline(new PolylineOptions()
                                 .addAll(list)
-                                .width(15)
+                                .width(10)
                                 .color(Color.RED)
                                 .geodesic(true)
                         );

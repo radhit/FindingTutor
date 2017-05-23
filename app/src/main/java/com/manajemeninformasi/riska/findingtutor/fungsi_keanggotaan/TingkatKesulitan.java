@@ -7,11 +7,6 @@ package com.manajemeninformasi.riska.findingtutor.fungsi_keanggotaan;
 public class TingkatKesulitan {
     private double tingkatkesulitan;
 
-    private double a = 1;
-    private double b = 2;
-    private double c = 6;
-    private double d = 11;
-
     public double getTingkatKesulitan(){
         return tingkatkesulitan;
     }
@@ -21,31 +16,30 @@ public class TingkatKesulitan {
     }
 
     public double mudah(){
-        if(tingkatkesulitan >= a && tingkatkesulitan <= b)
+        if(tingkatkesulitan >= 1 && tingkatkesulitan <= 4)
             return 1;
-        else if (tingkatkesulitan > b && tingkatkesulitan < c)
-            return (c - tingkatkesulitan) / (c - b);
+        else if (tingkatkesulitan > 4 && tingkatkesulitan < 6)
+            return (6 - tingkatkesulitan) / 2;
         else
             return 0;
-
     }
 
     public  double sedang(){
-        if(tingkatkesulitan <= b && tingkatkesulitan >= d)
+        if(tingkatkesulitan <= 4 && tingkatkesulitan > 9)
             return 0;
-        else if(tingkatkesulitan > b && tingkatkesulitan < c)
-            return (tingkatkesulitan - b) / (c - b);
-        else if(tingkatkesulitan >= c && tingkatkesulitan < d)
-            return (d - tingkatkesulitan) / (d-c);
+        else if(tingkatkesulitan > 4 && tingkatkesulitan <= 6)
+            return (tingkatkesulitan - 4) / 2;
+        else if(tingkatkesulitan > 6 && tingkatkesulitan <= 9)
+            return 1;
         else
             return 0;
     }
     public  double sulit(){
-        if(tingkatkesulitan <= c)
+        if(tingkatkesulitan <= 9 && tingkatkesulitan > 13)
             return 0;
-        else if(tingkatkesulitan > c && tingkatkesulitan < d)
-            return (tingkatkesulitan - c) / (d - c);
-        else if(tingkatkesulitan >= d && tingkatkesulitan <= 13)
+        else if(tingkatkesulitan > 9 && tingkatkesulitan <= 12)
+            return (tingkatkesulitan - 9) / 3;
+        else if(tingkatkesulitan > 12 && tingkatkesulitan <= 13)
             return 1;
         else
             return 0;

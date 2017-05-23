@@ -7,12 +7,6 @@ package com.manajemeninformasi.riska.findingtutor.fungsi_keanggotaan;
 public class Harga {
     private static double harga;
 
-    private static double a = 35000;
-    private static double b = 45000;
-    private static double c = 60000;
-    private static double d = 80000;
-    private static double e = 90000;
-
     public static double getHarga(){
         return harga;
     }
@@ -23,44 +17,48 @@ public class Harga {
 
     public static double murah(){
 
-        if(harga >= a && harga <= b)
+        if(harga >= 35000 && harga <= 45000)
             return 1;
-        else if (harga > b && harga < c)
-            return (c - harga) / (c - b);
+        else if (harga > 45000 && harga < 60000)
+            return (60000 - harga) / 15000;
         else
             return 0;
 
     }
 
     public static double sedang(){
-        if(harga <= b && harga >= d)
+        if(harga >= 60000 && harga <= 80000)
+            return 1;
+        else if(harga > 45000 && harga < 60000)
+            return (harga - 45000) / 15000;
+        else if(harga <= 45000 && harga > 80000)
             return 0;
-        else if(harga > b && harga < c)
-            return (harga - b) / (c - b);
         else
             return 0;
     }
     public static double mahal(){
-        if(harga <= d && harga > 100000)
+        if(harga <= 80000 && harga > 100000)
             return 0;
-        else if(harga > d && harga < e)
-            return (harga - d) / (e - d);
-        else if(harga >= e && harga <= 100000)
+        else if(harga > 80000 && harga < 90000)
+            return (harga - 80000) / 10000;
+        else if(harga >= 9000 && harga <= 100000)
             return 1;
         else
             return 0;
     }
 
     public static double murah(double alfa){
-        return(c - (alfa*(c - b)));
+
+        return(60000 - (alfa*15000));
     }
 
     public static double sedang(double alfa){
-        return(b + (alfa*(c - b)));
+
+        return(45000 + (alfa*15000));
     }
 
     public static double mahal(double alfa){
-        return(d + (alfa*(e - d)));
+        return(80000 + (alfa*10000));
 
     }
 }

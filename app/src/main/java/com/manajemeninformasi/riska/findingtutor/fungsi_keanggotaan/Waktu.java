@@ -7,11 +7,6 @@ package com.manajemeninformasi.riska.findingtutor.fungsi_keanggotaan;
 public class Waktu {
     private  double waktu;
 
-    private  double a = 0;
-    private  double b = 4;
-    private  double c = 7;
-    private  double d = 11;
-
     public double getWaktu(){
         return waktu;
     }
@@ -20,32 +15,32 @@ public class Waktu {
         waktu = waktu1;
     }
 
-    public  double dekat(){
-        if(waktu >= a && waktu <= b)
+    public  double mendadak(){
+        if(waktu >= 0 && waktu <= 3)
             return 1;
-        else if (waktu > b && waktu < c)
-            return (c - waktu) / (c - b);
+        else if (waktu > 3 && waktu < 5)
+            return (5 - waktu) / 2;
         else
             return 0;
 
     }
 
     public  double sedang(){
-        if(waktu <= b && waktu >= d)
+        if(waktu <= 3 && waktu > 7)
             return 0;
-        else if(waktu > b && waktu < c)
-            return (waktu - b) / (c - b);
-        else if(waktu >= c && waktu < d)
-            return (d - waktu) / (d-c);
+        else if(waktu > 3 && waktu <= 5)
+            return (waktu - 3) / 2;
+        else if(waktu > 5 && waktu <= 7)
+            return 1;
         else
             return 0;
     }
-    public  double jauh(){
-        if(waktu <= c)
+    public  double tdkmendadak(){
+        if(waktu <= 7)
             return 0;
-        else if(waktu > c && waktu < d)
-            return (waktu - c) / (d - c);
-        else if(waktu >= d && waktu <= 14)
+        else if(waktu > 7 && waktu < 10)
+            return (waktu - 6) / 2;
+        else if(waktu >= 10 && waktu <= 14)
             return 1;
         else
             return 0;

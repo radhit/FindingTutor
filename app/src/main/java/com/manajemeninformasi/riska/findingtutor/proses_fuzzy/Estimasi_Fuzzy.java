@@ -16,15 +16,15 @@ public class Estimasi_Fuzzy {
     private Waktu waktu;
 
     public static void hitungX(TingkatKesulitan tingkatKesulitan1, Waktu waktu1){
-        xHarga[0] = Math.min(tingkatKesulitan1.mudah(), waktu1.jauh());
+        xHarga[0] = Math.min(tingkatKesulitan1.mudah(), waktu1.tdkmendadak());
         xHarga[1] = Math.min(tingkatKesulitan1.mudah(), waktu1.sedang());
-        xHarga[2] = Math.min(tingkatKesulitan1.mudah(), waktu1.dekat());
-        xHarga[3] = Math.min(tingkatKesulitan1.sedang(), waktu1.jauh());
+        xHarga[2] = Math.min(tingkatKesulitan1.mudah(), waktu1.mendadak());
+        xHarga[3] = Math.min(tingkatKesulitan1.sedang(), waktu1.tdkmendadak());
         xHarga[4] = Math.min(tingkatKesulitan1.sedang(), waktu1.sedang());
-        xHarga[5] = Math.min(tingkatKesulitan1.sedang(), waktu1.dekat());
-        xHarga[6] = Math.min(tingkatKesulitan1.sulit(), waktu1.jauh());
+        xHarga[5] = Math.min(tingkatKesulitan1.sedang(), waktu1.mendadak());
+        xHarga[6] = Math.min(tingkatKesulitan1.sulit(), waktu1.tdkmendadak());
         xHarga[7] = Math.min(tingkatKesulitan1.sulit(), waktu1.sedang());
-        xHarga[8] = Math.min(tingkatKesulitan1.sulit(), waktu1.dekat());
+        xHarga[8] = Math.min(tingkatKesulitan1.sulit(), waktu1.mendadak());
     }
 
     public static void hitungY(){
@@ -35,7 +35,7 @@ public class Estimasi_Fuzzy {
         yHarga[4] = Harga.sedang(xHarga[4]);
         yHarga[5] = Harga.sedang(xHarga[5]);
         yHarga[6] = Harga.sedang(xHarga[6]);
-        yHarga[7] = Harga.sedang(xHarga[7]);
+        yHarga[7] = Harga.mahal(xHarga[7]);
         yHarga[8] = Harga.mahal(xHarga[8]);
     }
 

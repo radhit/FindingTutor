@@ -17,34 +17,33 @@ public class Fuzzy {
     private Waktu waktu;
 
     public static void hitungX(TingkatKesulitan tingkatKesulitan1, Waktu waktu1, Jarak jarak1){
-        xHarga[0] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.dekat(), jarak1.dekat()));
-        xHarga[1] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.dekat(), jarak1.sedang()));
-        xHarga[2] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.dekat(), jarak1.jauh()));
+        xHarga[0] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.mendadak(), jarak1.dekat()));
+        xHarga[1] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.mendadak(), jarak1.sedang()));
+        xHarga[2] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.mendadak(), jarak1.jauh()));
         xHarga[3] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.sedang(), jarak1.dekat()));
         xHarga[4] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.sedang(), jarak1.sedang()));
         xHarga[5] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.sedang(), jarak1.jauh()));
-        xHarga[6] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.jauh(), jarak1.dekat()));
-        xHarga[7] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.jauh(), jarak1.sedang()));
-        xHarga[8] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.jauh(), jarak1.jauh()));
-        xHarga[9] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.dekat(), jarak1.dekat()));
-        xHarga[10] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.dekat(), jarak1.sedang()));
-        xHarga[11] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.dekat(), jarak1.jauh()));
+        xHarga[6] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.tdkmendadak(), jarak1.dekat()));
+        xHarga[7] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.tdkmendadak(), jarak1.sedang()));
+        xHarga[8] = Math.min(tingkatKesulitan1.mudah(), Math.min(waktu1.tdkmendadak(), jarak1.jauh()));
+        xHarga[9] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.mendadak(), jarak1.dekat()));
+        xHarga[10] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.mendadak(), jarak1.sedang()));
+        xHarga[11] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.mendadak(), jarak1.jauh()));
         xHarga[12] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.sedang(), jarak1.dekat()));
         xHarga[13] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.sedang(), jarak1.sedang()));
         xHarga[14] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.sedang(), jarak1.jauh()));
-        xHarga[15] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.jauh(), jarak1.dekat()));
-        xHarga[16] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.jauh(), jarak1.sedang()));
-        xHarga[17] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.jauh(), jarak1.jauh()));
-        xHarga[18] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.dekat(), jarak1.dekat()));
-        xHarga[19] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.dekat(), jarak1.sedang()));
-        xHarga[20] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.dekat(), jarak1.jauh()));
+        xHarga[15] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.tdkmendadak(), jarak1.dekat()));
+        xHarga[16] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.tdkmendadak(), jarak1.sedang()));
+        xHarga[17] = Math.min(tingkatKesulitan1.sedang(), Math.min(waktu1.tdkmendadak(), jarak1.jauh()));
+        xHarga[18] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.mendadak(), jarak1.dekat()));
+        xHarga[19] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.mendadak(), jarak1.sedang()));
+        xHarga[20] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.mendadak(), jarak1.jauh()));
         xHarga[21] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.sedang(), jarak1.dekat()));
         xHarga[22] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.sedang(), jarak1.sedang()));
         xHarga[23] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.sedang(), jarak1.jauh()));
-        xHarga[24] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.jauh(), jarak1.dekat()));
-        xHarga[25] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.jauh(), jarak1.sedang()));
-        xHarga[26] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.jauh(), jarak1.jauh()));
-
+        xHarga[24] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.tdkmendadak(), jarak1.dekat()));
+        xHarga[25] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.tdkmendadak(), jarak1.sedang()));
+        xHarga[26] = Math.min(tingkatKesulitan1.sulit(), Math.min(waktu1.tdkmendadak(), jarak1.jauh()));
     }
 
     public static void hitungY(){

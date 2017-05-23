@@ -22,10 +22,10 @@ public class Jarak {
 
     public  double dekat(){
 
-        if(jarak >= a && jarak <= b)
+        if(jarak >= 0 && jarak <= 3000)
             return 1;
-        else if (jarak > b && jarak < c)
-            return (c - jarak) / (c - b);
+        else if (jarak > 3000 && jarak < 5000)
+            return (5000 - jarak) / 2000;
         else
             return 0;
 
@@ -33,21 +33,21 @@ public class Jarak {
 
     public  double sedang(){
 
-        if(jarak <= b && jarak >= d)
+        if(jarak <= 3000 && jarak > 7500)
             return 0;
-        else if(jarak > b && jarak < c)
-            return (jarak - b) / (c - b);
-        else if(jarak >= c && jarak < d)
-            return (d - jarak) / (d-c);
+        else if(jarak > 3000 && jarak <= 5000)
+            return (jarak - 3000) / 2000;
+        else if(jarak > 5000 && jarak <= 7500)
+            return 1;
         else
             return 0;
     }
     public  double jauh(){
-        if(jarak <= c)
+        if(jarak <= 7500 && jarak > 35000)
             return 0;
-        else if(jarak > c && jarak < d)
-            return (jarak - c) / (d - c);
-        else if(jarak >= d && jarak <= 35000)
+        else if(jarak > 7500 && jarak <= 9000)
+            return (jarak - 7500) / 1500;
+        else if(jarak > 9000 && jarak <= 35000)
             return 1;
         else
             return 0;
