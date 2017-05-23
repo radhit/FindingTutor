@@ -75,7 +75,6 @@ public class GeneratorActivity extends AppCompatActivity {
 
 
                 long second = sisaMinute / 1000;
-                //textView.setText(hour+":"+minute+":"+second);
 
                 if(second%5 == 0) {
                     Log.d("jalan","jalan");
@@ -105,8 +104,10 @@ public class GeneratorActivity extends AppCompatActivity {
                                         try {
                                             final JSONObject jsonObject = new JSONObject(response);
                                             db.updateFlag("punish");
-                                            //Log.d("flag", db.selectFlag());
                                             Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                            countDownTimer.cancel();
+                                            finish();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -114,7 +115,6 @@ public class GeneratorActivity extends AppCompatActivity {
                                 },new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        //    progresDialog.hide();
                                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 }) {
@@ -129,8 +129,6 @@ public class GeneratorActivity extends AppCompatActivity {
                                 RequestQueue requestQueue = Volley.newRequestQueue(GeneratorActivity.this);
                                 requestQueue.add(stringRequest);
 
-                                countDownTimer.cancel();
-                                finish();
                             }
                         })
                         .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
@@ -155,7 +153,6 @@ public class GeneratorActivity extends AppCompatActivity {
     }
 
     private void getData(final String s, final int temp) {
-        //for (int i = 0; i < 60; i++) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.TIMESERVER, new Response.Listener<String>() {
             @Override
             public void onResponse(String current_data) {
@@ -179,7 +176,7 @@ public class GeneratorActivity extends AppCompatActivity {
                         }
                     }
                     else if(temp == 3) {
-                        if(status.equals("cancel")){
+                        if(status.equals("cancelbyMurid")){
                             AlertDialog.Builder altd = new AlertDialog.Builder(GeneratorActivity.this);
                             altd.setMessage("Apakah Memberatkan Anda?").setCancelable(false)
                                     .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
@@ -199,10 +196,7 @@ public class GeneratorActivity extends AppCompatActivity {
                             alert.setTitle("Transaksi Dibatalkan Oleh Murid");
                             alert.show();
                         }
-//                            Toast.makeText(GeneratorActivity.this, "Nilai status adalah: " + status, Toast.LENGTH_SHORT).show();
                     }
-                    //waktu(s);
-                    //tombol(s);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,7 +205,6 @@ public class GeneratorActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //    progresDialog.hide();
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -267,7 +260,6 @@ public class GeneratorActivity extends AppCompatActivity {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //    progresDialog.hide();
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {

@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     toIntent(SignInActivity.class);
-                    finish();
                 }
             });
             signup = (Button) findViewById(R.id.btnsignup);

@@ -41,6 +41,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaksi_murid);
         bundle = getIntent().getBundleExtra("bundle");
+        db = new Database(this);
 
         tvnama = (TextView) findViewById(R.id.tvnama);
         tvalamat = (TextView) findViewById(R.id.tvalamat);
@@ -76,21 +77,7 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.d("respon :", jsonObject.toString());
-//                            String message = jsonObject.getString("message");
-//                            Log.d("lala", message);
-//                            if (message.equals("Tidak ada transaksi sedang berjalan"))
-//                            {
-//                                namaTutor = "-";
-//                                alamatTutor = "-";
-//                                usiaTutor = "-";
-//                                telpTutor = "-";
-//                                pelajaran = "-";
-//                                durasi = "-";
-//                                biaya = "-";
-//
-//                                setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
-//                                Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
-////                            }
+
 //                            else {
                                 qrcode = jsonObject.getString("data_transaksi");
 
@@ -167,12 +154,12 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.d("jenis",db.getJenis());
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.CANCELTRANSAKSI, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         try {
                                             final JSONObject jsonObject = new JSONObject(response);
-                                            Log.d("masuk sini", response);
                                             Toast.makeText(TransaksiMuridActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                             db.updateFlag("punish");
 
@@ -226,12 +213,11 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                     if (status.equals("0") && temp==2) {
                         Toast.makeText(TransaksiMuridActivity.this, "Pentutor tidak datang dalam kurun waktu yang telah ditentukan!", Toast.LENGTH_SHORT).show();
                         Toast.makeText(TransaksiMuridActivity.this, " Transaksi dibatalkan!", Toast.LENGTH_SHORT).show();
-//                        Intent aIntent = new Intent(TransaksiMuridActivity.this, HomeMuridActivity.class);
-//                        startActivity(aIntent);
+
                         finish();
                     }
 
-                    else if(status.equals("cancel") && temp==3)
+                    else if(status.equals("cancelbyTutor") && temp==3)
                     {
                         AlertDialog.Builder altd = new AlertDialog.Builder(TransaksiMuridActivity.this);
                         altd.setMessage("Apakah Memberatkan Anda?").setCancelable(false)
