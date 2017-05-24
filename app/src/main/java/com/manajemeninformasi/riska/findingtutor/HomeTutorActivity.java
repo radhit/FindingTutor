@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ public class HomeTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_tutor);
         db = new Database(this);
+        Log.d("jenis kelamin", db.getJenisKelamin());
         cari = (Button) findViewById(R.id.btncari);
         keahlian = (Button) findViewById(R.id.btnkeahlian);
         profile = (Button) findViewById(R.id.btnprofile);

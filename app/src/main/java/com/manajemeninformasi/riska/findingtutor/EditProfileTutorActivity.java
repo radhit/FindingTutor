@@ -114,31 +114,31 @@ public class EditProfileTutorActivity extends AppCompatActivity {
 
         selectedDay = new StringBuilder();
         if (senin.isChecked()) {
-            selectedDay.append("Senin,");
+            selectedDay.append("Monday,");
             count = 0;
         }
         if (selasa.isChecked()) {
-            selectedDay.append("Selasa,");
+            selectedDay.append("Tuesday,");
             count = 0;
         }
         if (rabu.isChecked()) {
-            selectedDay.append("Rabu,");
+            selectedDay.append("Wednesday,");
             count = 0;
         }
         if (kamis.isChecked()) {
-            selectedDay.append("Kamis,");
+            selectedDay.append("Thusday,");
             count = 0;
         }
         if (jumat.isChecked()) {
-            selectedDay.append("Jumat,");
+            selectedDay.append("Friday,");
             count = 0;
         }
         if (sabtu.isChecked()) {
-            selectedDay.append("Sabtu,");
+            selectedDay.append("Saturday,");
             count = 0;
         }
         if (minggu.isChecked()) {
-            selectedDay.append("Minggu,");
+            selectedDay.append("Sunday,");
             count = 0;
         }
         if (selectedDay.toString().equals("")) {

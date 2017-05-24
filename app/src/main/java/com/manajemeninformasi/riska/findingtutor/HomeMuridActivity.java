@@ -32,7 +32,7 @@ import java.util.Map;
 public class HomeMuridActivity extends AppCompatActivity {
     Button cari, profile, transaksi, history;
     private Database db;
-    private String jeniskelamin, usia;
+    private String jeniskelamin="", usia="";
     private Intent myIntent;
 
     @Override
@@ -40,8 +40,6 @@ public class HomeMuridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_murid);
         db = new Database(this);
-        usia = "";
-        jeniskelamin = "";
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         cari = (Button) findViewById(R.id.btncari);
@@ -102,6 +100,7 @@ public class HomeMuridActivity extends AppCompatActivity {
                     JSONObject objectKriteria = arrayKriteria.getJSONObject(0);
                     jeniskelamin = objectKriteria.getString("jeniskelamin");
                     usia = objectKriteria.getString("usia");
+                    Log.d("jeniskelamin", jeniskelamin);
 
                     myIntent =  new Intent(getBaseContext(),CariTutorActivity.class);
                     Bundle bundle = new Bundle();

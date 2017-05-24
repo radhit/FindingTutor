@@ -73,19 +73,17 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         bundle = getIntent().getBundleExtra("bundle");
         status = db.selectFlag();
 
-
-
         pelajaran = (EditText) findViewById(R.id.etpelajaran);
         usia = (EditText) findViewById(R.id.etusia);
         usia.setText(bundle.getString("usia"));
         kriteriaJenis = bundle.getString("jeniskelamin");
 
-        if (kriteriaJenis.equals("Laki-laki"))
+        if (kriteriaJenis.equals("Man"))
         {
             RadioButton rblaki = (RadioButton) findViewById(R.id.rblakilaki);
             rblaki.setChecked(true);
         }
-        else if (kriteriaJenis.equals("Perempuan"))
+        else if (kriteriaJenis.equals("Woman"))
         {
             RadioButton rbperempuan = (RadioButton) findViewById(R.id.rbperempuan);
             rbperempuan.setChecked(true);
@@ -226,8 +224,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         Log.d("jenis kelamin",kriteriaJenis);
         int selectedId = jeniskelamin.getCheckedRadioButtonId();
         jkTutor = (RadioButton) findViewById(selectedId);
-        final String getUsername, getNameuser, jam, menit;
-        getUsername = db.getUsername();
+        final String getNameuser, jam, menit;
         getNameuser = db.getNameuser();
         final String getTanggal;
         getKelas = pilihKelas;
@@ -244,31 +241,31 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         if (toGetDay.equals("1"))
         {
-            getHari = "Minggu";
+            getHari = "Sunday";
         }
         else if(toGetDay.equals("2"))
         {
-            getHari = "Senin";
+            getHari = "Monday";
         }
         else if(toGetDay.equals("3"))
         {
-            getHari = "Selasa";
+            getHari = "Tuesday";
         }
         else if(toGetDay.equals("4"))
         {
-            getHari = "Rabu";
+            getHari = "Wednesday";
         }
         else if(toGetDay.equals("5"))
         {
-            getHari = "Kamis";
+            getHari = "Thusday";
         }
         else if(toGetDay.equals("6"))
         {
-            getHari = "Jumat";
+            getHari = "Friday";
         }
         else if(toGetDay.equals("7"))
         {
-            getHari = "Sabtu";
+            getHari = "Saturday";
         }
 
         progressDialog.setMessage("Pencarian Tutor...");
@@ -336,26 +333,19 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         int bulan = Integer.parseInt(getTanggal.split("/")[1]);
         int tahun = Integer.parseInt(getTanggal.split("/")[2]);
 
-
         final Calendar today = Calendar.getInstance();
         Log.d("tanggal sekarang", today.toString());
 
         Calendar tanggalLes = Calendar.getInstance();
-
         tanggalLes.set(Calendar.DAY_OF_MONTH,tanggal);
         tanggalLes.set(Calendar.MONTH,bulan-1);
         tanggalLes.set(Calendar.YEAR,tahun);
 
-
-
         long diff = tanggalLes.getTimeInMillis()-today.getTimeInMillis();
-
         final long diffDay = diff/(24*60*60*1000);
-
         Waktu waktu = new Waktu();
         waktu.setWaktu(diffDay);
         Log.d("tanggal",String.valueOf(diffDay));
-
 
         Estimasi_Fuzzy fuzzy = new Estimasi_Fuzzy();
         fuzzy.hitungX(tingkatKesulitan, waktu);
@@ -372,7 +362,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         alertDialogBuilder.setTitle("Konfirmasi");
 
-        // set dialog message
         alertDialogBuilder
                 .setMessage("Estimasi Biaya Transaksi Anda sebesar : " + hargaakhir)
                 .setCancelable(false)
@@ -388,14 +377,12 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                                             JSONObject jsonObject = new JSONObject(response);
                                             if (db.selectFlag().equals("punish"))
                                                 db.updateFlag(null);
-                                            //final String pesan = jsonObject.getString("message");
                                             Toast.makeText(getApplicationContext(),jsonObject.getString("message"),Toast.LENGTH_LONG).show();
                                             finish();
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
-
                                     }
                                 },
                                 new Response.ErrorListener() {
@@ -403,7 +390,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                                     public void onErrorResponse(VolleyError error) {
                                         progressDialog.hide();
                                         Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                                        Log.d("cek",error.getMessage());
                                     }
                                 }){
                             @Override
@@ -439,8 +425,5 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
-
-
     }
 }

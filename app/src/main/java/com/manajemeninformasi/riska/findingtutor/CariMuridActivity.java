@@ -191,6 +191,8 @@ public class CariMuridActivity extends AppCompatActivity {
                                 objectJarak.getString("hari"),
                                 objectJarak.getString("jam"),
                                 objectJarak.getString("biaya"),
+                                objectJarak.getString("jeniskelamin"),
+                                objectJarak.getString("usia"),
                                 getJarak,
                                 objectJarak.getInt("durasi"));
                         cariMuridDataList.add(dataMurid);

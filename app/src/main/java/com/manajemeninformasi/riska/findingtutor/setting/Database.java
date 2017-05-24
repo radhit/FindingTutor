@@ -20,6 +20,8 @@ public class Database extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_JENIS = "jenis_user";
     public static final String COLUMN_ALAMAT = "alamat";
+    public static final String COLUMN_JK = "jeniskelamin";
+    public static final String COLUMN_USIA = "usia";
     public static final String COLUMN_FLAG = "flag";
     public static final int VERSION = 2;
     public Database(Context context) {
@@ -29,14 +31,14 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table if not exists "+TABLE_NAME+"("+COLUMN_ID+" TEXT, "+COLUMN_USERNAME+" TEXT, "+COLUMN_NAME+" TEXT, "
-                +COLUMN_ALAMAT+" TEXT, "+COLUMN_JENIS+" TEXT, "+COLUMN_FLAG+" TEXT);");
+                +COLUMN_ALAMAT+" TEXT, "+COLUMN_JENIS+" TEXT, "+COLUMN_JK+" TEXT, "+COLUMN_USIA+" TEXT, "+COLUMN_FLAG+" TEXT);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS"+TABLE_NAME);
     }
-    public void add(String id, String username, String name, String alamat, String jenis)
+    public void add(String id, String username, String name, String alamat, String jeniskelamin, String jenis, String usia)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -44,9 +46,10 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_USERNAME, username);
         values.put(COLUMN_NAME, name);
         values.put(COLUMN_ALAMAT, alamat);
+        values.put(COLUMN_JK, jeniskelamin);
         values.put(COLUMN_JENIS, jenis);
+        values.put(COLUMN_USIA,usia);
         db.insert(TABLE_NAME,null,values);
-
     }
     public void delete()
     {
@@ -95,6 +98,34 @@ public class Database extends SQLiteOpenHelper {
         String jenis = cursor.getString(cursor.getColumnIndex("jenis_user"));
         cursor.close();
         return jenis;
+    }
+    public String getJenisKelamin()
+    {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (cursor.getCount()==0)
+        {
+            return "";
+        }
+        String jeniskelamin = cursor.getString(cursor.getColumnIndex("jeniskelamin"));
+        cursor.close();
+        return jeniskelamin;
+    }
+    public String getUsia()
+    {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (cursor.getCount()==0)
+        {
+            return "";
+        }
+        String usia = cursor.getString(cursor.getColumnIndex("usia"));
+        cursor.close();
+        return usia;
     }
     public String getUsername()
     {
@@ -164,7 +195,7 @@ public class Database extends SQLiteOpenHelper {
         {
             return "";
         }
-        if (cursor.isNull(5))
+        if (cursor.isNull(7))
         {
             flag = "kosong";
         }

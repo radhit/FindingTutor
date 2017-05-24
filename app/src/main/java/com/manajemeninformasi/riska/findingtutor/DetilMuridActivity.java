@@ -49,7 +49,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
     private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak, durasi;
     private Bundle bundle;
     private Database db;
-    private String alamatTutordb, status, qrcode;
+    private String alamatTutordb, jeniskelamin, usia;
     private Geocoder geocoder;
     private Button accept;
     private Context context;
@@ -60,11 +60,12 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detil_murid);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         db = new Database(this);
+        jeniskelamin = db.getJenisKelamin();
+        usia = db.getUsia();
         alamatTutordb = db.getAlamatuser();
         Log.d("alamat tutor : ", alamatTutordb);
         bundle = getIntent().getBundleExtra("bundle");
@@ -95,16 +96,21 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         biaya.setText(bundle.getString("biaya"));
         jarak.setText(String.format("%.2f",jarakMurid)+" Km");
         durasi.setText(String.valueOf(bundle.getInt("durasi")));
-//        db.updateFlag("free");
-        //Log.d("flag", db.selectFlag());
-
+        Log.d("jeniskelamin murid", bundle.getString("jeniskelamin"));
+        Log.d("jeniskelamin tutor", jeniskelamin);
+        Log.d("usia murid", bundle.getString("usia"));
+        Log.d("usia tutor", usia);
+        Log.d("flag",db.selectFlag());
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(db.selectFlag().equals("kosong"))
                 {
-                    transaksi();
+                    if (jeniskelamin.equals(bundle.getString("jeniskelamin")) && usia.equals(bundle.getString("usia"))) {
+                        transaksi();
+                    }
+                    else
+                        Toast.makeText(DetilMuridActivity.this, "Syarat Tidak Memenuhi!", Toast.LENGTH_SHORT).show();
 
                 } else if (db.selectFlag().equals("punish"))
                     waktu();

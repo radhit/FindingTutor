@@ -74,9 +74,7 @@ public class ReaderActivity extends AppCompatActivity {
                         finish();
                     } else if(jsonObject.getString("status").equals("2")){
                         Toast.makeText(ReaderActivity.this, "Transaksi telah Selesai Terima Kasih Telah Menggunakan Aplikasi Ini", Toast.LENGTH_SHORT).show();
-                        //tambahHistory(contents);
-//                        Intent gxIntent = new Intent(ReaderActivity.this, MainActivity.class);
-//                        startActivity(gxIntent);
+
                         finish();
                     }
                 } catch (JSONException e) {

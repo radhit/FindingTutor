@@ -15,11 +15,13 @@ public class CariMuridData {
     private String hari_pencarian;
     private String jam_pencarian;
     private String biaya_pencarian;
+    private String jk_pencarian;
+    private String usia_pencarian;
     private Float jarak_pencarian;
     private Integer durasi;
 
     public CariMuridData(Integer id, Integer id_user, String name, String kelas, String pelajaran, String alamat,
-                         String tanggal, String hari, String jam, String biaya, Float jarak, Integer durasi)
+                         String tanggal, String hari, String jam, String biaya, String jeniskelamin, String usia_pencarian, Float jarak, Integer durasi)
     {
         this.id_pencarian = id;
         this.iduser_pencarian = id_user;
@@ -31,8 +33,26 @@ public class CariMuridData {
         this.hari_pencarian = hari;
         this.jam_pencarian = jam;
         this.biaya_pencarian = biaya;
+        this.jk_pencarian = jeniskelamin;
+        this.usia_pencarian = usia_pencarian;
         this.jarak_pencarian = jarak;
         this.durasi = durasi;
+    }
+
+    public String getUsia_pencarian() {
+        return usia_pencarian;
+    }
+
+    public void setUsia_pencarian(String usia_pencarian) {
+        this.usia_pencarian = usia_pencarian;
+    }
+
+    public String getJk_pencarian() {
+        return jk_pencarian;
+    }
+
+    public void setJk_pencarian(String jk_pencarian) {
+        this.jk_pencarian = jk_pencarian;
     }
 
     public Integer getDurasi() {

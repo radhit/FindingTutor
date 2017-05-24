@@ -185,14 +185,12 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
                         Double hargaFix = finalHargaawal + Double.parseDouble(biayaDatabase);
                         Integer hargaakhir = hargaFix.intValue();
                         hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
-//                        Integer hargaakhir = hargaFix.intValue();
-
-//                        Integer hargaakhir = finalHargaawal.intValue();
-//                        hargaakhir = hargaakhir - (hargaakhir%1000) +1000;
                         bundle.putString("biaya", String.valueOf(hargaakhir));
                     }
 
                     bundle.putFloat("jarak", dataMurid.getJarak_pencarian());
+                    bundle.putString("jeniskelamin", dataMurid.getJk_pencarian());
+                    bundle.putString("usia", dataMurid.getUsia_pencarian());
                     bundle.putInt("durasi", dataMurid.getDurasi());
                     detilMurid.putExtra("bundle",bundle);
                     contextMurid.startActivity(detilMurid);
