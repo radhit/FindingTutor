@@ -46,10 +46,11 @@ import java.util.Map;
 public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak, durasi;
+    private TextView nama, kelas, pelajaran, alamat, tanggal, hari, jam, biaya, jarak, durasi, usia, jeniskelamin;
     private Bundle bundle;
     private Database db;
-    private String alamatTutordb, jeniskelamin, usia;
+    private String alamatTutordb, jeniskelamintutor;
+    private Integer usiatutor, usiamurid;
     private Geocoder geocoder;
     private Button accept;
     private Context context;
@@ -64,8 +65,7 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         db = new Database(this);
-        jeniskelamin = db.getJenisKelamin();
-        usia = db.getUsia();
+        jeniskelamintutor = db.getJenisKelamin();
         alamatTutordb = db.getAlamatuser();
         Log.d("alamat tutor : ", alamatTutordb);
         bundle = getIntent().getBundleExtra("bundle");
@@ -81,6 +81,8 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         biaya = (TextView) findViewById(R.id.tvbiaya);
         jarak = (TextView) findViewById(R.id.tvjarak);
         durasi = (TextView) findViewById(R.id.tvdurasi);
+        usia = (TextView) findViewById(R.id.tvusia);
+        jeniskelamin = (TextView) findViewById(R.id.tvjeniskelamin);
 
         accept = (Button) findViewById(R.id.btnaccept);
 
@@ -96,17 +98,23 @@ public class DetilMuridActivity extends FragmentActivity implements OnMapReadyCa
         biaya.setText(bundle.getString("biaya"));
         jarak.setText(String.format("%.2f",jarakMurid)+" Km");
         durasi.setText(String.valueOf(bundle.getInt("durasi")));
-        Log.d("jeniskelamin murid", bundle.getString("jeniskelamin"));
-        Log.d("jeniskelamin tutor", jeniskelamin);
-        Log.d("usia murid", bundle.getString("usia"));
-        Log.d("usia tutor", usia);
+        usia.setText(bundle.getString("usia"));
+        jeniskelamin.setText(bundle.getString("jeniskelamin"));
+        usiatutor = Integer.valueOf(db.getUsia());
+        usiamurid = Integer.valueOf(bundle.getString("usia"));
+//
+//        Log.d("jeniskelamin murid", bundle.getString("jeniskelamin"));
+//        Log.d("jeniskelamin tutor", jeniskelamin);
+        Log.d("usia murid", usiamurid.toString());
+        Log.d("usia tutor", usiatutor.toString());
         Log.d("flag",db.selectFlag());
+
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(db.selectFlag().equals("kosong"))
                 {
-                    if (jeniskelamin.equals(bundle.getString("jeniskelamin")) && usia.equals(bundle.getString("usia"))) {
+                    if (jeniskelamintutor.equals(bundle.getString("jeniskelamin")) && usiatutor<=usiamurid) {
                         transaksi();
                     }
                     else

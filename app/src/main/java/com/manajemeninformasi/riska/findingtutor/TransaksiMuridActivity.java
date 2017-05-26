@@ -78,7 +78,6 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.d("respon :", jsonObject.toString());
 
-//                            else {
                                 qrcode = jsonObject.getString("data_transaksi");
 
                                 JSONArray arraytransaksi = jsonObject.getJSONArray("transaksi");
@@ -94,10 +93,8 @@ public class TransaksiMuridActivity extends AppCompatActivity {
                                 usiaTutor = objectdata.getString("usia_user");
                                 telpTutor = objectdata.getString("telp_user");
 
-
                                 setView(namaTutor, alamatTutor, usiaTutor, telpTutor, pelajaran, durasi, biaya);
                                 waktu(qrcode);
-                            //}
 
                         } catch (JSONException e) {
                             e.printStackTrace();

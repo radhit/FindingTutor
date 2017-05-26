@@ -96,7 +96,7 @@ public class EditProfileTutorActivity extends AppCompatActivity {
                 if (etnama.getText().toString().equals("") || alamat.equals("") ||
                         ettelp.getText().toString().equals("") || etemail.getText().toString().equals(""))
                 {
-                    Toast.makeText(EditProfileTutorActivity.this, "Data harus Lengkap", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileTutorActivity.this, "Incomplete Data", Toast.LENGTH_SHORT).show();
                 }
                 else
                 editProfile();
@@ -142,12 +142,12 @@ public class EditProfileTutorActivity extends AppCompatActivity {
             count = 0;
         }
         if (selectedDay.toString().equals("")) {
-            Toast.makeText(this, "Minimal 1 hari", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "At least 1 day", Toast.LENGTH_SHORT).show();
             count = 1;
         }
         if (count == 0) {
 
-            progressDialog.setMessage("Ubah Profil...");
+            progressDialog.setMessage("Please wait...");
             progressDialog.show();
             StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.EDITPROFILE_URL,
                     new Response.Listener<String>() {

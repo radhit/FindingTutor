@@ -39,7 +39,6 @@ public class ReaderActivity extends AppCompatActivity {
         integrator.setBeepEnabled(false);
         integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan();
-
     }
 
     @Override
@@ -51,7 +50,6 @@ public class ReaderActivity extends AppCompatActivity {
                 Toast.makeText(this, "You cancelled the scanning", Toast.LENGTH_LONG).show();
             }
             else {
-                //Toast.makeText(this, result.getContents(),Toast.LENGTH_LONG).show();
                 next(result.getContents());
             }
         }
@@ -97,34 +95,4 @@ public class ReaderActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
-//    private void tambahHistory(final String qr_codes) {
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, Connect.ADDHISTORY, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    final JSONObject jsonObject = new JSONObject(response);
-//                    Toast.makeText(ReaderActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        },new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                //    progresDialog.hide();
-//                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("qr_codes", qr_codes);
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(ReaderActivity.this);
-//        requestQueue.add(stringRequest);
-//    }
-
 }

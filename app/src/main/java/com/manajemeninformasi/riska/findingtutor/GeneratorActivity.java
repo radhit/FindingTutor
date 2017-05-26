@@ -169,7 +169,6 @@ public class GeneratorActivity extends AppCompatActivity {
                         if (status.equals("2")) {
                             Toast.makeText(GeneratorActivity.this, "Transaksi telah Selesai Terima Kasih Telah Menggunakan Aplikasi Ini", Toast.LENGTH_SHORT).show();
                             tambahHistory(s);
-                            hapusTransaksi(s);
                             finish();
                         } else {
                             Toast.makeText(GeneratorActivity.this, "Transaksi masih sedang berjalan", Toast.LENGTH_SHORT).show();
@@ -226,6 +225,7 @@ public class GeneratorActivity extends AppCompatActivity {
                 try {
                     final JSONObject jsonObject = new JSONObject(response);
                     Toast.makeText(GeneratorActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                    hapusTransaksi(qr_codes);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

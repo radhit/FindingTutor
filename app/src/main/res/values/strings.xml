@@ -40,6 +40,7 @@
     </string-array>
     <string name="pilih_durasi">Pilih Hari</string>
     <string-array name="durasi">
+        <item>1 Menit</item>
         <item>30 Menit</item>
         <item>60 Menit</item>
         <item>90 Menit</item>
