@@ -373,7 +373,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                                     public void onResponse(String response) {
                                         progressDialog.dismiss();
                                         try {
-                                            Log.d("respon :", response.toString());
+//                                            Log.d("respon :", response.toString());
                                             JSONObject jsonObject = new JSONObject(response);
                                             if (db.selectFlag().equals("punish"))
                                                 db.updateFlag(null);

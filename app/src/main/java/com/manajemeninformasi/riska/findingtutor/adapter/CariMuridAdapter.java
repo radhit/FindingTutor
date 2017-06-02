@@ -110,9 +110,10 @@ public class CariMuridAdapter extends ArrayAdapter<CariMuridData> {
         tingkatKesulitan.setTingkatKesulitan(kesulitan);
         Log.d("kesulitan", kesulitan.toString());
 
-        int tanggal = Integer.parseInt(dataMurid.getTanggal_pencarian().split("-")[0]);
-        int bulan = Integer.parseInt(dataMurid.getTanggal_pencarian().split("-")[1]);
-        int tahun = Integer.parseInt(dataMurid.getTanggal_pencarian().split("-")[2]);
+        int tanggal = Integer.parseInt(dataMurid.getTanggal_pencarian().split("/")[0]);
+        int bulan = Integer.parseInt(dataMurid.getTanggal_pencarian().split("/")[1]);
+        int tahun = Integer.parseInt(dataMurid.getTanggal_pencarian().split("/")[2]);
+
 
         Calendar today = Calendar.getInstance();
 
