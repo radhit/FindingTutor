@@ -96,7 +96,7 @@ public class SignInActivity extends AppCompatActivity {
                             Log.d("ini tutor",jsonObject.getString("name"));
                             finish();
                         }
-                        else
+                        else if (jsonObject.getString("jenis").equals("Murid"))
                         {
                             db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("alamat")
                                     ,jsonObject.getString("jeniskelamin")
@@ -104,6 +104,15 @@ public class SignInActivity extends AppCompatActivity {
                                     ,jsonObject.getString("usia"));
                             toIntent(HomeMuridActivity.class);
                             Log.d("ini murid",jsonObject.getString("name"));
+                            finish();
+                        }
+                        else if (jsonObject.getString("jenis").equals("Admin"))
+                        {
+                            db.add(jsonObject.getString("id"),susername,jsonObject.getString("name"),jsonObject.getString("alamat")
+                                    ,jsonObject.getString("jeniskelamin")
+                                    ,jsonObject.getString("jenis")
+                                    ,jsonObject.getString("usia"));
+                            toIntent(AdminActivity.class);
                             finish();
                         }
                     } catch (JSONException e) {

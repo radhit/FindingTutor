@@ -41,20 +41,22 @@ import com.manajemeninformasi.riska.findingtutor.proses_fuzzy.Estimasi_Fuzzy;
 import com.manajemeninformasi.riska.findingtutor.setting.Connect;
 import com.manajemeninformasi.riska.findingtutor.setting.Database;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
-    private Spinner spinnerKelas, spinnerDurasi;
-    private EditText pelajaran, usia;
+    private Spinner spinnerPelajaran, spinnerKelas, spinnerDurasi;
+    private EditText usia;
     private RadioGroup jeniskelamin;
     private RadioButton jkTutor;
-    private String pilihKelas, flag, status, pilihDurasi;
+    private String pilihKelas, flag, status, pilihDurasi, pilihPelajaran;
     private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis, getDurasi ;
     private DatePicker tanggal;
     private Calendar calendar;
@@ -64,6 +66,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private ProgressDialog progressDialog;
     private Bundle bundle;
     private Context context = this;
+    private ArrayList<String> lesson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         db = new Database(this);
         bundle = getIntent().getBundleExtra("bundle");
         status = db.selectFlag();
+        lesson = new ArrayList<String>();
 
-        pelajaran = (EditText) findViewById(R.id.etpelajaran);
+        //pelajaran = (EditText) findViewById(R.id.etpelajaran);
         usia = (EditText) findViewById(R.id.etusia);
         usia.setText(bundle.getString("usia"));
         kriteriaJenis = bundle.getString("jeniskelamin");
@@ -123,6 +127,9 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         durasiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDurasi.setAdapter(durasiAdapter);
 
+        spinnerPelajaran = (Spinner) findViewById(R.id.spinnerpelajaran);
+        spinnerPelajaran.setOnItemSelectedListener(this);
+        getDataPelajaran();
 
         acAlamat = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.acalamat);
         acAlamat.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -161,12 +168,12 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                     Toast.makeText(context, "Anda terkena tambahan biaya sebesar : "+flag, Toast.LENGTH_SHORT).show();
                 }
                 getKelas = pilihKelas;
-                getPelajaran = pelajaran.getText().toString();
+                //getPelajaran = pelajaran.getText().toString();
                 getDurasi = pilihDurasi;
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour() + ":" + waktu.getCurrentMinute();
                 getUsia = usia.getText().toString();
-                if (getKelas.matches("") || getPelajaran.matches("") || getAlamat.matches("")
+                if (getKelas.matches("") || getAlamat.matches("")
                         || toGetDay.matches("") || getWaktu.matches("") || getUsia.matches("") || getDurasi.matches("")) {
                     Toast.makeText(CariTutorActivity.this, "Semua data harus di isi lengkap!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -175,6 +182,45 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
             }
         });
     }
+
+    private void getDataPelajaran() {
+        StringRequest stringRequest = new StringRequest(Connect.PELAJARAN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray arrayPelajaran = jsonObject.getJSONArray("result");
+                    getListPelajaran(arrayPelajaran);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getListPelajaran(JSONArray arrayPelajaran) {
+        for (int i = 0;i<arrayPelajaran.length();i++)
+        {
+            try {
+                JSONObject json = arrayPelajaran.getJSONObject(i);
+                lesson.add(json.getString("nama_pelajaran"));
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        spinnerPelajaran.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lesson));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -194,6 +240,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
 
         Spinner spin = (Spinner)parent;
         Spinner spin2 = (Spinner)parent;
+        Spinner spin3 = (Spinner)parent;
         if(spin.getId() == R.id.spkelas)
         {
             pilihKelas = parent.getItemAtPosition(position).toString();
@@ -201,6 +248,10 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         if(spin2.getId() == R.id.spdurasi)
         {
             pilihDurasi = parent.getItemAtPosition(position).toString();
+        }
+        if(spin3.getId() == R.id.spinnerpelajaran)
+        {
+            pilihPelajaran = parent.getItemAtPosition(position).toString();
         }
     }
 
@@ -228,7 +279,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         getNameuser = db.getNameuser();
         final String getTanggal;
         getKelas = pilihKelas;
-        getPelajaran = pelajaran.getText().toString();
+        getPelajaran = pilihPelajaran;
         month = month+1;
         getTanggal = day+"/"+month+"/"+year;
         toGetDay = selectedDay.toString();

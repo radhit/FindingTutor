@@ -25,21 +25,24 @@
                     android:layout_height="wrap_content"
                     android:text="Class"
                     android:textSize="20sp"/>
+
                 <Spinner
+                    android:id="@+id/spkelas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spkelas"
                     android:entries="@array/kelas"
-                    android:prompt="@string/pilih_kelas"/>
+                    android:prompt="@string/pilih_kelas" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Lesson"
                     android:textSize="20sp"/>
-                <EditText
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/etpelajaran"/>
+                    android:id="@+id/spinnerpelajaran">
+                </Spinner>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

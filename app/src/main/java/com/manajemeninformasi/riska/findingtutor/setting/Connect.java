@@ -28,4 +28,6 @@ public class Connect {
     public static final String DELETETRANSAKSI = ROOT_URL+"DeleteTransaksi_controller";
     public static final String CANCELTRANSAKSI = ROOT_URL+"CancelTransaksi_controller";
     public static final String RATING = ROOT_URL+"Rating_controller";
+    public static final String ADMIN = ROOT_URL+"Tambahpelajaran_controller";
+    public static final String PELAJARAN = ROOT_URL+"Listpelajaran_controller";
 }

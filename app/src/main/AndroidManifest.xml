@@ -61,7 +61,8 @@
         <activity android:name=".HistoryTutorActivity" />
         <activity android:name=".TransaksiMuridActivity" />
         <activity android:name=".RatingActivity" />
-        <activity android:name=".ListTransaksiMuridActivity"></activity>
+        <activity android:name=".ListTransaksiMuridActivity" />
+        <activity android:name=".AdminActivity"></activity>
     </application>
 
 </manifest>
