@@ -46,6 +46,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Student Skill (1-5)"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etskill"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Address"
                     android:textSize="20sp"/>
                 <fragment

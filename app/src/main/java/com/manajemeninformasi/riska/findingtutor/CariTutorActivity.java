@@ -53,11 +53,11 @@ import java.util.Map;
 public class CariTutorActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Database db;
     private Spinner spinnerPelajaran, spinnerKelas, spinnerDurasi;
-    private EditText usia;
+    private EditText usia, skill;
     private RadioGroup jeniskelamin;
     private RadioButton jkTutor;
     private String pilihKelas, flag, status, pilihDurasi, pilihPelajaran;
-    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis, getDurasi ;
+    private String getKelas, getPelajaran, toGetDay, getWaktu, getAlamat, getUsia, getJeniskelamin, getHari, kriteriaJenis, getDurasi, getSkill ;
     private DatePicker tanggal;
     private Calendar calendar;
     private TimePicker waktu;
@@ -76,6 +76,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         bundle = getIntent().getBundleExtra("bundle");
         status = db.selectFlag();
         lesson = new ArrayList<String>();
+        skill = (EditText) findViewById(R.id.etskill);
 
         //pelajaran = (EditText) findViewById(R.id.etpelajaran);
         usia = (EditText) findViewById(R.id.etusia);
@@ -169,6 +170,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                 }
                 getKelas = pilihKelas;
                 //getPelajaran = pelajaran.getText().toString();
+                getSkill = skill.getText().toString();
                 getDurasi = pilihDurasi;
                 toGetDay = selectedDay.toString();
                 getWaktu = waktu.getCurrentHour() + ":" + waktu.getCurrentMinute();
@@ -272,7 +274,6 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
     private void cariTutor()
     {
 
-        Log.d("jenis kelamin",kriteriaJenis);
         int selectedId = jeniskelamin.getCheckedRadioButtonId();
         jkTutor = (RadioButton) findViewById(selectedId);
         final String getNameuser, jam, menit;
@@ -289,6 +290,8 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
         getJeniskelamin = jkTutor.getText().toString();
         getUsia = usia.getText().toString();
         getDurasi = pilihDurasi;
+        getSkill = skill.getText().toString();
+        Log.d("jenis kelamin",getSkill);
 
         if (toGetDay.equals("1"))
         {
@@ -450,6 +453,7 @@ public class CariTutorActivity extends AppCompatActivity implements AdapterView.
                                 params.put("name",getNameuser);
                                 params.put("kelas",getKelas);
                                 params.put("pelajaran",getPelajaran);
+                                params.put("skill", getSkill);
                                 params.put("alamat",getAlamat);
                                 params.put("tanggal", getTanggal);
                                 params.put("hari",getHari);
